@@ -99,6 +99,9 @@ importers:
       '@types/js-yaml':
         specifier: ^4.0.9
         version: 4.0.9
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.4(@types/node@24.5.1)(@vitest/ui@3.2.4)(happy-dom@18.0.1)(yaml@2.8.1)
 
   packs:
     dependencies:
