@@ -16,7 +16,7 @@ export abstract class BaseCheck implements Check {
     passed: boolean,
     message: string,
     score?: number,
-    details?: any,
+    details?: Record<string, unknown>,
     error?: string
   ): GateResult {
     return {
@@ -29,11 +29,19 @@ export abstract class BaseCheck implements Check {
     };
   }
 
-  protected createSuccess(message: string, score?: number, details?: any): GateResult {
+  protected createSuccess(
+    message: string,
+    score?: number,
+    details?: Record<string, unknown>
+  ): GateResult {
     return this.createResult(true, message, score, details);
   }
 
-  protected createFailure(message: string, error?: string, details?: any): GateResult {
+  protected createFailure(
+    message: string,
+    error?: string,
+    details?: Record<string, unknown>
+  ): GateResult {
     return this.createResult(false, message, undefined, details, error);
   }
 }

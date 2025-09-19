@@ -1,22 +1,23 @@
 import chalk from 'chalk';
+import { GateRunResult } from '@anvil/core';
 
 export function success(message: string): void {
   console.log(chalk.green('✓'), message);
 }
 
 export function error(message: string): void {
-  console.log(chalk.red('✗'), message);
+  console.error(chalk.red('✗'), message);
 }
 
 export function warning(message: string): void {
-  console.log(chalk.yellow('⚠'), message);
+  console.warn(chalk.yellow('⚠'), message);
 }
 
 export function info(message: string): void {
   console.log(chalk.blue('ℹ'), message);
 }
 
-export function formatValidationErrors(errors: any[]): void {
+export function formatValidationErrors(errors: Array<{ message: string; path?: string }>): void {
   if (errors.length === 0) return;
 
   console.log(chalk.red('\nValidation Errors:'));
@@ -28,17 +29,19 @@ export function formatValidationErrors(errors: any[]): void {
   });
 }
 
-export function formatGateResults(results: any): void {
+export function formatGateResults(results: GateRunResult): void {
   console.log(chalk.bold('\nGate Results:'));
-  console.log(chalk.bold(`Overall: ${results.overall ? chalk.green('PASSED') : chalk.red('FAILED')}`));
+  console.log(
+    chalk.bold(`Overall: ${results.overall ? chalk.green('PASSED') : chalk.red('FAILED')}`)
+  );
   console.log(chalk.bold(`Score: ${results.score.toFixed(1)}%`));
-  
+
   console.log(chalk.bold('\nCheck Results:'));
-  results.checks.forEach((check: any) => {
+  results.checks.forEach((check) => {
     const status = check.passed ? chalk.green('PASS') : chalk.red('FAIL');
     const score = check.score ? ` (${check.score.toFixed(1)}%)` : '';
     console.log(`  ${status} ${check.check}${score}: ${check.message}`);
-    
+
     if (check.error) {
       console.log(chalk.gray(`    Error: ${check.error}`));
     }

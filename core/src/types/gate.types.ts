@@ -2,7 +2,7 @@ export interface GateCheck {
   name: string;
   description: string;
   enabled: boolean;
-  config?: Record<string, any>;
+  config?: Record<string, unknown>;
 }
 
 export interface GateResult {
@@ -10,7 +10,7 @@ export interface GateResult {
   passed: boolean;
   score?: number;
   message: string;
-  details?: any;
+  details?: Record<string, unknown>;
   error?: string;
   skipped?: boolean;
 }
@@ -34,7 +34,7 @@ export interface GateConfig {
     overall_score: number;
     [key: string]: number;
   };
-  global_config?: Record<string, any>;
+  global_config?: Record<string, unknown>;
 }
 
 export interface PlanData {
@@ -44,7 +44,7 @@ export interface PlanData {
     type: string;
     target: string;
     action: string;
-    content: any;
+    content: unknown;
   }>;
   provenance: {
     created_at: string;
@@ -61,5 +61,5 @@ export interface CheckContext {
   plan: PlanData;
   workspace_root: string;
   config: GateConfig;
-  check_config: Record<string, any>;
+  check_config: Record<string, unknown>;
 }

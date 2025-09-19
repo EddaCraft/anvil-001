@@ -38,8 +38,8 @@ export class GateConfigManager {
           description: 'Code quality checks',
           enabled: true,
           config: {
-            min_score: 80
-          }
+            min_score: 80,
+          },
         },
         {
           name: 'coverage',
@@ -51,44 +51,61 @@ export class GateConfigManager {
               lines: 80,
               functions: 80,
               branches: 80,
-              statements: 80
-            }
-          }
+              statements: 80,
+            },
+          },
         },
         {
           name: 'secret',
           description: 'Secret scanning',
           enabled: true,
-          config: {}
-        }
+          config: {},
+        },
       ],
       thresholds: {
-        overall_score: 80
-      }
+        overall_score: 80,
+      },
     };
   }
 
-  private validateAndNormalizeConfig(config: any): GateConfig {
+  private validateAndNormalizeConfig(config: unknown): GateConfig {
+    // Type guard to ensure config is an object
+    const configObj =
+      typeof config === 'object' && config !== null ? (config as Record<string, unknown>) : {};
+
     // Ensure required fields exist
-    if (!config.version) config.version = 1;
-    if (!config.checks) config.checks = [];
-    if (!config.thresholds) config.thresholds = { overall_score: 80 };
+    if (!configObj.version) configObj.version = 1;
+    if (!configObj.checks) configObj.checks = [];
+    if (!configObj.thresholds) configObj.thresholds = { overall_score: 80 };
 
     // Validate checks structure
-    config.checks = config.checks.map((check: any) => ({
-      name: check.name || 'unknown',
-      description: check.description || '',
-      enabled: check.enabled !== false,
-      config: check.config || {}
-    }));
+    const checksArray = Array.isArray(configObj.checks) ? configObj.checks : [];
+    configObj.checks = checksArray.map((check: unknown) => {
+      const checkObj =
+        typeof check === 'object' && check !== null ? (check as Record<string, unknown>) : {};
+      return {
+        name: typeof checkObj.name === 'string' ? checkObj.name : 'unknown',
+        description: typeof checkObj.description === 'string' ? checkObj.description : '',
+        enabled: checkObj.enabled !== false,
+        config:
+          typeof checkObj.config === 'object' && checkObj.config !== null
+            ? (checkObj.config as Record<string, unknown>)
+            : {},
+      };
+    });
 
-    return config as GateConfig;
+    return {
+      version: configObj.version as number,
+      checks: configObj.checks as GateCheck[],
+      thresholds: configObj.thresholds as { overall_score: number; [key: string]: number },
+      global_config: configObj.global_config as Record<string, unknown> | undefined,
+    };
   }
 
   updateCheck(name: string, updates: Partial<GateCheck>): void {
     const config = this.loadConfig();
-    const checkIndex = config.checks.findIndex(c => c.name === name);
-    
+    const checkIndex = config.checks.findIndex((c) => c.name === name);
+
     if (checkIndex >= 0) {
       config.checks[checkIndex] = { ...config.checks[checkIndex], ...updates };
     } else {
@@ -96,7 +113,7 @@ export class GateConfigManager {
         name,
         description: updates.description || '',
         enabled: updates.enabled !== false,
-        config: updates.config || {}
+        config: updates.config || {},
       });
     }
 
