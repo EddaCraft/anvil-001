@@ -12,7 +12,8 @@
     "isolatedModules": true,
     "noEmitOnError": true,
     "declaration": true,
-    "emitDeclarationOnly": false
+    "emitDeclarationOnly": false,
+    "composite": true
   },
   "include": ["src/**/*"]
 }

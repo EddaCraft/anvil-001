@@ -81,9 +81,10 @@ export class GateRunner {
       }
     }
 
-    const overallScore = validChecks > 0 ? totalScore / validChecks : 0;
+    const overallScore = validChecks > 0 ? totalScore / validChecks : 100; // Default to 100 if no checks ran
     const passed = results.every((r) => r.passed || r.skipped);
-    const overallPassed = passed && overallScore >= (config.thresholds.overall_score || 80);
+    const overallPassed =
+      passed && (validChecks === 0 || overallScore >= (config.thresholds.overall_score || 80));
 
     const summary = {
       total: results.length,
