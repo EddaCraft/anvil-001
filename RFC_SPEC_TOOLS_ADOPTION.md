@@ -112,12 +112,23 @@ Based on the project documentation, Anvil's APS includes:
 #### Plugin Architecture
 
 ```typescript
+// Define more specific types for context and external spec
+interface SpecContext {
+  // Add relevant context fields here
+  [key: string]: unknown;
+}
+
+interface ExternalSpec {
+  // Add relevant external spec fields here
+  [key: string]: unknown;
+}
+
 interface SpecToolAdapter {
   name: string;
   version: string;
-  generateSpec(intent: string, context: any): Promise<APSSpec>;
+  generateSpec(intent: string, context: SpecContext): Promise<APSSpec>;
   validateSpec(spec: APSSpec): Promise<ValidationResult>;
-  convertToAPS(spec: any): APSSpec;
+  convertToAPS(spec: ExternalSpec): APSSpec;
 }
 
 class BMADMethodAdapter implements SpecToolAdapter {
