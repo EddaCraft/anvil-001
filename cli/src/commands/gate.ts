@@ -6,13 +6,13 @@ import ora from 'ora';
 
 export function createGateCommand(): Command {
   const command = new Command('gate');
-  
+
   command
     .description('Run quality gates on a plan')
     .argument('<plan>', 'Plan ID or file path')
     .option('-c, --config <path>', 'Custom config file path')
     .option('-v, --verbose', 'Verbose output')
-    .action(async (planArg: string, options: any) => {
+    .action(async (planArg: string, _options: { config?: string; verbose?: boolean }) => {
       try {
         const workspaceRoot = getWorkspaceRoot();
         const configManager = new GateConfigManager(workspaceRoot);

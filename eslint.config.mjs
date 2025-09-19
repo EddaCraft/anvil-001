@@ -37,5 +37,11 @@ export default typescriptEslint.config(
       '@typescript-eslint/no-explicit-any': 'off',
       'no-console': 'off',
     },
+  },
+  {
+    files: ['cli/**/*.ts'],
+    rules: {
+      'no-console': 'off',
+    },
   }
 );

@@ -1,5 +1,11 @@
 import { Check } from './check.interface.js';
-import { CheckContext, GateConfig, GateRunResult, PlanData } from '../types/gate.types.js';
+import {
+  CheckContext,
+  GateConfig,
+  GateResult,
+  GateRunResult,
+  PlanData,
+} from '../types/gate.types.js';
 import { ESLintCheck } from './checks/eslint.check.js';
 import { CoverageCheck } from './checks/coverage.check.js';
 import { SecretCheck } from './checks/secret.check.js';
@@ -24,7 +30,7 @@ export class GateRunner {
   }
 
   async runGate(plan: PlanData, config: GateConfig, workspaceRoot: string): Promise<GateRunResult> {
-    const results: any[] = [];
+    const results: GateResult[] = [];
     let totalScore = 0;
     let validChecks = 0;
 
@@ -34,7 +40,7 @@ export class GateRunner {
           check: checkConfig.name,
           passed: true,
           message: 'Check disabled',
-          skipped: true
+          skipped: true,
         });
         continue;
       }
@@ -45,7 +51,7 @@ export class GateRunner {
           check: checkConfig.name,
           passed: false,
           message: `Check '${checkConfig.name}' not found`,
-          error: 'Unknown check'
+          error: 'Unknown check',
         });
         continue;
       }
@@ -55,7 +61,7 @@ export class GateRunner {
           plan,
           workspace_root: workspaceRoot,
           config,
-          check_config: checkConfig.config || {}
+          check_config: checkConfig.config || {},
         };
 
         const result = await check.run(context);
@@ -70,27 +76,27 @@ export class GateRunner {
           check: checkConfig.name,
           passed: false,
           message: `Check '${checkConfig.name}' failed with error`,
-          error: error instanceof Error ? error.message : 'Unknown error'
+          error: error instanceof Error ? error.message : 'Unknown error',
         });
       }
     }
 
     const overallScore = validChecks > 0 ? totalScore / validChecks : 0;
-    const passed = results.every(r => r.passed || r.skipped);
+    const passed = results.every((r) => r.passed || r.skipped);
     const overallPassed = passed && overallScore >= (config.thresholds.overall_score || 80);
 
     const summary = {
       total: results.length,
-      passed: results.filter(r => r.passed && !r.skipped).length,
-      failed: results.filter(r => !r.passed && !r.skipped).length,
-      skipped: results.filter(r => r.skipped).length
+      passed: results.filter((r) => r.passed && !r.skipped).length,
+      failed: results.filter((r) => !r.passed && !r.skipped).length,
+      skipped: results.filter((r) => r.skipped).length,
     };
 
     return {
       overall: overallPassed,
       score: overallScore,
       checks: results,
-      summary
+      summary,
     };
   }
 
