@@ -1,6 +1,6 @@
 import { GateConfig, GateCheck } from '../types/gate.types.js';
-import { readFileSync, existsSync, writeFileSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
+import { join, dirname } from 'path';
 
 export class GateConfigManager {
   private configPath: string;
@@ -26,6 +26,11 @@ export class GateConfigManager {
 
   saveConfig(config: GateConfig): void {
     const content = JSON.stringify(config, null, 2);
+    // Ensure directory exists before writing file
+    const dir = dirname(this.configPath);
+    if (!existsSync(dir)) {
+      mkdirSync(dir, { recursive: true });
+    }
     writeFileSync(this.configPath, content, 'utf-8');
   }
 

@@ -9,7 +9,7 @@ export class SecretCheck extends BaseCheck {
 
   private readonly secretPatterns = [
     // API Keys
-    { name: 'API Key', pattern: /(?:api[_-]?key|apikey)\s*[:=]\s*['"]?[a-zA-Z0-9]{20,}['"]?/i },
+    { name: 'API Key', pattern: /(?:api[_-]?key|apikey)\s*[:=]\s*['"]?[a-zA-Z0-9_-]{16,}['"]?/i },
     // JWT Tokens
     { name: 'JWT Token', pattern: /eyJ[a-zA-Z0-9_-]*\.eyJ[a-zA-Z0-9_-]*\.[a-zA-Z0-9_-]*/ },
     // AWS Keys
@@ -19,7 +19,10 @@ export class SecretCheck extends BaseCheck {
     // Database URLs
     { name: 'Database URL', pattern: /(?:postgres|mysql|mongodb):\/\/[^:\s]+:[^@\s]+@/ },
     // Generic secrets
-    { name: 'Generic Secret', pattern: /(?:secret|password|passwd|pwd)\s*[:=]\s*['"]?[^\s'"]{8,}['"]?/i },
+    {
+      name: 'Generic Secret',
+      pattern: /(?:secret|password|passwd|pwd)\s*[:=]\s*['"]?[^\s'"]{8,}['"]?/i,
+    },
     // Credit Cards (basic pattern)
     { name: 'Credit Card', pattern: /\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b/ },
   ];
@@ -39,11 +42,11 @@ export class SecretCheck extends BaseCheck {
         if (existsSync(file)) {
           const content = readFileSync(file, 'utf-8');
           const lines = content.split('\n');
-          
+
           for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
             const lineNumber = i + 1;
-            
+
             for (const pattern of this.secretPatterns) {
               const matches = line.match(pattern.pattern);
               if (matches) {
@@ -52,7 +55,7 @@ export class SecretCheck extends BaseCheck {
                   line: lineNumber,
                   type: pattern.name,
                   match: matches[0],
-                  context: line.trim()
+                  context: line.trim(),
                 });
               }
             }
@@ -81,7 +84,7 @@ export class SecretCheck extends BaseCheck {
 
   private getFilesFromPlan(context: CheckContext): string[] {
     const files: string[] = [];
-    
+
     for (const change of context.plan.proposed_changes) {
       if (change.type === 'file') {
         const fullPath = join(context.workspace_root, change.target);

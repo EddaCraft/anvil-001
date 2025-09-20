@@ -11,8 +11,9 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "noEmitOnError": true,
-    "declaration": false,
-    "emitDeclarationOnly": false
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "composite": true
   },
   "include": ["src/**/*"]
 }
