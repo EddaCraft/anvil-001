@@ -14,19 +14,64 @@ This is an Nx monorepo workspace for JavaScript/TypeScript packages. The workspa
 pnpm install
 ```
 
-### Build a package
+### Build commands
 
 ```sh
+# Build a specific package
 npx nx build <package-name>
-# or directly with pnpm:
+
+# Build all packages
+pnpm build
+
+# Build with pnpm directly
 pnpm --filter <package-name> build
 ```
 
-### Run type checking
+### Testing
 
 ```sh
+# Run unit tests with Vitest
+pnpm test
+
+# Run tests with UI
+pnpm test:ui
+
+# Run tests with coverage
+pnpm test:coverage
+
+# Run E2E tests with Playwright
+pnpm test:e2e
+
+# Run E2E tests with UI
+pnpm test:e2e:ui
+```
+
+### Linting and formatting
+
+```sh
+# Lint and fix issues
+pnpm lint
+
+# Check linting without fixing
+pnpm lint:check
+
+# Format code with Prettier
+pnpm format
+
+# Check formatting without fixing
+pnpm format:check
+```
+
+### Type checking
+
+```sh
+# Type check entire workspace
+pnpm typecheck
+
+# Type check specific package
 npx nx typecheck <package-name>
-# or directly with pnpm:
+
+# Type check with pnpm directly
 pnpm --filter <package-name> typecheck
 ```
 
@@ -70,6 +115,8 @@ npx nx graph
   - `core/` - Shared core functionality
   - `packs/` - Package bundles
   - `packages/` - Additional library packages
+  - `e2e/` - End-to-end tests using Playwright
+  - `docs/` - Project documentation
 - **Build system**: Nx with TypeScript plugin for automatic task inference
 - **TypeScript configuration**:
   - Base config in `tsconfig.base.json` with strict mode enabled
@@ -77,6 +124,14 @@ npx nx graph
   - Configured for Node.js ES2022 with ES modules
   - Each app folder has its own `tsconfig.json` with project references
 - **Package management**: Uses pnpm workspaces (defined in `pnpm-workspace.yaml`)
+- **Testing frameworks**:
+  - Unit testing: Vitest with coverage support
+  - E2E testing: Playwright
+- **Code quality tools**:
+  - ESLint with TypeScript support (configured in `eslint.config.mjs`)
+  - Prettier for code formatting
+  - Husky for Git hooks
+  - Lint-staged for pre-commit checks
 - **Nx plugins**: Currently using `@nx/js/typescript` plugin for automatic TypeScript build and typecheck targets
 
 ## Development Workflow
