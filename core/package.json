@@ -8,16 +8,21 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "test": "vitest"
+    "test": "vitest",
+    "generate:schema": "tsx scripts/generate-json-schema.ts"
   },
   "dependencies": {
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
+    "eslint": "^9.35.0",
     "js-yaml": "^4.1.0",
-    "eslint": "^9.35.0"
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.24.6"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
+    "@types/json-schema": "^7.0.15",
+    "tsx": "^4.20.5",
     "vitest": "^3.2.4"
   }
 }

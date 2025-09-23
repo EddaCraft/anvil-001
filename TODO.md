@@ -39,8 +39,8 @@ This document provides a comprehensive task list for implementing the Anvil plat
   - [x] TypeScript strict mode configuration
   - **Acceptance**: Code quality tools run automatically
   - **Dependencies**: Repository structure
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-22
+  - **Date Committed**: 2025-09-22
 
 ## Phase 2: APS Spine
 
@@ -48,7 +48,7 @@ This document provides a comprehensive task list for implementing the Anvil plat
 
 #### Schema Definition
 
-- [ ] **Create schema directory structure**
+- [x] **Create schema directory structure** ✅
 
   ```
   core/src/schema/
@@ -58,34 +58,34 @@ This document provides a comprehensive task list for implementing the Anvil plat
   ```
 
   - **Acceptance**: Directory structure exists and exports schema
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-23
+  - **Date Committed**: Pending
 
-- [ ] **Define APS Zod Schema** (`aps.schema.ts`)
-  - [ ] Import and configure Zod with strict mode
-  - [ ] Define schema version as literal type
-  - [ ] Core fields definition using Zod:
-    - [ ] `id`: z.string() with regex pattern `^aps-[a-f0-9]{8}$`
-    - [ ] `hash`: z.string() with SHA-256 pattern `^[a-f0-9]{64}$`
-    - [ ] `intent`: z.string() with min(10) and max(500)
-    - [ ] `proposed_changes`: z.array() of change objects
-    - [ ] `provenance`: z.object() for creation metadata
-    - [ ] `validations`: z.object() for check requirements
-  - [ ] Add Zod branding for type safety
-  - [ ] Export inferred TypeScript types from Zod schema
+- [x] **Define APS Zod Schema** (`aps.schema.ts`) ✅
+  - [x] Import and configure Zod with strict mode
+  - [x] Define schema version as literal type
+  - [x] Core fields definition using Zod:
+    - [x] `id`: z.string() with regex pattern `^aps-[a-f0-9]{8}$`
+    - [x] `hash`: z.string() with SHA-256 pattern `^[a-f0-9]{64}$`
+    - [x] `intent`: z.string() with min(10) and max(500)
+    - [x] `proposed_changes`: z.array() of change objects
+    - [x] `provenance`: z.object() for creation metadata
+    - [x] `validations`: z.object() for check requirements
+  - [x] Add Zod branding for type safety
+  - [x] Export inferred TypeScript types from Zod schema
   - **Acceptance**: Zod schema validates example plans with clear error messages
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-23
+  - **Date Committed**: Pending
 
-- [ ] **Generate JSON Schema from Zod** (`aps.schema.json`)
-  - [ ] Use zod-to-json-schema library
-  - [ ] Export JSON Schema with proper $schema and $id
-  - [ ] Add generation script to package.json
-  - [ ] Verify JSON Schema matches Zod validation rules
+- [x] **Generate JSON Schema from Zod** (`aps.schema.json`) ✅
+  - [x] Use zod-to-json-schema library
+  - [x] Export JSON Schema with proper $schema and $id
+  - [x] Add generation script to package.json
+  - [x] Verify JSON Schema matches Zod validation rules
   - **Acceptance**: JSON Schema is automatically generated from Zod definition
   - **Dependencies**: Zod schema definition
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-23
+  - **Date Committed**: Pending
 
 #### TypeScript Types
 
@@ -101,19 +101,19 @@ This document provides a comprehensive task list for implementing the Anvil plat
   - **Date Completed**:
   - **Date Committed**:
 
-- [ ] **Export TypeScript types from Zod schema**
-  - [ ] Use Zod's type inference (z.infer<typeof schema>)
-  - [ ] Export inferred types:
-    - [ ] `APSPlan` - Inferred from main Zod schema
-    - [ ] `APSChange` - Inferred from change schema
-    - [ ] `APSProvenance` - Inferred from provenance schema
-    - [ ] `APSValidations` - Inferred from validations schema
-  - [ ] Add JSDoc documentation to exported types
-  - [ ] Re-export from types/index.ts for convenience
+- [x] **Export TypeScript types from Zod schema** ✅
+  - [x] Use Zod's type inference (z.infer<typeof schema>)
+  - [x] Export inferred types:
+    - [x] `APSPlan` - Inferred from main Zod schema
+    - [x] `APSChange` - Inferred from change schema (named `Change`)
+    - [x] `APSProvenance` - Inferred from provenance schema (named `Provenance`)
+    - [x] `APSValidations` - Inferred from validations schema (named `Validation`)
+  - [x] Add JSDoc documentation to exported types
+  - [x] Re-export from schema/index.ts for convenience
   - **Acceptance**: Types automatically stay in sync with Zod schema
   - **Dependencies**: Zod schema definition
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-23
+  - **Date Committed**: Pending
 
 #### Hash Generation
 
@@ -176,16 +176,16 @@ This document provides a comprehensive task list for implementing the Anvil plat
 
 #### Core Package Dependencies
 
-- [ ] **Add required dependencies**
-  - [ ] Add `zod` (v3.x) - Runtime validation and TypeScript types
-  - [ ] Add `zod-to-json-schema` (v3.x) - JSON Schema export
+- [x] **Add required dependencies** ✅
+  - [x] Add `zod` (v3.x) - Runtime validation and TypeScript types
+  - [x] Add `zod-to-json-schema` (v3.x) - JSON Schema export
   - [x] Add `js-yaml` (v4.1.0) - YAML parsing
   - [x] Add `@types/js-yaml` - TypeScript types
-  - [ ] Optional: Add `ajv` (v8.17.1) - JSON Schema validation (for compatibility)
-  - [ ] Optional: Add `ajv-formats` (v3.0.1) - Format validators (if using Ajv)
+  - [x] Add `ajv` (v8.17.1) - JSON Schema validation (already present)
+  - [x] Add `ajv-formats` (v3.0.1) - Format validators (already present)
   - **Acceptance**: Dependencies installed and configured
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-23
+  - **Date Committed**: Pending
 
 #### Core Package Testing
 
