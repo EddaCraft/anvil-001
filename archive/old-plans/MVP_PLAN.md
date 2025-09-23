@@ -2,7 +2,8 @@
 
 ## Project Overview
 
-Anvil is a deterministic development automation platform that enforces quality gates and manages infrastructure-as-code through validated, reproducible plans.
+Anvil is a deterministic development automation platform that enforces quality
+gates and manages infrastructure-as-code through validated, reproducible plans.
 
 ## MVP Phases Overview
 
@@ -38,7 +39,8 @@ Anvil is a deterministic development automation platform that enforces quality g
 
 - **Version**: 1.0.0
 - **Format**: JSON Schema 2020-12
-- **Purpose**: Define the structure for deterministic, validated development plans
+- **Purpose**: Define the structure for deterministic, validated development
+  plans
 
 ##### Schema Structure
 

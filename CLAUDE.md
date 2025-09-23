@@ -1,10 +1,13 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with
+code in this repository.
 
 ## Project Overview
 
-This is an Nx monorepo workspace for JavaScript/TypeScript packages. The workspace is configured to manage multiple packages under the `packages/` directory using Nx build system and uses pnpm for package management.
+This is an Nx monorepo workspace for JavaScript/TypeScript packages. The
+workspace is configured to manage multiple packages under the `packages/`
+directory using Nx build system and uses pnpm for package management.
 
 ## Commands
 
@@ -123,7 +126,8 @@ npx nx graph
   - Uses TypeScript project references for better build performance
   - Configured for Node.js ES2022 with ES modules
   - Each app folder has its own `tsconfig.json` with project references
-- **Package management**: Uses pnpm workspaces (defined in `pnpm-workspace.yaml`)
+- **Package management**: Uses pnpm workspaces (defined in
+  `pnpm-workspace.yaml`)
 - **Testing frameworks**:
   - Unit testing: Vitest with coverage support
   - E2E testing: Playwright
@@ -132,7 +136,8 @@ npx nx graph
   - Prettier for code formatting
   - Husky for Git hooks
   - Lint-staged for pre-commit checks
-- **Nx plugins**: Currently using `@nx/js/typescript` plugin for automatic TypeScript build and typecheck targets
+- **Nx plugins**: Currently using `@nx/js/typescript` plugin for automatic
+  TypeScript build and typecheck targets
 
 ## Development Workflow
 

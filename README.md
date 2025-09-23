@@ -22,16 +22,19 @@ A modern monorepo workspace powered by Nx, pnpm, and TypeScript.
 | Phase 5: OPA/Rego       | ⏳ Planned     | 0%                |
 | **Overall Progress**    | **~4%**        | **14/300+ tasks** |
 
-See [TODO.md](./TODO.md) for detailed task tracking and [PLAN.md](./PLAN.md) for the strategic roadmap.
+See [TODO.md](./TODO.md) for detailed task tracking and [PLAN.md](./PLAN.md) for
+the strategic roadmap.
 
 ## 🚀 Features
 
-- **Monorepo Structure**: Organized workspace with `cli/`, `ui/`, `core/`, and `packs/` packages
+- **Monorepo Structure**: Organized workspace with `cli/`, `ui/`, `core/`, and
+  `packs/` packages
 - **TypeScript**: Full TypeScript support with project references
 - **Testing**: Vitest for unit tests, Playwright for E2E tests
 - **Code Quality**: ESLint, Prettier, and Husky pre-commit hooks
 - **CI/CD**: GitHub Actions workflow with caching and matrix testing
-- **Developer Experience**: Fast builds with Nx, efficient package management with pnpm
+- **Developer Experience**: Fast builds with Nx, efficient package management
+  with pnpm
 
 ## 📦 Project Structure
 
@@ -175,7 +178,8 @@ Contributions are welcome! Please ensure:
 
 ## 💡 Nx Console
 
-For an enhanced development experience, install the Nx Console extension for your IDE:
+For an enhanced development experience, install the Nx Console extension for
+your IDE:
 
 - [VSCode Extension](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console)
 - [IntelliJ Plugin](https://plugins.jetbrains.com/plugin/15000-nx-console)

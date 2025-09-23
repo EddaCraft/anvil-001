@@ -2,7 +2,9 @@
 
 ## Objectives & Success Criteria
 
-**Mission:** Ship an MVP sidecar/forge that converts human/AI intent into deterministic plans (APS), gates them through one quality bar, and applies or rolls back with evidence.
+**Mission:** Ship an MVP sidecar/forge that converts human/AI intent into
+deterministic plans (APS), gates them through one quality bar, and applies or
+rolls back with evidence.
 
 **We’re “done” when**
 
@@ -17,9 +19,11 @@ anvil rollback plan.json
 
 - Plans are hash-stable and validated by Zod; evidence is appended immutably.
 
-- Plan Gate enforces lint, tests, coverage threshold, secrets scan, and at least one policy rule.
+- Plan Gate enforces lint, tests, coverage threshold, secrets scan, and at least
+  one policy rule.
 
-- Packs work end-to-end, starting with OpenFeature flags (swap-capable to FeatureBoard).
+- Packs work end-to-end, starting with OpenFeature flags (swap-capable to
+  FeatureBoard).
 
 - GitHub Action blocks merges that fail the Gate.
 
@@ -29,17 +33,20 @@ anvil rollback plan.json
 
 - CLI: plan/validate/export/gate/apply/rollback/productionise.
 
-- Plan Gate: ESLint, Vitest + coverage, secrets scan, SAST placeholder, OPA policy hook.
+- Plan Gate: ESLint, Vitest + coverage, secrets scan, SAST placeholder, OPA
+  policy hook.
 
 - Sidecar Runtime: dry-run → evidence; apply/rollback with audit.
 
-- Packs (Flags first): @anvil/pack-flags using OpenFeature (file store + env overrides).
+- Packs (Flags first): @anvil/pack-flags using OpenFeature (file store + env
+  overrides).
 
 - Productioniser: scans repo; emits remediation APS.
 
 - Integrations: GitHub Action template; optional minimal React dashboard later.
 
-**Out-of-scope: for MVP:** Terraform/K8s, multi-model switchboard, managed hosting, marketplace.
+**Out-of-scope: for MVP:** Terraform/K8s, multi-model switchboard, managed
+hosting, marketplace.
 
 ## Architecture (quick map)
 
@@ -51,9 +58,11 @@ Dev/IDE/Agent → APS draft (Zod) → Sidecar dry-run → Evidence
                Approve → Apply → Audit trail → Rollback
 ```
 
-- Language split: TypeScript everywhere; option to add a small systems binary later (Go/Rust) for heavy scanning—post-MVP.
+- Language split: TypeScript everywhere; option to add a small systems binary
+  later (Go/Rust) for heavy scanning—post-MVP.
 
-- Policy: OPA/Rego evaluated by the Gate; rules live in a bundle versioned with the repo.
+- Policy: OPA/Rego evaluated by the Gate; rules live in a bundle versioned with
+  the repo.
 
 - Packs: Emit APS deltas (never direct file writes).
 
@@ -75,7 +84,8 @@ Dev/IDE/Agent → APS draft (Zod) → Sidecar dry-run → Evidence
 
 ### Phase 1: Foundations
 
-- Nx monorepo + pnpm workspaces; folders: core/, cli/, packs/, ui/ (placeholder).
+- Nx monorepo + pnpm workspaces; folders: core/, cli/, packs/, ui/
+  (placeholder).
 
 - CI: lint + test workflow; status badge; Node versions pinned.
 
@@ -99,7 +109,8 @@ Dev/IDE/Agent → APS draft (Zod) → Sidecar dry-run → Evidence
 
 ### Phase 4: Gate v1
 
-- Gate runner with ESLint + Vitest coverage + secrets (regex) + SAST placeholder.
+- Gate runner with ESLint + Vitest coverage + secrets (regex) + SAST
+  placeholder.
 
 - Gate result appended to plan evidence.
 
@@ -275,7 +286,8 @@ Dev/IDE/Agent → APS draft (Zod) → Sidecar dry-run → Evidence
 
 - **Unit:** APS validation; canonicalisation; CLI commands; pack functions.
 
-- **Integration:** Dry-run → evidence; Gate across real fixtures; apply/rollback.
+- **Integration:** Dry-run → evidence; Gate across real fixtures;
+  apply/rollback.
 
 - **Policy tests:** Rego rules with pass/fail bundles.
 
@@ -312,7 +324,8 @@ Dev/IDE/Agent → APS draft (Zod) → Sidecar dry-run → Evidence
 
 - **CLI and sidecar structured logs (JSON) with correlation IDs.**
 
-- **Counters** plans created, gate passes/fails, apply/rollback counts, flag evaluations.
+- **Counters** plans created, gate passes/fails, apply/rollback counts, flag
+  evaluations.
 
 - **Optional:** export simple metrics to stdout for CI scrape.
 
@@ -322,7 +335,8 @@ Dev/IDE/Agent → APS draft (Zod) → Sidecar dry-run → Evidence
 
 - **CI:** pinned Node; OPA binary vendored; reproducible toolchain.
 
-- **Release artefacts:** npm packages (`@anvil/aps`, `@anvil/cli`, `@anvil/flags`), checksums; Action template.
+- **Release artefacts:** npm packages (`@anvil/aps`, `@anvil/cli`,
+  `@anvil/flags`), checksums; Action template.
 
 ## Migration to FeatureBoard (post-MVP plan)
 
@@ -334,7 +348,8 @@ Dev/IDE/Agent → APS draft (Zod) → Sidecar dry-run → Evidence
 
 4. Optional dual-read during a burn-in period.
 
-5. Flip `"provider": "featureboard"` in Pack config via APS plan; remove file store once stable.
+5. Flip `"provider": "featureboard"` in Pack config via APS plan; remove file
+   store once stable.
 
 ## Definition of Done (per feature)
 
@@ -348,13 +363,16 @@ Dev/IDE/Agent → APS draft (Zod) → Sidecar dry-run → Evidence
 
 ## Risks & Mitigations
 
-- **False-positive secret scans** → start with warn, graduate to block with allowlist.
+- **False-positive secret scans** → start with warn, graduate to block with
+  allowlist.
 
 - **Slow Gate on big repos** → run scoped to changed files; parallelise; cache.
 
-- **Policy brittleness** → maintain fixtures; semantic version the policy bundle.
+- **Policy brittleness** → maintain fixtures; semantic version the policy
+  bundle.
 
-- **Plan drift** → treat hash as source of truth; reject modified plans without re-hash.
+- **Plan drift** → treat hash as source of truth; reject modified plans without
+  re-hash.
 
 ## Stretch (only after MVP is green)
 

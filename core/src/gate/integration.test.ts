@@ -13,7 +13,7 @@ describe('Gate Integration Tests', () => {
   beforeEach(() => {
     tempDir = join(tmpdir(), 'anvil-test', Math.random().toString(36));
     mkdirSync(tempDir, { recursive: true });
-    
+
     gateRunner = new GateRunner();
     configManager = new GateConfigManager(tempDir);
   });
@@ -34,20 +34,20 @@ describe('Gate Integration Tests', () => {
           type: 'file',
           target: 'src/index.ts',
           action: 'create',
-          content: 'console.log("Hello, TypeScript!");'
+          content: 'console.log("Hello, TypeScript!");',
         },
         {
           type: 'file',
           target: 'src/utils.ts',
           action: 'create',
-          content: 'export function helper() { return "help"; }'
-        }
+          content: 'export function helper() { return "help"; }',
+        },
       ],
       provenance: {
         created_at: '2024-01-01T00:00:00Z',
         created_by: 'test@example.com',
-        version: '1.0.0'
-      }
+        version: '1.0.0',
+      },
     };
 
     // Create the files referenced in the plan
@@ -63,12 +63,12 @@ describe('Gate Integration Tests', () => {
           name: 'secret',
           description: 'Secret scanning',
           enabled: true,
-          config: {}
-        }
+          config: {},
+        },
       ],
       thresholds: {
-        overall_score: 80
-      }
+        overall_score: 80,
+      },
     };
 
     configManager.saveConfig(config);
@@ -92,14 +92,14 @@ describe('Gate Integration Tests', () => {
           type: 'file',
           target: 'src/secret.js',
           action: 'create',
-          content: 'const apiKey = "sk-1234567890abcdef";'
-        }
+          content: 'const apiKey = "sk-1234567890abcdef";',
+        },
       ],
       provenance: {
         created_at: '2024-01-01T00:00:00Z',
         created_by: 'test@example.com',
-        version: '1.0.0'
-      }
+        version: '1.0.0',
+      },
     };
 
     mkdirSync(join(tempDir, 'src'), { recursive: true });
@@ -112,12 +112,12 @@ describe('Gate Integration Tests', () => {
           name: 'secret',
           description: 'Secret scanning',
           enabled: true,
-          config: {}
-        }
+          config: {},
+        },
       ],
       thresholds: {
-        overall_score: 80
-      }
+        overall_score: 80,
+      },
     };
 
     const result = await gateRunner.runGate(plan, config, tempDir);
@@ -135,8 +135,8 @@ describe('Gate Integration Tests', () => {
       provenance: {
         created_at: '2024-01-01T00:00:00Z',
         created_by: 'test@example.com',
-        version: '1.0.0'
-      }
+        version: '1.0.0',
+      },
     };
 
     const config = {
@@ -146,12 +146,12 @@ describe('Gate Integration Tests', () => {
           name: 'secret',
           description: 'Secret scanning',
           enabled: false,
-          config: {}
-        }
+          config: {},
+        },
       ],
       thresholds: {
-        overall_score: 80
-      }
+        overall_score: 80,
+      },
     };
 
     const result = await gateRunner.runGate(plan, config, tempDir);
@@ -169,14 +169,14 @@ describe('Gate Integration Tests', () => {
           type: 'file',
           target: 'src/clean.js',
           action: 'create',
-          content: 'console.log("clean code");'
-        }
+          content: 'console.log("clean code");',
+        },
       ],
       provenance: {
         created_at: '2024-01-01T00:00:00Z',
         created_by: 'test@example.com',
-        version: '1.0.0'
-      }
+        version: '1.0.0',
+      },
     };
 
     mkdirSync(join(tempDir, 'src'), { recursive: true });
@@ -189,12 +189,12 @@ describe('Gate Integration Tests', () => {
           name: 'secret',
           description: 'Secret scanning',
           enabled: true,
-          config: {}
-        }
+          config: {},
+        },
       ],
       thresholds: {
-        overall_score: 50
-      }
+        overall_score: 50,
+      },
     };
 
     const result = await gateRunner.runGate(plan, config, tempDir);

@@ -6,7 +6,8 @@ Accepted
 
 ## Context
 
-The Anvil Plan Specification (APS) requires a robust schema definition system that provides:
+The Anvil Plan Specification (APS) requires a robust schema definition system
+that provides:
 
 - Runtime validation with clear error messages
 - TypeScript type safety and inference
@@ -16,19 +17,23 @@ The Anvil Plan Specification (APS) requires a robust schema definition system th
 
 We evaluated two approaches:
 
-1. **JSON Schema First**: Define schema in JSON Schema format, generate TypeScript types
-2. **Zod First**: Define schema using Zod (TypeScript), export JSON Schema when needed
+1. **JSON Schema First**: Define schema in JSON Schema format, generate
+   TypeScript types
+2. **Zod First**: Define schema using Zod (TypeScript), export JSON Schema when
+   needed
 
 ## Decision
 
-We will use **Zod as the primary schema definition** for APS, with the ability to export to JSON Schema when needed.
+We will use **Zod as the primary schema definition** for APS, with the ability
+to export to JSON Schema when needed.
 
 ## Rationale
 
 ### Advantages of Zod-First Approach
 
 1. **Type Safety and Inference**
-   - TypeScript types are automatically inferred from Zod schemas using `z.infer<typeof schema>`
+   - TypeScript types are automatically inferred from Zod schemas using
+     `z.infer<typeof schema>`
    - No code generation step required - types stay in sync automatically
    - Better IDE support with autocomplete and type checking
 
@@ -49,7 +54,8 @@ We will use **Zod as the primary schema definition** for APS, with the ability t
 
 5. **Flexibility**
    - Can export to JSON Schema using `zod-to-json-schema` when needed
-   - Supports advanced features like branding, transforms, and custom error messages
+   - Supports advanced features like branding, transforms, and custom error
+     messages
    - Can still use Ajv for JSON Schema validation if required for compatibility
 
 ### Disadvantages Considered

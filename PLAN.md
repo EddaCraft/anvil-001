@@ -2,9 +2,14 @@
 
 ## Project Mission
 
-**Mission**: Ship an MVP sidecar/forge that converts human/AI intent into deterministic plans (APS), gates them through one quality bar, and applies or rolls back with evidence.
+**Mission**: Ship an MVP sidecar/forge that converts human/AI intent into
+deterministic plans (APS), gates them through one quality bar, and applies or
+rolls back with evidence.
 
-Anvil is a deterministic development automation platform that enforces quality gates and manages infrastructure-as-code through validated, reproducible plans. The platform sits beside the development flow and acts as an arbiter for all changes, ensuring consistency, quality, and auditability.
+Anvil is a deterministic development automation platform that enforces quality
+gates and manages infrastructure-as-code through validated, reproducible plans.
+The platform sits beside the development flow and acts as an arbiter for all
+changes, ensuring consistency, quality, and auditability.
 
 ## Success Criteria
 
@@ -20,8 +25,10 @@ We're "done" when:
   ```
 
 - Plans are hash-stable and validated by Zod; evidence is appended immutably
-- Plan Gate enforces lint, tests, coverage threshold, secrets scan, and at least one policy rule
-- Packs work end-to-end, starting with OpenFeature flags (swap-capable to FeatureBoard)
+- Plan Gate enforces lint, tests, coverage threshold, secrets scan, and at least
+  one policy rule
+- Packs work end-to-end, starting with OpenFeature flags (swap-capable to
+  FeatureBoard)
 - GitHub Action blocks merges that fail the Gate
 
 ## Architecture Overview
@@ -36,8 +43,10 @@ Dev/IDE/Agent → APS draft (Zod) → Sidecar dry-run → Evidence
 
 ### Technical Architecture
 
-- **Language**: TypeScript everywhere; option to add systems binary later (Go/Rust) for heavy scanning—post-MVP
-- **Policy**: OPA/Rego evaluated by the Gate; rules live in a bundle versioned with the repo
+- **Language**: TypeScript everywhere; option to add systems binary later
+  (Go/Rust) for heavy scanning—post-MVP
+- **Policy**: OPA/Rego evaluated by the Gate; rules live in a bundle versioned
+  with the repo
 - **Packs**: Emit APS deltas (never direct file writes)
 - **Storage**: Plans stored in `.anvil/plans/` with immutable evidence appended
 - **Security**: No direct writes from agents/IDEs; only via validated plans
@@ -323,28 +332,28 @@ Dev/IDE/Agent → APS draft (Zod) → Sidecar dry-run → Evidence
 
 ### Technical Risks
 
-**Risk**: False-positive secret scans
-**Mitigation**: Start with warn, graduate to block with allowlist
+**Risk**: False-positive secret scans **Mitigation**: Start with warn, graduate
+to block with allowlist
 
-**Risk**: Slow Gate on big repos
-**Mitigation**: Run scoped to changed files; parallelize; cache
+**Risk**: Slow Gate on big repos **Mitigation**: Run scoped to changed files;
+parallelize; cache
 
-**Risk**: Policy brittleness
-**Mitigation**: Maintain fixtures; semantic version the policy bundle
+**Risk**: Policy brittleness **Mitigation**: Maintain fixtures; semantic version
+the policy bundle
 
-**Risk**: Plan drift
-**Mitigation**: Treat hash as source of truth; reject modified plans without re-hash
+**Risk**: Plan drift **Mitigation**: Treat hash as source of truth; reject
+modified plans without re-hash
 
 ### Delivery Risks
 
-**Risk**: Scope creep beyond MVP
-**Mitigation**: Strict adherence to defined MVP scope; defer non-essential features
+**Risk**: Scope creep beyond MVP **Mitigation**: Strict adherence to defined MVP
+scope; defer non-essential features
 
-**Risk**: Integration complexity with existing tools
-**Mitigation**: Start with simple integrations; comprehensive testing on real repositories
+**Risk**: Integration complexity with existing tools **Mitigation**: Start with
+simple integrations; comprehensive testing on real repositories
 
-**Risk**: Performance issues with large repositories
-**Mitigation**: Early performance testing; optimization focused on changed files
+**Risk**: Performance issues with large repositories **Mitigation**: Early
+performance testing; optimization focused on changed files
 
 ## Technology Decisions
 
@@ -399,4 +408,5 @@ Items to consider after MVP completion:
 
 ## References
 
-For detailed task breakdowns and implementation specifics, see [TODO.md](./TODO.md).
+For detailed task breakdowns and implementation specifics, see
+[TODO.md](./TODO.md).

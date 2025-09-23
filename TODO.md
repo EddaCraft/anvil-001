@@ -1,6 +1,8 @@
 # Anvil Implementation TODO
 
-This document provides a comprehensive task list for implementing the Anvil platform. Tasks are organized by phase and epic, with detailed acceptance criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
+This document provides a comprehensive task list for implementing the Anvil
+platform. Tasks are organized by phase and epic, with detailed acceptance
+criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
 ## Progress Tracking
 
@@ -75,7 +77,7 @@ This document provides a comprehensive task list for implementing the Anvil plat
   - [x] Export inferred TypeScript types from Zod schema
   - **Acceptance**: Zod schema validates example plans with clear error messages
   - **Date Completed**: 2025-09-23
-  - **Date Committed**: Pending
+  - **Date Committed**: 2025-09-23
 
 - [x] **Generate JSON Schema from Zod** (`aps.schema.json`) ✅
   - [x] Use zod-to-json-schema library
@@ -85,7 +87,7 @@ This document provides a comprehensive task list for implementing the Anvil plat
   - **Acceptance**: JSON Schema is automatically generated from Zod definition
   - **Dependencies**: Zod schema definition
   - **Date Completed**: 2025-09-23
-  - **Date Committed**: Pending
+  - **Date Committed**: 2025-09-23
 
 #### TypeScript Types
 
@@ -107,7 +109,8 @@ This document provides a comprehensive task list for implementing the Anvil plat
     - [x] `APSPlan` - Inferred from main Zod schema
     - [x] `APSChange` - Inferred from change schema (named `Change`)
     - [x] `APSProvenance` - Inferred from provenance schema (named `Provenance`)
-    - [x] `APSValidations` - Inferred from validations schema (named `Validation`)
+    - [x] `APSValidations` - Inferred from validations schema (named
+          `Validation`)
   - [x] Add JSDoc documentation to exported types
   - [x] Re-export from schema/index.ts for convenience
   - **Acceptance**: Types automatically stay in sync with Zod schema
@@ -323,9 +326,12 @@ This document provides a comprehensive task list for implementing the Anvil plat
 
 - [ ] **File I/O utilities** (`utils/file-io.ts`)
   - [ ] `loadPlan(path: string): Promise<APSPlan>` - Load plan from file
-  - [ ] `savePlan(plan: APSPlan, path: string): Promise<void>` - Save plan to file
-  - [ ] `ensureDirectory(path: string): Promise<void>` - Create directory if needed
-  - [ ] `findPlanById(id: string): Promise<string | null>` - Find plan file by ID
+  - [ ] `savePlan(plan: APSPlan, path: string): Promise<void>` - Save plan to
+        file
+  - [ ] `ensureDirectory(path: string): Promise<void>` - Create directory if
+        needed
+  - [ ] `findPlanById(id: string): Promise<string | null>` - Find plan file by
+        ID
   - [ ] Handle JSON and YAML formats
   - [ ] Proper error handling for file operations
   - **Acceptance**: File operations are reliable and well-tested
@@ -337,7 +343,8 @@ This document provides a comprehensive task list for implementing the Anvil plat
   - [ ] `error(message: string): void` - Red error messages
   - [ ] `warning(message: string): void` - Yellow warning messages
   - [ ] `info(message: string): void` - Blue info messages
-  - [ ] `formatValidationErrors(errors: any[]): string` - Format validation errors
+  - [ ] `formatValidationErrors(errors: any[]): string` - Format validation
+        errors
   - [ ] Consistent formatting across all commands
   - **Acceptance**: CLI output is colorful and user-friendly
   - **Date Completed**:
