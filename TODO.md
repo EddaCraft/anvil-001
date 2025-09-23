@@ -52,26 +52,38 @@ This document provides a comprehensive task list for implementing the Anvil plat
 
   ```
   core/src/schema/
-  ├── aps.schema.json
-  └── index.ts
+  ├── aps.schema.ts
+  ├── index.ts
+  └── aps.schema.json (generated)
   ```
 
   - **Acceptance**: Directory structure exists and exports schema
   - **Date Completed**:
   - **Date Committed**:
 
-- [ ] **Define APS JSON Schema** (`aps.schema.json`)
-  - [ ] Schema metadata ($schema, $id, version)
-  - [ ] Core fields definition:
-    - [ ] `id`: Pattern `^aps-[a-f0-9]{8}$`
-    - [ ] `hash`: SHA-256 pattern `^[a-f0-9]{64}$`
-    - [ ] `intent`: String with min/max length (10-500 chars)
-    - [ ] `proposed_changes`: Array of change objects
-    - [ ] `provenance`: Creation metadata
-    - [ ] `validations`: Check requirements
-  - [ ] Required fields configuration
-  - [ ] Field constraints and formats
-  - **Acceptance**: Schema validates example plans correctly
+- [ ] **Define APS Zod Schema** (`aps.schema.ts`)
+  - [ ] Import and configure Zod with strict mode
+  - [ ] Define schema version as literal type
+  - [ ] Core fields definition using Zod:
+    - [ ] `id`: z.string() with regex pattern `^aps-[a-f0-9]{8}$`
+    - [ ] `hash`: z.string() with SHA-256 pattern `^[a-f0-9]{64}$`
+    - [ ] `intent`: z.string() with min(10) and max(500)
+    - [ ] `proposed_changes`: z.array() of change objects
+    - [ ] `provenance`: z.object() for creation metadata
+    - [ ] `validations`: z.object() for check requirements
+  - [ ] Add Zod branding for type safety
+  - [ ] Export inferred TypeScript types from Zod schema
+  - **Acceptance**: Zod schema validates example plans with clear error messages
+  - **Date Completed**:
+  - **Date Committed**:
+
+- [ ] **Generate JSON Schema from Zod** (`aps.schema.json`)
+  - [ ] Use zod-to-json-schema library
+  - [ ] Export JSON Schema with proper $schema and $id
+  - [ ] Add generation script to package.json
+  - [ ] Verify JSON Schema matches Zod validation rules
+  - **Acceptance**: JSON Schema is automatically generated from Zod definition
+  - **Dependencies**: Zod schema definition
   - **Date Completed**:
   - **Date Committed**:
 
@@ -89,16 +101,17 @@ This document provides a comprehensive task list for implementing the Anvil plat
   - **Date Completed**:
   - **Date Committed**:
 
-- [ ] **Generate TypeScript types from schema**
-  - [ ] Create type generation script
-  - [ ] Define interfaces:
-    - [ ] `APSPlan` - Main plan interface
-    - [ ] `APSChange` - Change object interface
-    - [ ] `APSProvenance` - Metadata interface
-    - [ ] `APSValidations` - Validation config interface
-  - [ ] Export all types with proper documentation
-  - **Acceptance**: Types match schema exactly, no type errors
-  - **Dependencies**: Schema definition
+- [ ] **Export TypeScript types from Zod schema**
+  - [ ] Use Zod's type inference (z.infer<typeof schema>)
+  - [ ] Export inferred types:
+    - [ ] `APSPlan` - Inferred from main Zod schema
+    - [ ] `APSChange` - Inferred from change schema
+    - [ ] `APSProvenance` - Inferred from provenance schema
+    - [ ] `APSValidations` - Inferred from validations schema
+  - [ ] Add JSDoc documentation to exported types
+  - [ ] Re-export from types/index.ts for convenience
+  - **Acceptance**: Types automatically stay in sync with Zod schema
+  - **Dependencies**: Zod schema definition
   - **Date Completed**:
   - **Date Committed**:
 
@@ -141,20 +154,21 @@ This document provides a comprehensive task list for implementing the Anvil plat
   - **Date Committed**:
 
 - [ ] **APS Validator Class** (`aps-validator.ts`)
-  - [ ] Initialize Ajv with formats
-  - [ ] Load and compile schema
+  - [ ] Use Zod schema for primary validation
+  - [ ] Implement safe parse with error handling
   - [ ] `validate(plan: unknown): ValidationResult`
-  - [ ] `validateSchema(plan: any): boolean`
+  - [ ] `validateSchema(plan: any): boolean` using Zod
   - [ ] `validateHash(plan: APSPlan): boolean`
-  - [ ] Format error messages for CLI display
-  - **Acceptance**: Validator correctly accepts/rejects plans
-  - **Dependencies**: Schema definition, Hash generation
+  - [ ] Format Zod errors for user-friendly CLI display
+  - [ ] Optional: Ajv validation using exported JSON Schema for compatibility
+  - **Acceptance**: Validator correctly accepts/rejects plans with clear errors
+  - **Dependencies**: Zod schema definition, Hash generation
   - **Date Completed**:
   - **Date Committed**:
 
 - [ ] **Error Types** (`errors.ts`)
   - [ ] `ValidationError` class with structured data
-  - [ ] `SchemaError` type for JSON Schema errors
+  - [ ] `ZodError` formatting for schema validation errors
   - [ ] Error formatting utilities for user-friendly messages
   - **Acceptance**: Error messages are clear and actionable
   - **Date Completed**:
@@ -162,11 +176,13 @@ This document provides a comprehensive task list for implementing the Anvil plat
 
 #### Core Package Dependencies
 
-- [x] **Add required dependencies**
-  - [x] Add `ajv` (v8.17.1) - JSON Schema validation
-  - [x] Add `ajv-formats` (v3.0.1) - Format validators
+- [ ] **Add required dependencies**
+  - [ ] Add `zod` (v3.x) - Runtime validation and TypeScript types
+  - [ ] Add `zod-to-json-schema` (v3.x) - JSON Schema export
   - [x] Add `js-yaml` (v4.1.0) - YAML parsing
   - [x] Add `@types/js-yaml` - TypeScript types
+  - [ ] Optional: Add `ajv` (v8.17.1) - JSON Schema validation (for compatibility)
+  - [ ] Optional: Add `ajv-formats` (v3.0.1) - Format validators (if using Ajv)
   - **Acceptance**: Dependencies installed and configured
   - **Date Completed**:
   - **Date Committed**:
