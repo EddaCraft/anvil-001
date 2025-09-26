@@ -6,6 +6,8 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { APSValidator, validateAPSPlan } from './aps-validator.js';
 import { createPlan } from '../schema/index.js';
 import type { APSPlan } from '../schema/index.js';
+import { generateHash } from '../crypto/index.js';
+import { validator as defaultValidator } from './index.js';
 
 describe('APSValidator', () => {
   let validator: APSValidator;
@@ -130,6 +132,7 @@ describe('APSValidator', () => {
       const result = await validator.validate(validPlan, { validateHash: true });
 
       expect(result.valid).toBe(true);
+      expect(result.summary).toContain('✅ Validation passed');
       expect(result.summary).toContain('Hash validation skipped');
     });
   });
@@ -172,6 +175,102 @@ describe('APSValidator', () => {
 
       expect(result.valid).toBe(false);
       expect(result.issues?.[0].code).toBe('HASH_MISMATCH');
+    });
+  });
+
+  describe('integration with real hash module', () => {
+    it('should validate with real hash function', async () => {
+      // Create a new validator instance
+      const realValidator = new APSValidator();
+      realValidator.setHashValidator(generateHash);
+
+      // Create a plan without hash
+      const planWithoutHash = createPlan({
+        id: 'aps-12345678',
+        intent: 'Test plan for hash validation',
+        provenance: {
+          timestamp: '2024-01-01T00:00:00.000Z',
+          author: 'test-user',
+          source: 'manual',
+          version: '1.0.0',
+        },
+      });
+
+      // Generate the correct hash
+      const { hash: _unused, ...dataToHash } = planWithoutHash as any;
+      const correctHash = generateHash(dataToHash);
+
+      // Add the hash to the plan
+      const planWithCorrectHash = {
+        ...planWithoutHash,
+        hash: correctHash,
+      } as APSPlan;
+
+      // Validate with hash
+      const result = await realValidator.validate(planWithCorrectHash, { validateHash: true });
+
+      expect(result.valid).toBe(true);
+      expect(result.summary).toContain('Hash validation passed');
+    });
+
+    it('should detect hash tampering with real hash function', async () => {
+      // Create a new validator instance
+      const realValidator = new APSValidator();
+      realValidator.setHashValidator(generateHash);
+
+      // Create a plan with an incorrect hash
+      const plan = createPlan({
+        id: 'aps-12345678',
+        intent: 'Test plan for hash validation',
+        provenance: {
+          timestamp: '2024-01-01T00:00:00.000Z',
+          author: 'test-user',
+          source: 'manual',
+          version: '1.0.0',
+        },
+      });
+
+      const planWithBadHash = {
+        ...plan,
+        hash: 'b'.repeat(64), // Incorrect hash
+      } as APSPlan;
+
+      // Validate with hash
+      const result = await realValidator.validate(planWithBadHash, { validateHash: true });
+
+      expect(result.valid).toBe(false);
+      expect(result.issues?.[0].code).toBe('HASH_MISMATCH');
+      expect(result.issues?.[0].message).toContain('Hash mismatch');
+    });
+
+    it('should work with default validator from index', async () => {
+      // Create a plan
+      const planWithoutHash = createPlan({
+        id: 'aps-87654321',
+        intent: 'Test default validator hash integration',
+        provenance: {
+          timestamp: '2024-01-01T00:00:00.000Z',
+          author: 'test-user',
+          source: 'cli',
+          version: '1.0.0',
+        },
+      });
+
+      // Generate the correct hash
+      const { hash: _unused, ...dataToHash } = planWithoutHash as any;
+      const correctHash = generateHash(dataToHash);
+
+      // Add the hash to the plan
+      const planWithCorrectHash = {
+        ...planWithoutHash,
+        hash: correctHash,
+      } as APSPlan;
+
+      // Validate with hash using the default validator
+      const result = await defaultValidator.validate(planWithCorrectHash, { validateHash: true });
+
+      expect(result.valid).toBe(true);
+      expect(result.summary).toContain('Hash validation passed');
     });
   });
 });

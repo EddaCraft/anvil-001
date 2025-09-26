@@ -120,7 +120,7 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
 #### Hash Generation
 
-- [ ] **Create crypto utilities**
+- [x] **Create crypto utilities** ✅
 
   ```text
   core/src/crypto/
@@ -129,17 +129,21 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
   ```
 
   - **Acceptance**: Crypto module exports hash functions
+  - **Date Completed**: 2025-09-26
+  - **Date Committed**: Pending
   - **Date Completed**:
   - **Date Committed**:
 
-- [ ] **Implement hash functions** (`hash.ts`)
-  - [ ] `generateHash(data: any): string` - SHA-256 hash
-  - [ ] `canonicalizeJSON(obj: any): string` - Stable serialization
-  - [ ] `verifyHash(data: any, hash: string): boolean` - Verification
-  - [ ] `generatePlanId(): string` - Unique ID generation (aps-[8 hex chars])
+- [x] **Implement hash functions** (`hash.ts`) ✅
+  - [x] `generateHash(data: any): string` - SHA-256 hash
+  - [x] `canonicalizeJSON(obj: any): string` - Stable serialization
+  - [x] `verifyHash(data: any, hash: string): boolean` - Verification
+  - [x] `generatePlanId(): string` - Unique ID generation (aps-[8 hex chars])
+  - [x] `isValidPlanId(id: string): boolean` - Plan ID validation
+  - [x] `isValidHash(hash: string): boolean` - Hash format validation
   - **Acceptance**: Hash generation is deterministic across runs
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-26
+  - **Date Committed**: Pending
 
 #### Validation Implementation
 
@@ -192,15 +196,17 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
 #### Core Package Testing
 
-- [ ] **Hash generation tests** (`crypto/hash.test.ts`)
-  - [ ] Deterministic output test (same input = same hash)
-  - [ ] Different input order test (object property order independence)
-  - [ ] Hash verification test (valid/invalid hash detection)
-  - [ ] ID generation uniqueness test
+- [x] **Hash generation tests** (`crypto/hash.test.ts`) ✅
+  - [x] Deterministic output test (same input = same hash)
+  - [x] Different input order test (object property order independence)
+  - [x] Hash verification test (valid/invalid hash detection)
+  - [x] ID generation uniqueness test
+  - [x] Canonical JSON serialization tests
+  - [x] Edge cases (null, undefined, arrays, dates)
   - **Acceptance**: 100% test coverage, all edge cases covered
   - **Dependencies**: Hash implementation
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-26
+  - **Date Committed**: Pending
 
 - [x] **Validator tests** (`validation/aps-validator.test.ts`) ✅
   - [x] Valid schema acceptance tests
@@ -213,14 +219,14 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
   - **Date Completed**: 2025-09-26
   - **Date Committed**: Pending
 
-- [ ] **Golden file tests**
-  - [ ] Reference plans with known hashes
-  - [ ] Regression test suite for hash stability
-  - [ ] Cross-platform hash consistency tests
+- [x] **Golden file tests** ✅
+  - [x] Reference plans with known hashes
+  - [x] Regression test suite for hash stability
+  - [x] Cross-platform hash consistency tests
   - **Acceptance**: Golden tests prevent hash regressions
   - **Dependencies**: Hash implementation, Validator implementation
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-26
+  - **Date Committed**: Pending
 
 ## **Phase 2.5: APS Interop (SpecKit & BMAD)** **[NEW]**
 

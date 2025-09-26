@@ -98,7 +98,7 @@ export class APSValidator {
     );
 
     // If hash validation was performed and everything passed, include hash validation info
-    if (isValid && hashValidationInfo && hashValidationInfo.includes('skipped')) {
+    if (isValid && hashValidationInfo) {
       result.summary = `${result.summary} - ${hashValidationInfo}`;
     }
 

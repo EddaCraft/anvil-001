@@ -4,6 +4,9 @@
  * Exports validation utilities for APS plans.
  */
 
+import { generateHash } from '../crypto/index.js';
+import { validator as defaultValidator } from './aps-validator.js';
+
 // Main validator
 export {
   APSValidator,
@@ -23,3 +26,6 @@ export {
   formatZodErrors,
   createValidationSummary,
 } from './errors.js';
+
+// Initialize the validator with the hash function
+defaultValidator.setHashValidator(generateHash);
