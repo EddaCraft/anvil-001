@@ -119,11 +119,25 @@ describe('GateConfigManager', () => {
   it('should handle invalid JSON gracefully', () => {
     writeFileSync(join(tempDir, '.anvilrc'), 'invalid json');
 
-    const config = configManager.loadConfig();
+    // Mock console.warn to prevent stderr output during test
+    const originalWarn = console.warn;
+    const mockWarn = vi.fn();
+    console.warn = mockWarn;
 
-    // Should fall back to default config
-    expect(config.version).toBe(1);
-    expect(config.checks).toHaveLength(3);
+    try {
+      const config = configManager.loadConfig();
+
+      // Should fall back to default config
+      expect(config.version).toBe(1);
+      expect(config.checks).toHaveLength(3);
+
+      // Verify that a warning was logged
+      expect(mockWarn).toHaveBeenCalled();
+      expect(mockWarn.mock.calls[0][0]).toContain('Failed to load gate config');
+    } finally {
+      // Restore original console.warn
+      console.warn = originalWarn;
+    }
   });
 
   it('should validate and normalize config', () => {

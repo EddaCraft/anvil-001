@@ -11,7 +11,14 @@ export default typescriptEslint.config(
   ...typescriptEslint.configs.recommended,
   eslintPluginPrettierRecommended,
   {
-    ignores: ['**/dist/', '**/node_modules/', '**/.nx/', '**/coverage/', '**/playwright-report/', 'eslint.config.mts'],
+    ignores: [
+      '**/dist/',
+      '**/node_modules/',
+      '**/.nx/',
+      '**/coverage/',
+      '**/playwright-report/',
+      'eslint.config.mts',
+    ],
   },
   {
     languageOptions: {

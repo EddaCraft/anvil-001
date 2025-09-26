@@ -6,9 +6,9 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
 ## Progress Tracking
 
-- **Current Phase**: Phase 1 - Foundations
+- **Current Phase**: Phase 1 – Foundations
 - **Current Epic**: Setup & Infrastructure
-- **Overall Progress**: ~5% (15/300+ tasks completed)
+- **Overall Progress**: ~5% (15/300+ tasks completed) _(unchanged)_
 
 ## Phase 1: Foundations
 
@@ -52,7 +52,7 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
 - [x] **Create schema directory structure** ✅
 
-  ```
+  ```text
   core/src/schema/
   ├── aps.schema.ts
   ├── index.ts
@@ -91,9 +91,9 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
 #### TypeScript Types
 
-- [ ] **Create types directory**
+- [x] **Create types directory**
 
-  ```
+  ```text
   core/src/types/
   ├── aps.types.ts
   └── index.ts
@@ -122,7 +122,7 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
 - [ ] **Create crypto utilities**
 
-  ```
+  ```text
   core/src/crypto/
   ├── hash.ts
   └── index.ts
@@ -143,9 +143,9 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
 #### Validation Implementation
 
-- [ ] **Create validation module**
+- [x] **Create validation module** ✅
 
-  ```
+  ```text
   core/src/validation/
   ├── aps-validator.ts
   ├── errors.ts
@@ -153,29 +153,29 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
   ```
 
   - **Acceptance**: Validation module structure exists
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-26
+  - **Date Committed**: Pending
 
-- [ ] **APS Validator Class** (`aps-validator.ts`)
-  - [ ] Use Zod schema for primary validation
-  - [ ] Implement safe parse with error handling
-  - [ ] `validate(plan: unknown): ValidationResult`
-  - [ ] `validateSchema(plan: any): boolean` using Zod
-  - [ ] `validateHash(plan: APSPlan): boolean`
-  - [ ] Format Zod errors for user-friendly CLI display
-  - [ ] Optional: Ajv validation using exported JSON Schema for compatibility
+- [x] **APS Validator Class** (`aps-validator.ts`) ✅
+  - [x] Use Zod schema for primary validation
+  - [x] Implement safe parse with error handling
+  - [x] `validate(plan: unknown): ValidationResult`
+  - [x] `validateSchema(plan: any): boolean` using Zod
+  - [x] `validateHash(plan: APSPlan): boolean`
+  - [x] Format Zod errors for user-friendly CLI display
+  - [x] Optional: Ajv validation using exported JSON Schema for compatibility
   - **Acceptance**: Validator correctly accepts/rejects plans with clear errors
   - **Dependencies**: Zod schema definition, Hash generation
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-26
+  - **Date Committed**: Pending
 
-- [ ] **Error Types** (`errors.ts`)
-  - [ ] `ValidationError` class with structured data
-  - [ ] `ZodError` formatting for schema validation errors
-  - [ ] Error formatting utilities for user-friendly messages
+- [x] **Error Types** (`errors.ts`) ✅
+  - [x] `ValidationError` class with structured data
+  - [x] `ZodError` formatting for schema validation errors
+  - [x] Error formatting utilities for user-friendly messages
   - **Acceptance**: Error messages are clear and actionable
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-26
+  - **Date Committed**: Pending
 
 #### Core Package Dependencies
 
@@ -202,16 +202,16 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
   - **Date Completed**:
   - **Date Committed**:
 
-- [ ] **Validator tests** (`validation/aps-validator.test.ts`)
-  - [ ] Valid schema acceptance tests
-  - [ ] Invalid schema rejection tests
-  - [ ] Missing required fields tests
-  - [ ] Invalid field formats tests
-  - [ ] Hash mismatch detection tests
+- [x] **Validator tests** (`validation/aps-validator.test.ts`) ✅
+  - [x] Valid schema acceptance tests
+  - [x] Invalid schema rejection tests
+  - [x] Missing required fields tests
+  - [x] Invalid field formats tests
+  - [x] Hash mismatch detection tests
   - **Acceptance**: >95% test coverage, clear test descriptions
   - **Dependencies**: Validator implementation
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Date Completed**: 2025-09-26
+  - **Date Committed**: Pending
 
 - [ ] **Golden file tests**
   - [ ] Reference plans with known hashes
@@ -221,6 +221,27 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
   - **Dependencies**: Hash implementation, Validator implementation
   - **Date Completed**:
   - **Date Committed**:
+
+## **Phase 2.5: APS Interop (SpecKit & BMAD)** **[NEW]**
+
+### Epic: Adapters & Normalisation
+
+- [ ] **SpecKit import** (`adapters/speckit/import.ts`) **[NEW]**
+  - Parse `spec.md` / `plan.md` / `tasks.md` → APS
+  - Preserve metadata; map tasks to APS steps
+  - **Acceptance**: Valid APS generated from SpecKit docs
+
+- [ ] **SpecKit export** (`adapters/speckit/export.ts`) **[NEW]**
+  - APS → update `tasks.md` progress + plan summary
+  - **Acceptance**: Round-trip fidelity on sample repo
+
+- [ ] **BMAD import/export** (`adapters/bmad/*.ts`) **[NEW]**
+  - Map PRD/architecture/stories ↔ APS steps
+  - **Acceptance**: APS reflects BMAD stories accurately
+
+- [ ] **Interop tests** (`adapters/__tests__`) **[NEW]**
+  - Fixtures for SpecKit + BMAD
+  - Round-trip tests, error cases
 
 ## Phase 3: CLI Foundation
 
@@ -240,7 +261,7 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
 - [ ] **Create CLI directory structure**
 
-  ```
+  ```text
   cli/src/
   ├── commands/
   ├── utils/
@@ -386,6 +407,45 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
   - **Date Completed**:
   - **Date Committed**:
 
+## **Phase 3.5: Provenance & Commit Trailers** **[NEW]**
+
+### Epic: Provenance Surface
+
+- [ ] **Commit trailers** **[NEW]**
+  - Append `Anvil-APS`, `Anvil-Engine`, `Prompt-Hash` to commits
+  - **Acceptance**: Trailers present on APS-driven commits
+
+- [ ] **Provenance serializer** (`core/src/provenance/`) **[NEW]**
+  - Normalise author (human/AI/hybrid), model id, timestamps, hashes
+  - **Acceptance**: Stored with APS & surfaced in CLI/PR
+
+- [ ] **Minimal provenance report** (`cli/src/commands/prov.ts`) **[NEW]**
+  - Show per-plan lineage; print/export JSON
+  - **Acceptance**: Report consumable in PR description
+
+## **Phase 3.6: Agentic-Lite (Linear Orchestration) – MVP** **[NEW]**
+
+_(Leverages the "Claude Projects Lite" style sequencing without building the
+heavy sidecar. Keeps agentic optional.)_
+
+### Epic: Linear Workflows
+
+- [ ] **Workflow definitions** (`core/src/workflows/*.yaml`) **[NEW]**
+  - e.g. `feature.yaml`: plan → code → test → review
+  - **Acceptance**: Loaded and executed via CLI
+
+- [ ] **Engine adapters (API)** (`core/src/engines/*`) **[NEW]**
+  - `anthropic`, `openai`, `local` (mock)
+  - **Acceptance**: Return unified diffs with rationale
+
+- [ ] **Assisted apply** (`cli/src/commands/apply.ts`) **[NEW]**
+  - Show diff, accept/skip per step; write trailers
+  - **Acceptance**: Human-in-the-loop path working
+
+- [ ] **Inline quality hooks** **[NEW]**
+  - After code step, auto-run tests/lint; feed back into loop
+  - **Acceptance**: Failures reported; re-try supported
+
 ## Phase 4: Gate v1
 
 ### Epic: Plan Gate Implementation
@@ -394,7 +454,7 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
 - [ ] **Create gate package structure**
 
-  ```
+  ```text
   gate/src/
   ├── runners/
   ├── checks/
@@ -506,6 +566,22 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
   - **Date Completed**:
   - **Date Committed**:
 
+## **Phase 4.5: VS Code Extension (Slim)** **[NEW]**
+
+### Epic: Editor Experience
+
+- [ ] **Command palette** **[NEW]**
+  - "Anvil: Generate Plan", "Review Diffs", "Productionise"
+  - **Acceptance**: Commands callable; show webview diff
+
+- [ ] **Provenance decorations** **[NEW]**
+  - Gutter badges (AI/human/pack)
+  - **Acceptance**: Decorations reflect commit trailers
+
+- [ ] **Engine selection** **[NEW]**
+  - Quick pick: `Anthropic/OpenAI/Manual`
+  - **Acceptance**: Choice applied to apply-flow
+
 ## Phase 5: OPA/Rego Integration
 
 ### Epic: Policy Engine
@@ -569,6 +645,23 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
   - **Acceptance**: Security policies prevent common issues
   - **Date Completed**:
   - **Date Committed**:
+
+## **Phase 5.5: GitHub PR Experience** **[NEW]**
+
+### Epic: Reviews & Checks
+
+- [ ] **PR description templating** **[NEW]**
+  - Inject APS summary + provenance report + evidence summary
+  - **Acceptance**: Template renders on PR open
+
+- [ ] **AI PR Review comment** **[NEW]**
+  - Post tagged comment (e.g., "AI Review (Claude)") with suggestions & APS
+    conformance
+  - **Acceptance**: Appears alongside Dependabot & humans
+
+- [ ] **Dependabot coexistence** _(informational)_ **[NEW]**
+  - Ensure no conflict with Dependabot; label segregation
+  - **Acceptance**: Both comments visible, non-overlapping
 
 ## Phase 6: Sidecar Development
 
@@ -1098,6 +1191,21 @@ criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
   - **Date Completed**:
   - **Date Committed**:
 
+## Future Phases – Advanced / Enterprise
+
+- **Memory Layer (RAG + provenance store)** **[NEW]**
+  - [ ] Vector store + metadata indices for APS, ADRs, code artefacts
+  - [ ] Retrieval tools for agents and Productioniser
+  - **Acceptance**: Agents cite sources; PR shows citations summary
+
+- **MCP façade (agentic interop)** **[NEW]**
+  - [ ] Expose APS/gate/productionise as MCP tools
+  - **Acceptance**: Cursor/Claude Projects can call Anvil natively
+
+- **Packs Marketplace** **[NEW]**
+  - [ ] Install/upgrade/version packs; publishing flow
+  - **Acceptance**: Pack install via CLI + provenance
+
 ## Definition of Done
 
 Each task is considered complete when:
@@ -1126,3 +1234,15 @@ Each task is considered complete when:
 - **Next Week Goals**: Planned deliverables
 
 For strategic context and architectural decisions, see [PLAN.md](./PLAN.md).
+
+## Notes on MVP Cut (practical)
+
+- **Ship first:** Phase 2, 2.5, 3, 3.5, 3.6, 4, 4.5, 5.5, and the **Feature
+  Flags Pack** subset; plus a **minimal Productioniser** that wraps
+  tests/docs/telemetry + secret scan.
+- **Defer:** Sidecar, full transactional apply/rollback, deep OPA policies, full
+  Productioniser heuristics, memory layer, MCP façade, marketplace.
+
+If you want, I can convert this into **issue templates and GitHub project
+boards** (one board per phase, labels auto-applied), or drop this into canvas as
+a living checklist you can update with your team.
