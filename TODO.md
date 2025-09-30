@@ -4,11 +4,54 @@ This document provides a comprehensive task list for implementing the Anvil
 platform. Tasks are organized by phase and epic, with detailed acceptance
 criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
 
+## Progress Summary
+
+### ✅ Completed Phases
+
+- **Phase 1: Foundations** - Repository structure, CI/CD, quality gates
+
+### 🚧 In Progress
+
+- **Phase 2: APS Spine** - Core schema implementation (80% complete)
+  - ✅ Zod schema definition
+  - ✅ JSON Schema generation
+  - ✅ Hash generation utilities
+  - ✅ Validation module with comprehensive error handling
+  - ⏳ Integration and deployment pending
+
+- **Phase 3: CLI Foundation** - Basic commands (10% complete)
+  - ✅ Commander.js setup
+  - ⏳ Plan, validate, export commands not yet implemented
+
+- **Phase 4: Gate v1** - Quality checks (90% complete)
+  - ✅ ESLint, coverage, secret scanning implemented
+  - ✅ Integration tests passing
+  - ⏳ CLI command integration pending
+
+### ❌ Not Started
+
+- Phase 5: OPA/Rego Integration
+- Phase 6: Sidecar Development
+- Phase 7: Apply & Rollback
+- Phase 8: Feature Flags Pack
+- Phase 9: Productioniser
+- Phase 10: GitHub Integration
+- Phase 11: Hardening & Documentation
+- Phase 12: Release Candidate
+
+## Key Implementation Gaps
+
+1. **CLI Commands**: The `anvil plan`, `anvil validate`, and `anvil export`
+   commands need implementation to work with the APS schema
+2. **Sidecar Runtime**: No apply/rollback functionality exists yet
+3. **Packs System**: No modular pack system implemented
+4. **Productioniser**: Repository scanning and remediation not implemented
+
 ## Progress Tracking
 
-- **Current Phase**: Phase 1 – Foundations
-- **Current Epic**: Setup & Infrastructure
-- **Overall Progress**: ~5% (15/300+ tasks completed) _(unchanged)_
+- **Current Phase**: Phase 2 – APS Spine / Phase 3 – CLI Foundation
+- **Current Epic**: APS Core Implementation / CLI Interface
+- **Overall Progress**: ~15% (45/300+ tasks completed)
 
 ## Phase 1: Foundations
 

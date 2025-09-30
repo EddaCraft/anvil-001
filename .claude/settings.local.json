@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx nx list:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm run test:*)",
+      "Bash(pnpm run lint:check:*)",
+      "Bash(pnpm ls:*)",
+      "Bash(find:*)",
+      "Bash(pnpm list:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
