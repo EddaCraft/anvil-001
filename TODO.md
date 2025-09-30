@@ -1,1133 +1,679 @@
 # Anvil Implementation TODO
 
-This document provides a comprehensive task list for implementing the Anvil
-platform. Tasks are organized by phase and epic, with detailed acceptance
-criteria and dependencies. For strategic context, see [PLAN.md](./PLAN.md).
+This document provides a comprehensive task list for implementing Anvil,
+following the three-act strategic vision whilst maintaining practical MVP focus.
+Tasks are organised by phase and epic with detailed acceptance criteria. For
+strategic context, see [PLAN.md](./PLAN.md).
+
+## Executive Summary
+
+**Current Status**: Phase 2 (APS Core) 80% complete, Phase 4 (Gate) 90% complete
+**Next Critical Path**: Adapters → CLI Integration → Dry-run → Apply/Rollback
+**Target MVP**: 14-16 weeks from current state
+
+### Strategic Priorities (in order)
+
+1. **Interoperability First** - SpecKit & BMAD adapters (Act 1 wedge)
+2. **Developer Experience** - CLI commands that work with existing formats
+3. **Validation & Safety** - Gate integration with formats
+4. **Production Readiness** - Apply/rollback with audit trail
 
 ## Progress Summary
 
-### ✅ Completed Phases
+### ✅ Completed Phases (16% overall)
 
-- **Phase 1: Foundations** - Repository structure, CI/CD, quality gates
+- **Phase 1: Foundations** - Repository structure, CI/CD, quality gates (100%)
+- **Phase 2: APS Spine** - Core schema, validation, hash generation (80%)
+- **Phase 4: Gate v1** - ESLint, coverage, secret scanning (90%)
 
-### 🚧 In Progress
+### 🚧 Current Sprint (Weeks 1-2)
 
-- **Phase 2: APS Spine** - Core schema implementation (80% complete)
-  - ✅ Zod schema definition
-  - ✅ JSON Schema generation
-  - ✅ Hash generation utilities
-  - ✅ Validation module with comprehensive error handling
-  - ⏳ Integration and deployment pending
+**Goal**: Complete APS core and begin adapter development
 
-- **Phase 3: CLI Foundation** - Basic commands (10% complete)
-  - ✅ Commander.js setup
-  - ⏳ Plan, validate, export commands not yet implemented
+- [ ] Finish APS core integration (remaining 20%)
+- [ ] Begin SpecKit adapter implementation
+- [ ] Update CLI foundation for format detection
 
-- **Phase 4: Gate v1** - Quality checks (90% complete)
-  - ✅ ESLint, coverage, secret scanning implemented
-  - ✅ Integration tests passing
-  - ⏳ CLI command integration pending
+### 🎯 Next 4 Sprints (Weeks 3-8)
 
-### ❌ Not Started
+**Goal**: Working interoperability with SpecKit and BMAD
 
-- Phase 5: OPA/Rego Integration
-- Phase 6: Sidecar Development
-- Phase 7: Apply & Rollback
-- Phase 8: Feature Flags Pack
-- Phase 9: Productioniser
-- Phase 10: GitHub Integration
-- Phase 11: Hardening & Documentation
-- Phase 12: Release Candidate
+- Weeks 3-4: SpecKit adapter + tests
+- Weeks 5-6: BMAD adapter + tests
+- Weeks 7-8: Gate integration with both formats
 
-## Key Implementation Gaps
+### 📋 Remaining Work (Phases 5-12)
 
-1. **CLI Commands**: The `anvil plan`, `anvil validate`, and `anvil export`
-   commands need implementation to work with the APS schema
-2. **Sidecar Runtime**: No apply/rollback functionality exists yet
-3. **Packs System**: No modular pack system implemented
-4. **Productioniser**: Repository scanning and remediation not implemented
+- Phase 5: Policy engine (OPA/Rego)
+- Phase 6: Sidecar & dry-run
+- Phase 7: Apply & rollback
+- Phase 8: GitHub integration
+- Phases 9-12: Productioniser, hardening, release
 
-## Progress Tracking
+---
 
-- **Current Phase**: Phase 2 – APS Spine / Phase 3 – CLI Foundation
-- **Current Epic**: APS Core Implementation / CLI Interface
-- **Overall Progress**: ~15% (45/300+ tasks completed)
-
-## Phase 1: Foundations
+## Phase 1: Foundations ✅ COMPLETE
 
 ### Epic: Infrastructure Setup
 
-#### Repository Structure
+#### Repository Structure ✅
 
-- [x] **Initialize Nx monorepo structure** ✅
-  - [x] Verify current structure matches requirements
-  - [x] Ensure folders exist: `core/`, `cli/`, `packs/`, `ui/` (placeholder)
-  - [x] Configure `pnpm-workspace.yaml` correctly
-  - **Acceptance**: Repository structure matches architecture plan
-  - **Date Completed**: 2025-09-22
-  - **Date Committed**: 2025-09-22
+- [x] Initialize Nx monorepo structure
+- [x] Configure `pnpm-workspace.yaml`
+- [x] Ensure folder structure: `core/`, `cli/`, `gate/`, `adapters/`
+- **Date Completed**: 2025-09-22
+- **Date Committed**: 2025-09-22
 
-- [x] **Configure CI/CD pipeline** ✅
-  - [x] GitHub Actions workflow for lint + test
-  - [x] Status badges in README
-  - [x] Node.js version pinning (>=18.0.0)
-  - [x] Cache pnpm dependencies
-  - **Acceptance**: CI passes on empty repository
-  - **Dependencies**: Repository structure
-  - **Date Completed**: 2025-09-22
-  - **Date Committed**: 2025-09-22
+#### CI/CD Pipeline ✅
 
-- [x] **Setup quality gates**
-  - [x] ESLint configuration with TypeScript rules
-  - [x] Prettier formatting rules
-  - [x] Husky pre-commit hooks
-  - [x] TypeScript strict mode configuration
-  - **Acceptance**: Code quality tools run automatically
-  - **Dependencies**: Repository structure
-  - **Date Completed**: 2025-09-22
-  - **Date Committed**: 2025-09-22
+- [x] GitHub Actions workflow for lint + test
+- [x] Status badges in README
+- [x] Node.js version pinning (>=18.0.0)
+- [x] Cache pnpm dependencies
+- **Date Completed**: 2025-09-22
+- **Date Committed**: 2025-09-22
 
-## Phase 2: APS Spine
+#### Quality Gates ✅
+
+- [x] ESLint configuration with TypeScript rules
+- [x] Prettier formatting rules
+- [x] Husky pre-commit hooks
+- [x] TypeScript strict mode configuration
+- **Date Completed**: 2025-09-22
+- **Date Committed**: 2025-09-22
+
+---
+
+## Phase 2: APS Spine (80% Complete)
 
 ### Epic: APS Core Implementation
 
-#### Schema Definition
+#### Schema Definition ✅
 
-- [x] **Create schema directory structure** ✅
+- [x] Create schema directory structure
+- [x] Define APS Zod Schema with all required fields
+- [x] Export JSON Schema for compatibility
+- [x] TypeScript type generation
+- **Date Completed**: 2025-09-26
+- **Status**: Core schema complete, pending final integration
 
-  ```text
-  core/src/schema/
-  ├── aps.schema.ts
-  ├── index.ts
-  └── aps.schema.json (generated)
-  ```
+#### Hash Generation ✅
 
-  - **Acceptance**: Directory structure exists and exports schema
-  - **Date Completed**: 2025-09-23
-  - **Date Committed**: Pending
+- [x] Implement canonicalisation utilities
+- [x] SHA-256 hash generation
+- [x] Hash verification functions
+- [x] Plan ID generation (aps-[8 hex])
+- **Date Completed**: 2025-09-26
+- **Status**: Complete and tested
 
-- [x] **Define APS Zod Schema** (`aps.schema.ts`) ✅
-  - [x] Import and configure Zod with strict mode
-  - [x] Define schema version as literal type
-  - [x] Core fields definition using Zod:
-    - [x] `id`: z.string() with regex pattern `^aps-[a-f0-9]{8}$`
-    - [x] `hash`: z.string() with SHA-256 pattern `^[a-f0-9]{64}$`
-    - [x] `intent`: z.string() with min(10) and max(500)
-    - [x] `proposed_changes`: z.array() of change objects
-    - [x] `provenance`: z.object() for creation metadata
-    - [x] `validations`: z.object() for check requirements
-  - [x] Add Zod branding for type safety
-  - [x] Export inferred TypeScript types from Zod schema
-  - **Acceptance**: Zod schema validates example plans with clear error messages
-  - **Date Completed**: 2025-09-23
-  - **Date Committed**: 2025-09-23
+#### Validation Implementation ✅
 
-- [x] **Generate JSON Schema from Zod** (`aps.schema.json`) ✅
-  - [x] Use zod-to-json-schema library
-  - [x] Export JSON Schema with proper $schema and $id
-  - [x] Add generation script to package.json
-  - [x] Verify JSON Schema matches Zod validation rules
-  - **Acceptance**: JSON Schema is automatically generated from Zod definition
-  - **Dependencies**: Zod schema definition
-  - **Date Completed**: 2025-09-23
-  - **Date Committed**: 2025-09-23
+- [x] Create validation module structure
+- [x] APS Validator class with Zod
+- [x] Error formatting for CLI
+- [x] Comprehensive test coverage
+- **Date Completed**: 2025-09-26
+- **Status**: Complete and tested
 
-#### TypeScript Types
+#### Integration & Deployment (20% Remaining)
 
-- [x] **Create types directory**
+- [ ] **Integrate APS with CLI infrastructure**
+  - [ ] Export all APS utilities from core package
+  - [ ] Update CLI package.json to use core package
+  - [ ] Add integration tests for CLI + APS
+  - **Acceptance**: CLI can import and use APS validation
+  - **Blocker**: Required for adapter development
+  - **Target**: Week 1
 
-  ```text
-  core/src/types/
-  ├── aps.types.ts
-  └── index.ts
-  ```
+- [ ] **Documentation for APS Core**
+  - [ ] API documentation for all exported functions
+  - [ ] Usage examples for developers
+  - [ ] Migration guide from manual JSON
+  - **Acceptance**: Developers can use APS without source code inspection
+  - **Target**: Week 2
 
-  - **Acceptance**: Type exports are available
-  - **Date Completed**:
-  - **Date Committed**:
+---
 
-- [x] **Export TypeScript types from Zod schema** ✅
-  - [x] Use Zod's type inference (z.infer<typeof schema>)
-  - [x] Export inferred types:
-    - [x] `APSPlan` - Inferred from main Zod schema
-    - [x] `APSChange` - Inferred from change schema (named `Change`)
-    - [x] `APSProvenance` - Inferred from provenance schema (named `Provenance`)
-    - [x] `APSValidations` - Inferred from validations schema (named
-          `Validation`)
-  - [x] Add JSDoc documentation to exported types
-  - [x] Re-export from schema/index.ts for convenience
-  - **Acceptance**: Types automatically stay in sync with Zod schema
-  - **Dependencies**: Zod schema definition
-  - **Date Completed**: 2025-09-23
-  - **Date Committed**: Pending
+## Phase 2.5: Adapters (NEW - CRITICAL PATH)
 
-#### Hash Generation
+### Epic: Format Interoperability
 
-- [x] **Create crypto utilities** ✅
+**Strategic Rationale**: Users won't adopt a new format. We must work with
+existing planning formats (SpecKit, BMAD) whilst using APS internally for
+validation and execution.
 
-  ```text
-  core/src/crypto/
-  ├── hash.ts
-  └── index.ts
-  ```
+#### Adapter Architecture
 
-  - **Acceptance**: Crypto module exports hash functions
-  - **Date Completed**: 2025-09-26
-  - **Date Committed**: Pending
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] **Create adapter framework** (`adapters/src/base/`)
+  - [ ] Define `FormatAdapter` interface:
+    ```typescript
+    interface FormatAdapter {
+      name: string;
+      supportedExtensions: string[];
+      detect(content: string): boolean;
+      parse(content: string): APSPlan;
+      serialize(plan: APSPlan): string;
+      validate(content: string): ValidationResult;
+    }
+    ```
+  - [ ] Implement adapter registry for format detection
+  - [ ] Add adapter testing utilities
+  - [ ] Create adapter documentation template
+  - **Acceptance**: Framework supports pluggable adapters
+  - **Dependencies**: APS core complete
+  - **Target**: Week 2
+  - **Sprint**: Current
 
-- [x] **Implement hash functions** (`hash.ts`) ✅
-  - [x] `generateHash(data: any): string` - SHA-256 hash
-  - [x] `canonicalizeJSON(obj: any): string` - Stable serialization
-  - [x] `verifyHash(data: any, hash: string): boolean` - Verification
-  - [x] `generatePlanId(): string` - Unique ID generation (aps-[8 hex chars])
-  - [x] `isValidPlanId(id: string): boolean` - Plan ID validation
-  - [x] `isValidHash(hash: string): boolean` - Hash format validation
-  - **Acceptance**: Hash generation is deterministic across runs
-  - **Date Completed**: 2025-09-26
-  - **Date Committed**: Pending
+#### SpecKit Adapter (Customer #1)
 
-#### Validation Implementation
+- [ ] **Implement SpecKit parser** (`adapters/src/speckit/`)
+  - [ ] Parse `spec.md` / `plan.md` format
+  - [ ] Extract intent from spec structure
+  - [ ] Map SpecKit sections to APS proposed_changes
+  - [ ] Handle SpecKit metadata (authors, versions)
+  - [ ] Preserve round-trip fidelity
+  - **Acceptance**: Valid SpecKit documents convert to valid APS
+  - **Target**: Week 3
 
-- [x] **Create validation module** ✅
+- [ ] **Implement SpecKit serialiser**
+  - [ ] Convert APS back to SpecKit format
+  - [ ] Preserve original formatting where possible
+  - [ ] Update SpecKit with validation results
+  - [ ] Inject evidence as SpecKit comments/annotations
+  - **Acceptance**: Round-trip conversion preserves intent
+  - **Target**: Week 3
 
-  ```text
-  core/src/validation/
-  ├── aps-validator.ts
-  ├── errors.ts
-  └── index.ts
-  ```
+- [ ] **SpecKit adapter tests**
+  - [ ] Fixture: Valid SpecKit documents (5+ examples)
+  - [ ] Fixture: Invalid SpecKit documents
+  - [ ] Round-trip tests (parse → serialise → parse)
+  - [ ] Integration with gate validation
+  - **Acceptance**: >95% test coverage, all fixtures pass
+  - **Target**: Week 4
 
-  - **Acceptance**: Validation module structure exists
-  - **Date Completed**: 2025-09-26
-  - **Date Committed**: Pending
+- [ ] **CLI integration for SpecKit**
+  - [ ] Auto-detect SpecKit format in CLI
+  - [ ] `anvil gate spec.md` works end-to-end
+  - [ ] `anvil validate plan.md` provides feedback
+  - [ ] Evidence updates append to SpecKit files
+  - **Acceptance**: SpecKit users can validate plans
+  - **Demo**: Show Customer #1
+  - **Target**: Week 4
 
-- [x] **APS Validator Class** (`aps-validator.ts`) ✅
-  - [x] Use Zod schema for primary validation
-  - [x] Implement safe parse with error handling
-  - [x] `validate(plan: unknown): ValidationResult`
-  - [x] `validateSchema(plan: any): boolean` using Zod
-  - [x] `validateHash(plan: APSPlan): boolean`
-  - [x] Format Zod errors for user-friendly CLI display
-  - [x] Optional: Ajv validation using exported JSON Schema for compatibility
-  - **Acceptance**: Validator correctly accepts/rejects plans with clear errors
-  - **Dependencies**: Zod schema definition, Hash generation
-  - **Date Completed**: 2025-09-26
-  - **Date Committed**: Pending
+#### BMAD Adapter (Customer #2)
 
-- [x] **Error Types** (`errors.ts`) ✅
-  - [x] `ValidationError` class with structured data
-  - [x] `ZodError` formatting for schema validation errors
-  - [x] Error formatting utilities for user-friendly messages
-  - **Acceptance**: Error messages are clear and actionable
-  - **Date Completed**: 2025-09-26
-  - **Date Committed**: Pending
+- [ ] **Implement BMAD parser** (`adapters/src/bmad/`)
+  - [ ] Parse PRD/architecture doc formats
+  - [ ] Extract requirements and acceptance criteria
+  - [ ] Map BMAD structure to APS proposed_changes
+  - [ ] Handle BMAD metadata and versioning
+  - [ ] Support multiple BMAD document types
+  - **Acceptance**: Valid BMAD documents convert to valid APS
+  - **Target**: Week 5
 
-#### Core Package Dependencies
+- [ ] **Implement BMAD serialiser**
+  - [ ] Convert APS back to BMAD format
+  - [ ] Preserve document structure
+  - [ ] Update BMAD with validation results
+  - [ ] Inject evidence as BMAD annotations
+  - **Acceptance**: Round-trip conversion works correctly
+  - **Target**: Week 5
 
-- [x] **Add required dependencies** ✅
-  - [x] Add `zod` (v3.x) - Runtime validation and TypeScript types
-  - [x] Add `zod-to-json-schema` (v3.x) - JSON Schema export
-  - [x] Add `js-yaml` (v4.1.0) - YAML parsing
-  - [x] Add `@types/js-yaml` - TypeScript types
-  - [x] Add `ajv` (v8.17.1) - JSON Schema validation (already present)
-  - [x] Add `ajv-formats` (v3.0.1) - Format validators (already present)
-  - **Acceptance**: Dependencies installed and configured
-  - **Date Completed**: 2025-09-23
-  - **Date Committed**: Pending
+- [ ] **BMAD adapter tests**
+  - [ ] Fixture: Valid BMAD documents (5+ examples)
+  - [ ] Fixture: Invalid BMAD documents
+  - [ ] Round-trip tests
+  - [ ] Integration with gate validation
+  - **Acceptance**: >95% test coverage, all fixtures pass
+  - **Target**: Week 6
 
-#### Core Package Testing
+- [ ] **CLI integration for BMAD**
+  - [ ] Auto-detect BMAD format in CLI
+  - [ ] `anvil gate prd.md` works end-to-end
+  - [ ] Evidence updates work correctly
+  - **Acceptance**: BMAD users can validate plans
+  - **Demo**: Show Customer #2
+  - **Target**: Week 6
 
-- [x] **Hash generation tests** (`crypto/hash.test.ts`) ✅
-  - [x] Deterministic output test (same input = same hash)
-  - [x] Different input order test (object property order independence)
-  - [x] Hash verification test (valid/invalid hash detection)
-  - [x] ID generation uniqueness test
-  - [x] Canonical JSON serialization tests
-  - [x] Edge cases (null, undefined, arrays, dates)
-  - **Acceptance**: 100% test coverage, all edge cases covered
-  - **Dependencies**: Hash implementation
-  - **Date Completed**: 2025-09-26
-  - **Date Committed**: Pending
+#### Format Detection
 
-- [x] **Validator tests** (`validation/aps-validator.test.ts`) ✅
-  - [x] Valid schema acceptance tests
-  - [x] Invalid schema rejection tests
-  - [x] Missing required fields tests
-  - [x] Invalid field formats tests
-  - [x] Hash mismatch detection tests
-  - **Acceptance**: >95% test coverage, clear test descriptions
-  - **Dependencies**: Validator implementation
-  - **Date Completed**: 2025-09-26
-  - **Date Committed**: Pending
+- [ ] **Implement format auto-detection**
+  - [ ] Content-based detection (not just file extension)
+  - [ ] Confidence scoring for format detection
+  - [ ] Fallback to APS native format
+  - [ ] Clear error messages for unknown formats
+  - **Acceptance**: `anvil gate <any-format>` just works
+  - **Target**: Week 6
 
-- [x] **Golden file tests** ✅
-  - [x] Reference plans with known hashes
-  - [x] Regression test suite for hash stability
-  - [x] Cross-platform hash consistency tests
-  - **Acceptance**: Golden tests prevent hash regressions
-  - **Dependencies**: Hash implementation, Validator implementation
-  - **Date Completed**: 2025-09-26
-  - **Date Committed**: Pending
+---
 
-## **Phase 2.5: APS Interop (SpecKit & BMAD)** **[NEW]**
-
-### Epic: Adapters & Normalisation
-
-- [ ] **SpecKit import** (`adapters/speckit/import.ts`) **[NEW]**
-  - Parse `spec.md` / `plan.md` / `tasks.md` → APS
-  - Preserve metadata; map tasks to APS steps
-  - **Acceptance**: Valid APS generated from SpecKit docs
-
-- [ ] **SpecKit export** (`adapters/speckit/export.ts`) **[NEW]**
-  - APS → update `tasks.md` progress + plan summary
-  - **Acceptance**: Round-trip fidelity on sample repo
-
-- [ ] **BMAD import/export** (`adapters/bmad/*.ts`) **[NEW]**
-  - Map PRD/architecture/stories ↔ APS steps
-  - **Acceptance**: APS reflects BMAD stories accurately
-
-- [ ] **Interop tests** (`adapters/__tests__`) **[NEW]**
-  - Fixtures for SpecKit + BMAD
-  - Round-trip tests, error cases
-
-## Phase 3: CLI Foundation
+## Phase 3: CLI Foundation (30% Complete)
 
 ### Epic: CLI Interface
 
-#### CLI Setup
+**Status**: Commander.js setup complete, commands need implementation with
+adapter support
 
-- [ ] **Add CLI dependencies**
-  - [ ] Add `commander` (v12.x) - CLI framework
-  - [ ] Add `chalk` (v5.x) - Colored output
-  - [ ] Add `ora` (v8.x) - Loading spinners
-  - [ ] Add `inquirer` (v9.x) - Interactive prompts
-  - [ ] Add `fs-extra` (v11.x) - File operations
-  - **Acceptance**: Dependencies installed and types available
-  - **Date Completed**:
-  - **Date Committed**:
+#### Core Commands
 
-- [ ] **Create CLI directory structure**
+- [ ] **Implement `anvil plan <intent>`**
+  - [ ] Accept format flag: `--format=speckit|bmad|aps`
+  - [ ] Generate plan in specified format
+  - [ ] Save to `.anvil/plans/` directory
+  - [ ] Display plan summary
+  - [ ] Support interactive mode for missing details
+  - **Acceptance**: Users can create plans in their preferred format
+  - **Dependencies**: Adapter framework
+  - **Target**: Week 7
 
-  ```text
-  cli/src/
-  ├── commands/
-  ├── utils/
-  ├── config/
-  └── index.ts
-  ```
+- [ ] **Implement `anvil validate <plan>`**
+  - [ ] Auto-detect plan format
+  - [ ] Convert to APS for validation
+  - [ ] Run schema + hash validation
+  - [ ] Display validation results
+  - [ ] Support `--format` for output
+  - **Acceptance**: Validates any supported format
+  - **Dependencies**: Adapter framework, APS validator
+  - **Target**: Week 7
 
-  - **Acceptance**: Directory structure matches plan
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **Main entry point** (`index.ts`)
-  - [ ] Add shebang `#!/usr/bin/env node`
-  - [ ] Setup commander program with version
-  - [ ] Register all commands
-  - [ ] Add version from package.json
-  - [ ] Configure help display with examples
-  - **Acceptance**: CLI displays help and version correctly
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Plan Command Implementation
-
-- [ ] **Implement `anvil plan <intent>`** (`commands/plan.ts`)
-  - [ ] Parse intent argument (required)
-  - [ ] Validate intent length (10-500 characters)
-  - [ ] Generate plan structure:
-    - [ ] Create unique ID using crypto utilities
-    - [ ] Set intent description
-    - [ ] Initialize empty changes array
-    - [ ] Add provenance data (timestamp, user, version)
-    - [ ] Generate hash of plan content
-  - [ ] Create `.anvil/plans/` directory if it doesn't exist
-  - [ ] Save plan as JSON with pretty printing
-  - [ ] Display success message with plan ID and file path
-  - **Acceptance**: Can create valid plans from intent strings
-  - **Dependencies**: Core APS implementation
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Validate Command Implementation
-
-- [ ] **Implement `anvil validate <plan>`** (`commands/validate.ts`)
-  - [ ] Accept file path or plan ID as argument
-  - [ ] Resolve plan ID to file path if needed
-  - [ ] Load plan from file:
-    - [ ] Support JSON format
-    - [ ] Support YAML format
-    - [ ] Handle file not found errors
-  - [ ] Run validation:
-    - [ ] Schema validation using APS validator
-    - [ ] Hash verification
-    - [ ] Report specific validation errors
-  - [ ] Display results:
-    - [ ] ✅ Green checkmark for valid plans
-    - [ ] ❌ Red X for invalid plans
-    - [ ] Show specific errors with context
-    - [ ] Display hash verification status
-  - [ ] Exit with appropriate code (0 for valid, 1 for invalid)
-  - **Acceptance**: Correctly validates plans with clear feedback
-  - **Dependencies**: Plan command, Core validation
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Export Command Implementation
-
-- [ ] **Implement `anvil export <plan>`** (`commands/export.ts`)
-  - [ ] Accept plan ID or file path as argument
-  - [ ] Options:
-    - [ ] `--format <json|yaml>` (default: json)
-    - [ ] `--output <path>` (default: stdout)
-    - [ ] `--pretty` - Pretty print JSON output
-  - [ ] Load plan using utility functions
-  - [ ] Convert to requested format
-  - [ ] Write to file or stdout
-  - [ ] Display success message with output location
-  - **Acceptance**: Can export plans in multiple formats
-  - **Dependencies**: Validate command implementation
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Utility Functions
-
-- [ ] **File I/O utilities** (`utils/file-io.ts`)
-  - [ ] `loadPlan(path: string): Promise<APSPlan>` - Load plan from file
-  - [ ] `savePlan(plan: APSPlan, path: string): Promise<void>` - Save plan to
-        file
-  - [ ] `ensureDirectory(path: string): Promise<void>` - Create directory if
-        needed
-  - [ ] `findPlanById(id: string): Promise<string | null>` - Find plan file by
-        ID
-  - [ ] Handle JSON and YAML formats
-  - [ ] Proper error handling for file operations
-  - **Acceptance**: File operations are reliable and well-tested
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **Output formatting** (`utils/output.ts`)
-  - [ ] `success(message: string): void` - Green success messages
-  - [ ] `error(message: string): void` - Red error messages
-  - [ ] `warning(message: string): void` - Yellow warning messages
-  - [ ] `info(message: string): void` - Blue info messages
-  - [ ] `formatValidationErrors(errors: any[]): string` - Format validation
-        errors
-  - [ ] Consistent formatting across all commands
-  - **Acceptance**: CLI output is colorful and user-friendly
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### CLI Testing
-
-- [ ] **Plan command tests** (`commands/plan.test.ts`)
-  - [ ] Plan creation with valid intent
-  - [ ] Plan creation with invalid intent (too short/long)
-  - [ ] ID generation uniqueness
-  - [ ] File saving to correct location
-  - [ ] Directory creation when needed
-  - [ ] Error handling for filesystem issues
-  - **Acceptance**: >95% test coverage for plan command
-  - **Dependencies**: Plan command implementation
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **Validate command tests** (`commands/validate.test.ts`)
-  - [ ] Valid plan acceptance with success output
-  - [ ] Invalid plan rejection with error details
-  - [ ] File loading (JSON/YAML formats)
-  - [ ] Plan ID resolution
-  - [ ] Error display formatting
-  - [ ] Correct exit codes
-  - **Acceptance**: >95% test coverage for validate command
-  - **Dependencies**: Validate command implementation
-  - **Date Completed**:
-  - **Date Committed**:
-- [ ] **Export command tests** (`commands/export.test.ts`)
-  - [ ] JSON export with pretty printing
-  - [ ] YAML export with correct formatting
-  - [ ] File output vs stdout
-  - [ ] Option parsing
-  - [ ] Error handling for missing plans
-  - **Acceptance**: >95% test coverage for export command
-  - **Dependencies**: Export command implementation
-  - **Date Completed**:
-  - **Date Committed**:
-
-## **Phase 3.5: Provenance & Commit Trailers** **[NEW]**
-
-### Epic: Provenance Surface
-
-- [ ] **Commit trailers** **[NEW]**
-  - Append `Anvil-APS`, `Anvil-Engine`, `Prompt-Hash` to commits
-  - **Acceptance**: Trailers present on APS-driven commits
-
-- [ ] **Provenance serializer** (`core/src/provenance/`) **[NEW]**
-  - Normalise author (human/AI/hybrid), model id, timestamps, hashes
-  - **Acceptance**: Stored with APS & surfaced in CLI/PR
-
-- [ ] **Minimal provenance report** (`cli/src/commands/prov.ts`) **[NEW]**
-  - Show per-plan lineage; print/export JSON
-  - **Acceptance**: Report consumable in PR description
-
-## **Phase 3.6: Agentic-Lite (Linear Orchestration) – MVP** **[NEW]**
-
-_(Leverages the "Claude Projects Lite" style sequencing without building the
-heavy sidecar. Keeps agentic optional.)_
-
-### Epic: Linear Workflows
-
-- [ ] **Workflow definitions** (`core/src/workflows/*.yaml`) **[NEW]**
-  - e.g. `feature.yaml`: plan → code → test → review
-  - **Acceptance**: Loaded and executed via CLI
-
-- [ ] **Engine adapters (API)** (`core/src/engines/*`) **[NEW]**
-  - `anthropic`, `openai`, `local` (mock)
-  - **Acceptance**: Return unified diffs with rationale
-
-- [ ] **Assisted apply** (`cli/src/commands/apply.ts`) **[NEW]**
-  - Show diff, accept/skip per step; write trailers
-  - **Acceptance**: Human-in-the-loop path working
-
-- [ ] **Inline quality hooks** **[NEW]**
-  - After code step, auto-run tests/lint; feed back into loop
-  - **Acceptance**: Failures reported; re-try supported
-
-## Phase 4: Gate v1
-
-### Epic: Plan Gate Implementation
-
-#### Gate Infrastructure
-
-- [ ] **Create gate package structure**
-
-  ```text
-  gate/src/
-  ├── runners/
-  ├── checks/
-  ├── evidence/
-  └── index.ts
-  ```
-
-  - **Acceptance**: Gate package structure ready
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **Base gate runner** (`runners/gate-runner.ts`)
-  - [ ] Abstract check interface
-  - [ ] Check registration system
-  - [ ] Parallel check execution
-  - [ ] Evidence collection
-  - [ ] Summary reporting
-  - **Acceptance**: Gate runner can execute multiple checks
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### ESLint Integration
-
-- [ ] **ESLint check implementation** (`checks/eslint-check.ts`)
-  - [ ] Programmatic ESLint API usage
-  - [ ] Configuration loading from project
-  - [ ] Result formatting for evidence
-  - [ ] Error count and severity tracking
-  - **Acceptance**: ESLint runs programmatically with results
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Vitest Coverage Integration
-
-- [ ] **Coverage check implementation** (`checks/coverage-check.ts`)
-  - [ ] Vitest coverage threshold configuration
-  - [ ] Changed files detection (git diff)
-  - [ ] Coverage calculation for changed files only
-  - [ ] Threshold enforcement
-  - **Acceptance**: Coverage enforced on changed files only
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Secret Scanning
-
-- [ ] **Basic secret scanner** (`checks/secrets-check.ts`)
-  - [ ] Regex patterns for common secrets
-  - [ ] File content scanning
-  - [ ] Allowlist/denylist support
-  - [ ] SARIF output format
-  - **Acceptance**: Secret scanning detects common patterns
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### SAST Placeholder
-
-- [ ] **SAST check placeholder** (`checks/sast-check.ts`)
-  - [ ] Placeholder implementation for future integration
-  - [ ] Structured output format
-  - [ ] Configuration interface
-  - **Acceptance**: SAST check framework ready for implementation
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Evidence System
-
-- [ ] **Evidence bundling** (`evidence/evidence-bundle.ts`)
-  - [ ] Evidence collection from all checks
-  - [ ] Diff generation for proposed changes
-  - [ ] Log aggregation
-  - [ ] Report formatting
-  - [ ] Immutable evidence appending to plans
-  - **Acceptance**: Evidence is comprehensive and immutable
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Gate Command
-
-- [ ] **Implement `anvil gate <plan>`** (`cli/src/commands/gate.ts`)
-  - [ ] Load plan from file or ID
-  - [ ] Execute all configured checks
-  - [ ] Collect evidence from checks
-  - [ ] Append evidence to plan
-  - [ ] Display summary table with pass/fail status
+- [ ] **Implement `anvil gate <plan>`**
+  - [ ] Auto-detect plan format
+  - [ ] Convert to APS if needed
+  - [ ] Run all configured checks (lint, test, coverage, secrets)
+  - [ ] Collect evidence
+  - [ ] Update source file with results
+  - [ ] Display summary table
   - [ ] Exit with appropriate code
-  - **Acceptance**: Gate command runs all checks and reports results
-  - **Dependencies**: Gate infrastructure, All checks
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Acceptance**: Gate works with all supported formats
+  - **Dependencies**: Gate v1, Adapter framework
+  - **Target**: Week 8
 
-#### Gate Testing
+- [ ] **Implement `anvil export <plan>`**
+  - [ ] Export to different formats: `--to=speckit|bmad|aps|json|yaml`
+  - [ ] Preserve all data during conversion
+  - [ ] Validate exported format
+  - **Acceptance**: Plans can be converted between formats
+  - **Target**: Week 8
 
-- [ ] **Create test fixtures**
-  - [ ] Repository with passing checks
-  - [ ] Repository with failing lint
-  - [ ] Repository with low coverage
-  - [ ] Repository with secrets
-  - **Acceptance**: Test fixtures cover all check scenarios
-  - **Date Completed**:
-  - **Date Committed**:
+#### CLI User Experience
 
-- [ ] **Integration tests** (`gate/integration.test.ts`)
-  - [ ] End-to-end gate execution
-  - [ ] Evidence generation verification
-  - [ ] Pass/fail scenarios
-  - [ ] Performance testing on realistic repositories
-  - **Acceptance**: Gate works reliably on real repositories
-  - **Dependencies**: Gate implementation, Test fixtures
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] **Pretty printing**
+  - [ ] Colourised output for validation results
+  - [ ] Table formatting for gate summaries
+  - [ ] Progress indicators for long operations
+  - [ ] Clear error messages with suggestions
+  - **Acceptance**: CLI output is professional and helpful
+  - **Target**: Week 8
 
-## **Phase 4.5: VS Code Extension (Slim)** **[NEW]**
+- [ ] **Interactive prompts**
+  - [ ] Prompt for missing plan details
+  - [ ] Confirmation for destructive operations
+  - [ ] Format selection when ambiguous
+  - **Acceptance**: CLI guides users through workflows
+  - **Target**: Week 9
 
-### Epic: Editor Experience
+---
 
-- [ ] **Command palette** **[NEW]**
-  - "Anvil: Generate Plan", "Review Diffs", "Productionise"
-  - **Acceptance**: Commands callable; show webview diff
+## Phase 4: Gate v1 (90% Complete)
 
-- [ ] **Provenance decorations** **[NEW]**
-  - Gutter badges (AI/human/pack)
-  - **Acceptance**: Decorations reflect commit trailers
+### Epic: Quality Checks
 
-- [ ] **Engine selection** **[NEW]**
-  - Quick pick: `Anthropic/OpenAI/Manual`
-  - **Acceptance**: Choice applied to apply-flow
+**Status**: Check implementations complete, CLI integration pending
+
+#### Integration Tasks (10% Remaining)
+
+- [ ] **Connect Gate to CLI commands**
+  - [ ] Wire up `anvil gate` command to gate runner
+  - [ ] Support gate configuration file
+  - [ ] Add check selection flags: `--checks=lint,test`
+  - [ ] Support check exclusion: `--skip=coverage`
+  - **Acceptance**: Gate runs via CLI with all checks
+  - **Dependencies**: CLI commands
+  - **Target**: Week 8
+
+- [ ] **Evidence bundle integration**
+  - [ ] Append evidence to APS plans
+  - [ ] Update SpecKit/BMAD with evidence annotations
+  - [ ] Store evidence separately for audit
+  - [ ] Format evidence for different outputs
+  - **Acceptance**: Evidence properly attached to plans
+  - **Target**: Week 8
+
+- [ ] **Gate configuration**
+  - [ ] Support `.anvilrc` configuration file
+  - [ ] Check-specific configuration (coverage thresholds, etc.)
+  - [ ] Per-project policy overrides
+  - [ ] Configuration validation
+  - **Acceptance**: Users can configure gate behaviour
+  - **Target**: Week 9
+
+---
 
 ## Phase 5: OPA/Rego Integration
 
 ### Epic: Policy Engine
 
-#### OPA Integration
+#### OPA Foundation
 
 - [ ] **Vendor OPA binary**
-  - [ ] Download and include OPA binary for target platforms
-  - [ ] Version pinning and checksum verification
+  - [ ] Download OPA for Linux, macOS, Windows
+  - [ ] Version pinning (latest stable)
+  - [ ] Checksum verification
   - [ ] Binary execution wrapper
-  - **Acceptance**: OPA binary available and versioned
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Acceptance**: OPA available on all platforms
+  - **Target**: Week 10
 
 - [ ] **Policy bundle structure**
-  - [ ] Define policy bundle format
-  - [ ] Example policy rules:
-    - [ ] `coverage_min >= 80` for changed files
-    - [ ] "no client-side high-risk flags"
-    - [ ] Basic security policies
-  - [ ] Policy versioning system
-  - **Acceptance**: Policy bundle structure documented and tested
-  - **Date Completed**:
-  - **Date Committed**:
+  - [ ] Define policy directory structure: `.anvil/policies/`
+  - [ ] Create example policies:
+    - `coverage_min.rego` - Enforce minimum coverage
+    - `client_side_flags.rego` - Flag risk policies
+    - `change_scope.rego` - Limit change scope
+  - [ ] Policy versioning strategy
+  - [ ] Policy testing framework
+  - **Acceptance**: Policies can be defined and versioned
+  - **Target**: Week 10
 
-#### Policy Implementation
+#### Policy Integration
 
-- [ ] **Policy check** (`checks/policy-check.ts`)
-  - [ ] OPA binary execution
-  - [ ] Policy bundle loading
-  - [ ] Plan data input to OPA
-  - [ ] Policy evaluation results parsing
-  - [ ] Error handling for policy failures
-  - **Acceptance**: Policy evaluation integrated into gate
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] **Policy evaluation in Gate**
+  - [ ] Call OPA with plan data
+  - [ ] Collect policy violations
+  - [ ] Format policy results as evidence
+  - [ ] Support policy warnings vs. failures
+  - **Acceptance**: Policies enforced during gate execution
+  - **Dependencies**: OPA binary, Gate v1
+  - **Target**: Week 11
 
-- [ ] **Policy tests** (`policy/policy.test.ts`)
-  - [ ] Pass/fail fixtures for each policy rule
-  - [ ] Policy rule unit tests
-  - [ ] Integration tests with gate runner
-  - **Acceptance**: Policy tests provide confidence in rule logic
-  - **Dependencies**: Policy implementation
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] **Policy CLI commands**
+  - [ ] `anvil policy validate` - Check policy syntax
+  - [ ] `anvil policy test` - Run policy tests
+  - [ ] `anvil policy list` - Show active policies
+  - **Acceptance**: Users can manage policies via CLI
+  - **Target**: Week 11
 
-#### Sample Policies
-
-- [ ] **Coverage policy** (`policies/coverage.rego`)
-  - [ ] Minimum coverage threshold enforcement
-  - [ ] Changed files only scope
-  - [ ] Configurable thresholds
-  - **Acceptance**: Coverage policy works with Vitest integration
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **Security policies** (`policies/security.rego`)
-  - [ ] Secret exposure prevention
-  - [ ] High-risk flag restrictions
-  - [ ] File permission checks
-  - **Acceptance**: Security policies prevent common issues
-  - **Date Completed**:
-  - **Date Committed**:
-
-## **Phase 5.5: GitHub PR Experience** **[NEW]**
-
-### Epic: Reviews & Checks
-
-- [ ] **PR description templating** **[NEW]**
-  - Inject APS summary + provenance report + evidence summary
-  - **Acceptance**: Template renders on PR open
-
-- [ ] **AI PR Review comment** **[NEW]**
-  - Post tagged comment (e.g., "AI Review (Claude)") with suggestions & APS
-    conformance
-  - **Acceptance**: Appears alongside Dependabot & humans
-
-- [ ] **Dependabot coexistence** _(informational)_ **[NEW]**
-  - Ensure no conflict with Dependabot; label segregation
-  - **Acceptance**: Both comments visible, non-overlapping
+---
 
 ## Phase 6: Sidecar Development
 
-### Epic: Sidecar Runtime
+### Epic: Execution Runtime
 
-#### Sidecar Infrastructure
+**Strategic Note**: The sidecar is where plans become changes. This is the trust
+boundary.
 
-- [ ] **JSON-RPC server** (`sidecar/src/server/`)
-  - [ ] JSON-RPC protocol implementation
-  - [ ] Plan storage and retrieval
-  - [ ] Evidence writer system
-  - [ ] Request/response logging
-  - **Acceptance**: Sidecar responds to JSON-RPC calls
-  - **Date Completed**:
-  - **Date Committed**:
+#### Dry-run System
 
-- [ ] **Daemon process management**
-  - [ ] Process lifecycle management
-  - [ ] PID file handling
+- [ ] **Implement dry-run** (`sidecar/src/dry-run/`)
+  - [ ] Parse proposed_changes from APS
+  - [ ] Generate file diffs without applying
+  - [ ] Collect logs and evidence
+  - [ ] Create preview bundle
+  - [ ] Support rollback preview
+  - **Acceptance**: `anvil dry-run plan.json` shows what would happen
+  - **Target**: Week 12
+  - **Demo**: This is the "wow moment"
+
+- [ ] **Dry-run CLI command**
+  - [ ] `anvil dry-run <plan>` command
+  - [ ] Display diffs with syntax highlighting
+  - [ ] Show impact summary (files changed, LOC, etc.)
+  - [ ] Support `--output` for saving preview
+  - **Acceptance**: Users can preview changes safely
+  - **Dependencies**: Dry-run system
+  - **Target**: Week 12
+
+#### Sidecar Daemon
+
+- [ ] **Daemon process** (`sidecar/src/daemon/`)
+  - [ ] Background process management
+  - [ ] Job queue for apply operations
+  - [ ] Status monitoring
   - [ ] Graceful shutdown
-  - [ ] Error recovery
-  - **Acceptance**: Sidecar runs as stable daemon
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Acceptance**: Sidecar runs as background service
+  - **Target**: Week 13
 
-#### Dry-run Implementation
+- [ ] **Evidence collection**
+  - [ ] Immutable evidence appending
+  - [ ] Structured evidence format
+  - [ ] Evidence verification
+  - [ ] Audit trail generation
+  - **Acceptance**: All operations produce evidence
+  - **Target**: Week 13
 
-- [ ] **Sandbox environment** (`sidecar/src/sandbox/`)
-  - [ ] Network isolation
-  - [ ] Temporary worktree creation
-  - [ ] Environment variable masking
-  - [ ] Filesystem isolation
-  - **Acceptance**: Dry-run has no external effects
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **Dry-run execution**
-  - [ ] Plan change simulation
-  - [ ] Diff generation
-  - [ ] Log capture
-  - [ ] Evidence bundle creation
-  - **Acceptance**: Dry-run produces accurate preview
-  - **Dependencies**: Sandbox environment
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Sidecar Commands
-
-- [ ] **Implement `anvil daemon start`**
-  - [ ] Start sidecar process
-  - [ ] Configuration loading
-  - [ ] Health check endpoint
-  - **Acceptance**: Daemon starts and runs stably
-  - **Dependencies**: Sidecar infrastructure
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **Implement `anvil dry-run <plan>`**
-  - [ ] Communicate with sidecar
-  - [ ] Execute dry-run via JSON-RPC
-  - [ ] Display preview results
-  - **Acceptance**: Dry-run shows accurate change preview
-  - **Dependencies**: Dry-run implementation
-  - **Date Completed**:
-  - **Date Committed**:
+---
 
 ## Phase 7: Apply & Rollback
 
-### Epic: Plan Execution
+### Epic: Transactional Execution
 
-#### Apply Implementation
+**Critical**: This is where Anvil's core value proposition is delivered - safe,
+auditable, reversible changes.
 
-- [ ] **Transactional apply system** (`sidecar/src/apply/`)
-  - [ ] Atomic change application
-  - [ ] Rollback point creation
-  - [ ] Audit trail generation
-  - [ ] Change validation before application
-  - **Acceptance**: Apply operations are atomic and auditable
-  - **Date Completed**:
-  - **Date Committed**:
+#### Apply System
+
+- [ ] **Implement idempotent apply** (`sidecar/src/apply/`)
+  - [ ] Parse proposed_changes from APS
+  - [ ] Apply changes transactionally
+  - [ ] Create snapshots before applying
+  - [ ] Record all applied changes
+  - [ ] Generate apply evidence
+  - [ ] Support partial application with clear errors
+  - **Acceptance**: Changes apply successfully with audit trail
+  - **Target**: Week 14
+
+- [ ] **Apply CLI command**
+  - [ ] `anvil apply <plan>` command
+  - [ ] Require gate pass before applying
+  - [ ] Require approval flag: `--approved`
+  - [ ] Display apply progress
+  - [ ] Show summary of applied changes
+  - **Acceptance**: Users can apply validated plans safely
+  - **Dependencies**: Apply system, Gate integration
+  - **Target**: Week 14
+
+#### Rollback System
+
+- [ ] **Implement rollback** (`sidecar/src/rollback/`)
+  - [ ] Load snapshot from apply
+  - [ ] Reverse applied changes
+  - [ ] Verify rollback integrity
+  - [ ] Generate rollback evidence
+  - [ ] Support partial rollback
+  - **Acceptance**: Changes can be rolled back to previous state
+  - **Target**: Week 15
+
+- [ ] **Rollback CLI command**
+  - [ ] `anvil rollback <plan-id>` command
+  - [ ] Display what will be rolled back
+  - [ ] Require confirmation
+  - [ ] Show rollback progress
+  - [ ] Verify system state after rollback
+  - **Acceptance**: Users can safely undo applied changes
+  - **Dependencies**: Rollback system
+  - **Target**: Week 15
+
+#### Safety Guards
 
 - [ ] **Apply guards**
-  - [ ] Gate approval verification
-  - [ ] Plan approval verification
-  - [ ] Hash integrity verification
-  - [ ] Idempotency checks
-  - **Acceptance**: Apply only executes approved, valid plans
-  - **Date Completed**:
-  - **Date Committed**:
+  - [ ] Verify gate passed before apply
+  - [ ] Check approval status
+  - [ ] Validate plan hasn't been modified
+  - [ ] Prevent concurrent applies
+  - [ ] Timeout protection
+  - **Acceptance**: Apply operations are safe by default
+  - **Target**: Week 15
 
-#### Rollback Implementation
+---
 
-- [ ] **Rollback system** (`sidecar/src/rollback/`)
-  - [ ] Previous state snapshot restoration
-  - [ ] Rollback validation
-  - [ ] Rollback audit trail
-  - [ ] Error handling for partial rollbacks
-  - **Acceptance**: Rollback reliably restores previous state
-  - **Date Completed**:
-  - **Date Committed**:
+## Phase 8: GitHub Integration
 
-#### Approval System (MVP)
+### Epic: CI/CD Integration
 
-- [ ] **Simple approval log** (`sidecar/src/approval/`)
-  - [ ] Local approval storage
-  - [ ] Approval status tracking
-  - [ ] Basic approval workflow
-  - **Acceptance**: Plans can be approved for application
-  - **Date Completed**:
-  - **Date Committed**:
+**Goal**: Make Anvil a natural part of the development workflow
 
-#### Apply/Rollback Commands
+#### GitHub Action
 
-- [ ] **Implement `anvil apply <plan>`**
-  - [ ] Verify plan approval and gate status
-  - [ ] Execute apply via sidecar
-  - [ ] Display application results
-  - [ ] Handle application errors
-  - **Acceptance**: Apply executes approved plans reliably
-  - **Dependencies**: Apply implementation
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] **Create GitHub Action** (`.github/actions/anvil-gate/`)
+  - [ ] Action definition (action.yml)
+  - [ ] Install Anvil CLI
+  - [ ] Run gate on changed files
+  - [ ] Post results as PR comment
+  - [ ] Set status check (pass/fail)
+  - [ ] Support configuration via workflow inputs
+  - **Acceptance**: Action can be used in any repository
+  - **Target**: Week 16
 
-- [ ] **Implement `anvil rollback <plan>`**
-  - [ ] Execute rollback via sidecar
-  - [ ] Display rollback results
-  - [ ] Handle rollback errors
-  - **Acceptance**: Rollback restores previous state
-  - **Dependencies**: Rollback implementation
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] **PR Integration**
+  - [ ] Detect SpecKit/BMAD files in PR
+  - [ ] Run gate automatically
+  - [ ] Block merge on gate failure
+  - [ ] Clear merge on gate pass
+  - [ ] Support override via comment: `/anvil override`
+  - **Acceptance**: PRs are automatically validated
+  - **Target**: Week 16
 
-#### E2E Testing
+- [ ] **Status checks**
+  - [ ] Report individual check results
+  - [ ] Provide links to detailed evidence
+  - [ ] Show validation summary
+  - [ ] Support required vs. optional checks
+  - **Acceptance**: PR status clearly shows validation state
+  - **Target**: Week 17
 
-- [ ] **Complete workflow tests**
-  - [ ] Draft → Gate → Approve → Apply → Rollback
-  - [ ] Multiple plans interaction
-  - [ ] Error scenarios at each stage
-  - **Acceptance**: Complete workflow passes E2E tests
-  - **Dependencies**: All apply/rollback implementation
-  - **Date Completed**:
-  - **Date Committed**:
+#### Documentation & Examples
 
-## Phase 8: Feature Flags Pack
+- [ ] **GitHub Action documentation**
+  - [ ] Setup guide for repositories
+  - [ ] Configuration examples
+  - [ ] Troubleshooting guide
+  - [ ] Best practices
+  - **Acceptance**: Teams can integrate Anvil easily
+  - **Target**: Week 17
 
-### Epic: Packs - Feature Flags
+---
 
-#### OpenFeature Integration
+## Phase 9: Feature Flags Pack (DEFERRED)
 
-- [ ] **@anvil/flags library** (`packs/flags/src/`)
-  - [ ] OpenFeature provider interface implementation
-  - [ ] Provider adapter pattern
-  - [ ] TypeScript type definitions
-  - **Acceptance**: Library implements OpenFeature standard
-  - **Date Completed**:
-  - **Date Committed**:
+**Note**: This is deferred post-MVP. Including spec for completeness.
 
-- [ ] **File store provider**
-  - [ ] `flags.env.json` file format
-  - [ ] Environment variable overrides
-  - [ ] Flag evaluation logic
-  - [ ] Default value handling
-  - **Acceptance**: Flags work with file store
-  - **Date Completed**:
-  - **Date Committed**:
+### Epic: Feature Flag Management
 
-#### CLI Integration
+- [ ] Feature flag library implementation
+- [ ] CLI commands for flag management
+- [ ] OpenFeature provider
+- [ ] FeatureBoard adapter preparation
+- [ ] Test generation
+- [ ] Documentation
 
-- [ ] **Flag management commands**
-  - [ ] `anvil flags add <name> <default-value>` - Add new flag
-  - [ ] `anvil flags set <name> <value>` - Set flag value
-  - [ ] `anvil flags list` - List all flags
-  - [ ] `anvil flags remove <name>` - Remove flag
-  - **Acceptance**: Flags can be managed via CLI
-  - **Date Completed**:
-  - **Date Committed**:
+**Target**: Post-MVP (Weeks 20+)
 
-- [ ] **APS delta generation**
-  - [ ] Flag operations generate APS changes
-  - [ ] Changes integrated with plan system
-  - [ ] Validation of flag operations
-  - **Acceptance**: Flag changes go through plan system
-  - **Dependencies**: CLI integration
-  - **Date Completed**:
-  - **Date Committed**:
+---
 
-#### Generated Assets
-
-- [ ] **Test generation**
-  - [ ] Automated flag test creation
-  - [ ] Test templates for different flag types
-  - [ ] Integration with project test suite
-  - **Acceptance**: Flag tests generated automatically
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **Documentation generation**
-  - [ ] Flag documentation templates
-  - [ ] Usage examples
-  - [ ] Integration documentation
-  - **Acceptance**: Flag documentation generated
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Flag Policies
-
-- [ ] **Client-side risk policy**
-  - [ ] Policy rule for high-risk client-side flags
-  - [ ] Risk level classification
-  - [ ] Policy enforcement in gate
-  - **Acceptance**: Policy prevents risky flag configurations
-  - **Dependencies**: Policy engine
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### FeatureBoard Preparation
-
-- [ ] **FeatureBoard provider stub** (`providers/featureboard/`)
-  - [ ] Stub implementation with unimplemented methods
-  - [ ] Adapter test framework
-  - [ ] Migration preparation
-  - **Acceptance**: FeatureBoard adapter ready for implementation
-  - **Date Completed**:
-  - **Date Committed**:
-
-## Phase 9: Productioniser
+## Phase 10: Productioniser (MINIMAL MVP VERSION)
 
 ### Epic: Repository Governance
 
-#### Scanning System
+**MVP Scope**: Basic scanning with safe recommendations only. Full heuristics
+engine deferred.
 
-- [ ] **Repository scanner** (`productioniser/src/scanner/`)
-  - [ ] Test coverage analysis
-  - [ ] Documentation presence checking
-  - [ ] Lint configuration verification
-  - [ ] Folder structure hygiene
-  - [ ] Dependency security scanning
-  - **Acceptance**: Scanner identifies improvement opportunities
-  - **Date Completed**:
-  - **Date Committed**:
+#### Minimal Scanner
 
-- [ ] **Heuristics engine**
-  - [ ] Safe-by-default recommendations
-  - [ ] Context-aware suggestions
-  - [ ] Risk assessment for recommendations
-  - **Acceptance**: Heuristics provide valuable suggestions
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] **Basic repository scanner** (`productioniser/src/scanner/`)
+  - [ ] Test coverage check
+  - [ ] Documentation presence check
+  - [ ] Lint configuration check
+  - [ ] Basic security scan (secrets, known vulns)
+  - [ ] Simple scoring system
+  - **Acceptance**: Scanner identifies obvious gaps
+  - **Target**: Week 18
 
-#### Remediation System
-
-- [ ] **Plan generator** (`productioniser/src/generator/`)
-  - [ ] APS plan generation from scan results
-  - [ ] Scaffolding suggestions
-  - [ ] Configuration improvements
-  - [ ] Security enhancement recommendations
-  - **Acceptance**: Generator creates valid remediation plans
-  - **Dependencies**: Scanning system
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] **Safe recommendations**
+  - [ ] Suggest adding tests where missing
+  - [ ] Suggest adding README if absent
+  - [ ] Suggest lint setup if missing
+  - [ ] Flag potential security issues
+  - [ ] No automatic fixes, only suggestions
+  - **Acceptance**: Recommendations are safe and valuable
+  - **Target**: Week 18
 
 #### Productioniser Command
 
 - [ ] **Implement `anvil productionise`**
-  - [ ] Repository scanning execution
-  - [ ] Remediation plan generation
-  - [ ] Plan saving and display
-  - [ ] Options for scan scope
-  - **Acceptance**: Command outputs useful remediation plan
-  - **Dependencies**: Scanning and remediation systems
-  - **Date Completed**:
-  - **Date Committed**:
+  - [ ] Scan repository
+  - [ ] Generate report
+  - [ ] Optionally create remediation plan
+  - [ ] Support `--fix` flag for safe auto-fixes only
+  - **Acceptance**: Command outputs useful assessment
+  - **Target**: Week 19
 
-#### Testing
-
-- [ ] **Fixture repositories**
-  - [ ] Repository with missing tests
-  - [ ] Repository with poor documentation
-  - [ ] Repository with security issues
-  - [ ] Well-maintained repository
-  - **Acceptance**: Fixtures cover scan scenarios
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **Productioniser tests**
-  - [ ] Scan accuracy tests
-  - [ ] Plan generation tests
-  - [ ] Performance tests on large repositories
-  - **Acceptance**: Productioniser works reliably
-  - **Dependencies**: Fixture repositories
-  - **Date Completed**:
-  - **Date Committed**:
-
-## Phase 10: GitHub Integration
-
-### Epic: CI/CD Integration
-
-#### GitHub Action
-
-- [ ] **Action template** (`.github/actions/anvil-gate/`)
-  - [ ] Action metadata (action.yml)
-  - [ ] Action implementation (JavaScript/Docker)
-  - [ ] Input/output configuration
-  - [ ] Error handling and reporting
-  - **Acceptance**: Action runs anvil gate on PRs
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **PR blocking logic**
-  - [ ] Gate failure blocks merge
-  - [ ] Success annotation on PR
-  - [ ] Failure details in PR comments
-  - [ ] Re-run capabilities
-  - **Acceptance**: PRs blocked when gate fails
-  - **Dependencies**: GitHub Action
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Sample Repository
-
-- [ ] **Sample application** (`examples/sample-app/`)
-  - [ ] Application using @anvil/flags
-  - [ ] Complete CI/CD setup
-  - [ ] Documentation and examples
-  - [ ] Demonstration workflows
-  - **Acceptance**: Sample app demonstrates full workflow
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **Demo scenarios**
-  - [ ] Successful PR with passing gate
-  - [ ] Failed PR with gate failures
-  - [ ] Flag management demonstration
-  - [ ] Rollback demonstration
-  - **Acceptance**: All demo scenarios work
-  - **Dependencies**: Sample application
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Integration Testing
-
-- [ ] **GitHub workflow tests**
-  - [ ] Action execution tests
-  - [ ] PR blocking verification
-  - [ ] Comment generation tests
-  - **Acceptance**: GitHub integration works reliably
-  - **Dependencies**: GitHub Action, Sample repository
-  - **Date Completed**:
-  - **Date Committed**:
+---
 
 ## Phase 11: Hardening & Documentation
 
 ### Epic: Production Readiness
 
-#### Security Hardening
-
-- [ ] **Enhanced secret patterns**
-  - [ ] Expanded regex patterns
-  - [ ] ML-based secret detection (optional)
-  - [ ] Custom pattern configuration
-  - **Acceptance**: Secret detection has low false positive rate
-  - **Date Completed**:
-  - **Date Committed**:
-
-- [ ] **SARIF output implementation**
-  - [ ] SARIF format for all scanners
-  - [ ] GitHub integration for annotations
-  - [ ] Tool interoperability
-  - **Acceptance**: SARIF output works with security tools
-  - **Date Completed**:
-  - **Date Committed**:
-
-#### Performance Optimization
+#### Performance Optimisation
 
 - [ ] **Gate performance**
   - [ ] Parallel check execution
-  - [ ] Caching for repeated runs
-  - [ ] Incremental analysis
+  - [ ] Caching for repeated checks
+  - [ ] Incremental validation
+  - [ ] Memory optimisation
   - **Acceptance**: Gate runs efficiently on large repositories
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Target**: Week 20
 
-- [ ] **Memory optimization**
-  - [ ] Efficient data structures
-  - [ ] Memory leak prevention
-  - [ ] Resource cleanup
-  - **Acceptance**: Memory usage remains stable
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] **CLI responsiveness**
+  - [ ] Fast startup time
+  - [ ] Streaming output for long operations
+  - [ ] Interrupt handling
+  - **Acceptance**: CLI feels fast and responsive
+  - **Target**: Week 20
+
+#### Security Hardening
+
+- [ ] **Input validation**
+  - [ ] Sanitise all user inputs
+  - [ ] Validate file paths
+  - [ ] Prevent path traversal
+  - [ ] Rate limiting for operations
+  - **Acceptance**: CLI is secure against common attacks
+  - **Target**: Week 21
+
+- [ ] **Secrets handling**
+  - [ ] Never log sensitive data
+  - [ ] Secure evidence storage
+  - [ ] Audit trail encryption (optional)
+  - **Acceptance**: No secrets leaked in logs or evidence
+  - **Target**: Week 21
 
 #### Documentation
 
 - [ ] **Developer documentation** (`docs/`)
-  - [ ] Installation guide
-  - [ ] Configuration reference
-  - [ ] API documentation
+  - [ ] Getting started guide
+  - [ ] Architecture overview
+  - [ ] Adapter development guide
+  - [ ] API reference
   - [ ] Troubleshooting guide
-  - **Acceptance**: Documentation is comprehensive and clear
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Acceptance**: Developers can contribute effectively
+  - **Target**: Week 22
+
+- [ ] **User documentation**
+  - [ ] Installation guide
+  - [ ] CLI reference
+  - [ ] Configuration guide
+  - [ ] Best practices
+  - [ ] Examples and tutorials
+  - **Acceptance**: Users can use Anvil without support
+  - **Target**: Week 22
 
 - [ ] **Policy cookbook**
   - [ ] Common policy examples
   - [ ] Policy writing guide
-  - [ ] Best practices
+  - [ ] Policy testing guide
   - **Acceptance**: Users can write effective policies
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Target**: Week 22
 
-- [ ] **Contribution guide**
-  - [ ] Development setup
-  - [ ] Testing guidelines
-  - [ ] Code review process
-  - [ ] Release process
-  - **Acceptance**: Contributors can easily get started
-  - **Date Completed**:
-  - **Date Committed**:
+---
 
 ## Phase 12: Release Candidate
 
@@ -1136,20 +682,37 @@ heavy sidecar. Keeps agentic optional.)_
 #### Release Engineering
 
 - [ ] **Version management**
-  - [ ] Semantic versioning implementation
+  - [ ] Semantic versioning setup
   - [ ] Changelog generation
   - [ ] Version bumping automation
-  - **Acceptance**: Versions are managed consistently
-  - **Date Completed**:
-  - **Date Committed**:
+  - [ ] Git tagging strategy
+  - **Acceptance**: Versions managed consistently
+  - **Target**: Week 23
 
 - [ ] **Artifact signing**
   - [ ] Package signing setup
   - [ ] Checksum generation
   - [ ] Provenance documentation
+  - [ ] SBOM generation
   - **Acceptance**: Artifacts are signed and verifiable
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Target**: Week 23
+
+#### Release Testing
+
+- [ ] **End-to-end validation**
+  - [ ] Complete workflow testing
+  - [ ] Performance benchmarking
+  - [ ] Security validation
+  - [ ] Cross-platform testing (Linux, macOS, Windows)
+  - **Acceptance**: Release candidate is production-ready
+  - **Target**: Week 24
+
+- [ ] **Sample walkthrough**
+  - [ ] Video demonstration
+  - [ ] Written tutorial
+  - [ ] Example repository
+  - **Acceptance**: New users have clear onboarding
+  - **Target**: Week 24
 
 #### Release Documentation
 
@@ -1158,140 +721,133 @@ heavy sidecar. Keeps agentic optional.)_
   - [ ] Configuration recommendations
   - [ ] Common issues and solutions
   - **Acceptance**: Teams can deploy Anvil quickly
-  - **Date Completed**:
-  - **Date Committed**:
+  - **Target**: Week 24
 
-- [ ] **Incident procedures**
-  - [ ] Rollback procedures
-  - [ ] Debugging guides
-  - [ ] Support escalation
-  - **Acceptance**: Operations team can handle incidents
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] **Release notes**
+  - [ ] Feature summary
+  - [ ] Breaking changes
+  - [ ] Migration guide
+  - [ ] Known issues
+  - **Acceptance**: Release notes are clear and complete
+  - **Target**: Week 24
 
-#### Release Testing
+---
 
-- [ ] **End-to-end validation**
-  - [ ] Complete workflow testing
-  - [ ] Performance benchmarking
-  - [ ] Security validation
-  - [ ] Cross-platform testing
-  - **Acceptance**: Release candidate is production-ready
-  - **Date Completed**:
-  - **Date Committed**:
+## Post-MVP: Future Phases
 
-- [ ] **Sample walkthrough recording**
-  - [ ] Video demonstration
-  - [ ] Documentation walkthrough
-  - [ ] Best practices showcase
-  - **Acceptance**: Users have clear guidance for getting started
-  - **Date Completed**:
-  - **Date Committed**:
+### Deferred Features (Post-Week 24)
 
-#### Release Candidate
+**These are explicitly out of scope for MVP but documented for future
+planning:**
 
-- [ ] **RC tag creation**
-  - [ ] Tag with RC version
-  - [ ] Release notes generation
-  - [ ] Artifact publication
-  - **Acceptance**: RC is available for testing
-  - **Dependencies**: All release preparation
-  - **Date Completed**:
-  - **Date Committed**:
+#### Advanced Features
 
-## Higher-Level Tasks for Future Phases
+- [ ] Rust/Go worker for performance
+- [ ] React dashboard for plan approval
+- [ ] Additional packs (telemetry, observability, infrastructure)
+- [ ] Full productioniser with heuristics engine
+- [ ] Memory layer (RAG + provenance store)
+- [ ] MCP façade for agentic interoperability
 
-### Epic: Advanced Features (Post-MVP)
+#### Enterprise Features
 
-- [ ] **Rust/Go worker for performance**
-  - [ ] High-performance scanning implementation
-  - [ ] CLI rewrite for speed
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] Multi-language support (Python, Java, Go)
+- [ ] SSO authentication
+- [ ] RBAC authorisation
+- [ ] Advanced audit logging
+- [ ] Compliance reporting
+- [ ] Packs marketplace
 
-- [ ] **React dashboard**
-  - [ ] Plan approval interface
-  - [ ] History visualization
-  - [ ] Real-time status
-  - **Date Completed**:
-  - **Date Committed**:
+#### Act 2 & Act 3 Expansion
 
-- [ ] **Additional Packs**
-  - [ ] Observability pack
-  - [ ] Telemetry enrichment pack
-  - [ ] Infrastructure pack
-  - **Date Completed**:
-  - **Date Committed**:
+- [ ] Document validation adapters (Word, Confluence, Notion)
+- [ ] Analysis validation adapters (Excel, Jupyter, Tableau)
+- [ ] Horizontal platform expansion (consultants, analysts, legal)
 
-### Epic: Enterprise Features (Future)
+---
 
-- [ ] **Multi-language support**
-  - [ ] Python ecosystem integration
-  - [ ] Java/Kotlin support
-  - [ ] Go module support
-  - **Date Completed**:
-  - **Date Committed**:
+## Success Metrics
 
-- [ ] **Enterprise integrations**
-  - [ ] SSO authentication
-  - [ ] RBAC authorization
-  - [ ] Audit logging
-  - [ ] Compliance reporting
-  - **Date Completed**:
-  - **Date Committed**:
+### MVP Success Criteria
 
-## Future Phases – Advanced / Enterprise
+We've achieved MVP when:
 
-- **Memory Layer (RAG + provenance store)** **[NEW]**
-  - [ ] Vector store + metadata indices for APS, ADRs, code artefacts
-  - [ ] Retrieval tools for agents and Productioniser
-  - **Acceptance**: Agents cite sources; PR shows citations summary
+1. ✅ **Interoperability**: SpecKit and BMAD users can validate plans without
+   changing formats
+2. ✅ **Validation**: Gate enforces quality standards (lint, test, coverage,
+   secrets, policies)
+3. ✅ **Safety**: Apply and rollback work reliably with full audit trails
+4. ✅ **Integration**: GitHub Action blocks PRs that fail validation
+5. ✅ **Adoption**: 15-20 teams using Anvil in production
 
-- **MCP façade (agentic interop)** **[NEW]**
-  - [ ] Expose APS/gate/productionise as MCP tools
-  - **Acceptance**: Cursor/Claude Projects can call Anvil natively
+### Quality Gates for Each Phase
 
-- **Packs Marketplace** **[NEW]**
-  - [ ] Install/upgrade/version packs; publishing flow
-  - **Acceptance**: Pack install via CLI + provenance
+Each phase must meet:
 
-## Definition of Done
+- [ ] > 90% test coverage for new code
+- [ ] All integration tests passing
+- [ ] Documentation complete and reviewed
+- [ ] Security review completed
+- [ ] Performance benchmarks met
 
-Each task is considered complete when:
+---
 
-- [ ] Implementation meets acceptance criteria
-- [ ] Unit tests achieve >90% coverage
-- [ ] Integration tests pass
-- [ ] Code review completed
-- [ ] Documentation updated
-- [ ] CHANGELOG entry added
-- [ ] PR passes all CI checks
+## Sprint Planning Template
 
-## Progress Tracking Template
+### Current Sprint: [Week Number]
+
+**Goal**: [Primary objective]
+
+**Tasks**:
+
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
+
+**Blockers**:
+
+- None / [Description]
+
+**Demo**:
+
+- [What to demonstrate]
 
 ### Daily Standup
 
-- **Yesterday**: Tasks completed
-- **Today**: Tasks in progress
-- **Blockers**: Issues preventing progress
+**Yesterday**: [Completed tasks] **Today**: [Planned tasks] **Blockers**:
+[Issues preventing progress]
 
-### Weekly Review
+---
 
-- **Tasks Completed**: Count and list
-- **Tasks In Progress**: Current status
-- **Tasks Blocked**: Issues and resolution plans
-- **Next Week Goals**: Planned deliverables
+## Notes
 
-For strategic context and architectural decisions, see [PLAN.md](./PLAN.md).
+### MVP Philosophy
 
-## Notes on MVP Cut (practical)
+**Ship Fast, Ship Value:**
 
-- **Ship first:** Phase 2, 2.5, 3, 3.5, 3.6, 4, 4.5, 5.5, and the **Feature
-  Flags Pack** subset; plus a **minimal Productioniser** that wraps
-  tests/docs/telemetry + secret scan.
-- **Defer:** Sidecar, full transactional apply/rollback, deep OPA policies, full
-  Productioniser heuristics, memory layer, MCP façade, marketplace.
+- Focus on interoperability (adapters) before fancy features
+- Validation and safety before AI assistance
+- Working software before perfect software
 
-If you want, I can convert this into **issue templates and GitHub project
-boards** (one board per phase, labels auto-applied), or drop this into canvas as
-a living checklist you can update with your team.
+**Defer Strategically:**
+
+- Advanced features (packs, memory, MCP) come after validation works
+- Enterprise features come after product-market fit
+- Act 2/3 expansion comes after Act 1 success
+
+### Key Architectural Decisions
+
+1. **APS is internal** - Users never see it unless they want to
+2. **Adapters are the wedge** - Work with existing formats
+3. **Gate is the trust boundary** - All validation happens here
+4. **Evidence is immutable** - Full audit trail always
+5. **Safety first** - Rollback capability is non-negotiable
+
+---
+
+## Version History
+
+- **2025-09-30**: Major revision for interoperability strategy, updated
+  progress, aligned with three-act vision
+- **2025-09-26**: Initial comprehensive TODO with phase breakdown
+- **2025-09-22**: Repository foundations established
