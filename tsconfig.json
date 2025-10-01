@@ -1,11 +1,12 @@
 {
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
-  "include": ["vitest.config.ts", "playwright.config.ts", "eslint.config.mjs", "e2e/**/*"],
+  "include": ["vitest.config.ts", "playwright.config.ts", "eslint.config.mjs", "jest.config.ts", "e2e/**/*"],
   "references": [
     { "path": "./cli" },
     { "path": "./ui" },
     { "path": "./core" },
-    { "path": "./packs" }
+    { "path": "./packs" },
+    { "path": "./packages/adapters" }
   ]
 }

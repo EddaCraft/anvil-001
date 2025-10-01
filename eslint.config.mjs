@@ -1,10 +1,9 @@
 import js from '@eslint/js';
-import typescriptEslint from 'typescript-eslint';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import globals from 'globals';
 import reactPlugin from 'eslint-plugin-react';
+import globals from 'globals';
+import typescriptEslint from 'typescript-eslint';
 // import jsonPlugin from '@eslint/json'; // TODO: Re-enable once compatible with ESLint 9
-import markdownPlugin from '@eslint/markdown';
 
 export default typescriptEslint.config(
   js.configs.recommended,
@@ -18,6 +17,7 @@ export default typescriptEslint.config(
       '**/coverage/',
       '**/playwright-report/',
       'eslint.config.mts',
+      '**/*.md',
     ],
   },
   {
@@ -31,23 +31,6 @@ export default typescriptEslint.config(
   },
   // JSON files - temporarily disabled due to compatibility issues
   // TODO: Re-enable once @eslint/json is properly configured for ESLint 9
-  // Markdown files
-  {
-    files: ['**/*.md'],
-    processor: markdownPlugin.processors.markdown,
-  },
-  {
-    files: ['**/*.md/**/*.ts', '**/*.md/**/*.tsx', '**/*.md/**/*.js', '**/*.md/**/*.jsx'],
-    languageOptions: {
-      parserOptions: {
-        project: false,
-      },
-    },
-    rules: {
-      '@typescript-eslint/no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-expressions': 'off',
-    },
-  },
   // React files
   {
     files: ['**/*.jsx', '**/*.tsx'],
@@ -62,8 +45,9 @@ export default typescriptEslint.config(
     files: ['**/*.{ts,tsx,mts,cts}'],
     languageOptions: {
       parserOptions: {
-        project: true,
+        projectService: true,
         tsconfigRootDir: import.meta.dirname,
+        allowDefaultProject: true,
       },
     },
     rules: {
@@ -81,7 +65,15 @@ export default typescriptEslint.config(
     },
   },
   {
-    files: ['**/*.test.ts', '**/*.spec.ts'],
+    files: ['**/*.test.ts', '**/*.spec.ts', '**/vitest.config.ts', '**/jest.config.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: {
+          allowDefaultProject: ['**/*.test.ts', '**/*.spec.ts', '**/vitest.config.ts', '**/jest.config.ts'],
+        },
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       'no-console': 'off',
