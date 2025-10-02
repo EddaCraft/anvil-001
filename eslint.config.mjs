@@ -31,23 +31,6 @@ export default typescriptEslint.config(
   },
   // JSON files - temporarily disabled due to compatibility issues
   // TODO: Re-enable once @eslint/json is properly configured for ESLint 9
-  // Markdown files
-  {
-    files: ['**/*.md'],
-    processor: markdownPlugin.processors.markdown,
-  },
-  {
-    files: ['**/*.md/**/*.ts', '**/*.md/**/*.tsx', '**/*.md/**/*.js', '**/*.md/**/*.jsx'],
-    languageOptions: {
-      parserOptions: {
-        project: false,
-      },
-    },
-    rules: {
-      '@typescript-eslint/no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-expressions': 'off',
-    },
-  },
   // React files
   {
     files: ['**/*.jsx', '**/*.tsx'],
@@ -96,6 +79,24 @@ export default typescriptEslint.config(
   {
     files: ['**/scripts/**/*.ts'],
     rules: {
+      'no-console': 'off',
+    },
+  },
+  // Markdown files - must come last to override TypeScript rules
+  {
+    files: ['**/*.md'],
+    processor: markdownPlugin.processors.markdown,
+  },
+  {
+    files: ['**/*.md/**/*.ts', '**/*.md/**/*.tsx', '**/*.md/**/*.js', '**/*.md/**/*.jsx'],
+    languageOptions: {
+      parserOptions: {
+        project: false,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
       'no-console': 'off',
     },
   }

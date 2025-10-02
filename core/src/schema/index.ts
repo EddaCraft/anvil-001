@@ -29,7 +29,7 @@ export type {
   EvidenceEntry,
   Approval,
   ExecutionResult,
-  ValidationResult,
+  SchemaValidationResult,
 } from './aps.schema.js';
 
 // Re-export utility functions

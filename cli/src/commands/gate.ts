@@ -34,7 +34,7 @@ export function createGateCommand(): Command {
         }
 
         const spinner = ora('Loading plan...').start();
-        const plan = loadPlan(planPath);
+        const plan = await loadPlan(planPath);
         spinner.succeed('Plan loaded');
 
         // Load config
