@@ -15,5 +15,10 @@
     "emitDeclarationOnly": false,
     "composite": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../core"
+    }
+  ]
 }

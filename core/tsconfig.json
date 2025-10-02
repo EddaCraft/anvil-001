@@ -4,7 +4,7 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": ".",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "noEmitOnError": true,
     "declaration": true,
+    "declarationDir": "./dist",
     "emitDeclarationOnly": false,
     "composite": true
   },

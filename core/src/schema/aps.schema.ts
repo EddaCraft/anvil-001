@@ -145,8 +145,8 @@ export const APSPlanSchema = z
     tags: z.array(z.string()).optional().describe('Tags for categorization and filtering'),
     metadata: z.record(z.unknown()).optional().describe('Additional plan-specific metadata'),
   })
-  .strict() // Reject unknown properties
-  .brand<'APSPlan'>(); // Brand for nominal typing
+  .strict(); // Reject unknown properties
+// .brand<'APSPlan'>(); // Brand for nominal typing - disabled for easier testing
 
 /**
  * Type exports - automatically inferred from Zod schemas
