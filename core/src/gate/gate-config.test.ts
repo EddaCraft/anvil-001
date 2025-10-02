@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { GateConfigManager } from './gate-config.js';
 import { writeFileSync, rmSync, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';

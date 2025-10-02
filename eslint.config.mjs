@@ -69,7 +69,7 @@ export default typescriptEslint.config(
     languageOptions: {
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['**/*.test.ts', '**/*.spec.ts', '**/vitest.config.ts', '**/jest.config.ts'],
+          allowDefaultProject: ['*.test.ts', '*.spec.ts', 'vitest.config.ts', 'jest.config.ts'],
         },
         tsconfigRootDir: import.meta.dirname,
       },
