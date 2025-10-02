@@ -2,11 +2,14 @@
 
 ## Intent
 
-Implement a user authentication system with JWT tokens to secure API endpoints and manage user sessions effectively.
+Implement a user authentication system with JWT tokens to secure API endpoints
+and manage user sessions effectively.
 
 ## Overview
 
-This specification outlines the implementation of a JWT-based authentication system that will provide secure access control for our API endpoints. The system will support user registration, login, logout, and token refresh functionality.
+This specification outlines the implementation of a JWT-based authentication
+system that will provide secure access control for our API endpoints. The system
+will support user registration, login, logout, and token refresh functionality.
 
 ## Goals
 
@@ -30,7 +33,8 @@ This specification outlines the implementation of a JWT-based authentication sys
 
 #### Create authentication controller at `src/controllers/auth.controller.ts`
 
-This controller will handle all authentication-related endpoints including registration, login, and token refresh.
+This controller will handle all authentication-related endpoints including
+registration, login, and token refresh.
 
 ```typescript
 import { Request, Response } from 'express';
@@ -41,11 +45,11 @@ export class AuthController {
   async register(req: Request, res: Response) {
     // Implementation here
   }
-  
+
   async login(req: Request, res: Response) {
     // Implementation here
   }
-  
+
   async refresh(req: Request, res: Response) {
     // Implementation here
   }
@@ -60,7 +64,11 @@ Middleware to verify JWT tokens and protect routes.
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-export function authenticateToken(req: Request, res: Response, next: NextFunction) {
+export function authenticateToken(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   // Token verification logic
 }
 ```
@@ -80,6 +88,7 @@ Add JWT secret and token expiration settings.
 #### Update `.env` file
 
 Add the following environment variables:
+
 - JWT_SECRET: Secret key for signing tokens
 - JWT_EXPIRES_IN: Token expiration time
 - REFRESH_TOKEN_EXPIRES_IN: Refresh token expiration time

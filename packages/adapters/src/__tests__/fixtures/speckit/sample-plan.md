@@ -4,7 +4,8 @@ Generated from APS: aps-1234abcd
 
 ## Summary
 
-Implement a user authentication system with JWT tokens to secure API endpoints and manage user sessions effectively.
+Implement a user authentication system with JWT tokens to secure API endpoints
+and manage user sessions effectively.
 
 ## Implementation Steps
 
