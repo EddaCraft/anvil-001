@@ -8,6 +8,9 @@
   "bin": {
     "anvil": "./dist/index.js"
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
