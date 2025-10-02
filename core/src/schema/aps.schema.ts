@@ -164,7 +164,7 @@ export type APSPlan = z.infer<typeof APSPlanSchema>;
 /**
  * Validation result type for consistent error handling
  */
-export interface ValidationResult {
+export interface SchemaValidationResult {
   success: boolean;
   data?: APSPlan;
   errors?: Array<{
@@ -177,7 +177,7 @@ export interface ValidationResult {
 /**
  * Parse and validate a plan with user-friendly error formatting
  */
-export function validatePlan(data: unknown): ValidationResult {
+export function validatePlan(data: unknown): SchemaValidationResult {
   const result = APSPlanSchema.safeParse(data);
 
   if (result.success) {

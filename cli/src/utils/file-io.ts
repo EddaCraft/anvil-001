@@ -1,21 +1,37 @@
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, resolve } from 'path';
-import { PlanData } from '@anvil/core';
+import { APSPlan, validateAPSPlan } from '@anvil/core';
 import { ensureDirSync } from 'fs-extra';
 
-export function loadPlan(path: string): PlanData {
+export async function loadPlan(path: string): Promise<APSPlan> {
   if (!existsSync(path)) {
     throw new Error(`Plan file not found: ${path}`);
   }
 
   try {
     const content = readFileSync(path, 'utf-8');
-    return JSON.parse(content);
+    const data = JSON.parse(content);
+
+    // Validate the plan
+    const validationResult = await validateAPSPlan(data);
+
+    if (!validationResult.valid) {
+      const errorMessages =
+        validationResult.issues?.map((e) => e.message).join(', ') || 'Unknown validation error';
+      throw new Error(`Invalid plan: ${errorMessages}`);
+    }
+
+    return validationResult.data as APSPlan;
   } catch (error) {
     throw new Error(
       `Failed to load plan: ${error instanceof Error ? error.message : 'Unknown error'}`
     );
   }
+}
+
+export function savePlan(plan: APSPlan, path: string): void {
+  ensureDirSync(resolve(path, '..'));
+  writeFileSync(path, JSON.stringify(plan, null, 2), 'utf-8');
 }
 
 export function findPlanById(id: string, workspaceRoot: string): string | null {

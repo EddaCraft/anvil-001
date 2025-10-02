@@ -90,5 +90,23 @@ export default typescriptEslint.config(
     rules: {
       'no-console': 'off',
     },
+  },
+  // Markdown files - must come last to override TypeScript rules
+  {
+    files: ['**/*.md'],
+    processor: markdownPlugin.processors.markdown,
+  },
+  {
+    files: ['**/*.md/**/*.ts', '**/*.md/**/*.tsx', '**/*.md/**/*.js', '**/*.md/**/*.jsx'],
+    languageOptions: {
+      parserOptions: {
+        project: false,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
+      'no-console': 'off',
+    },
   }
 );
