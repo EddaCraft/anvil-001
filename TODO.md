@@ -146,6 +146,7 @@ validation and execution.
 
 - [ ] **Create adapter framework** (`adapters/src/base/`)
   - [ ] Define `FormatAdapter` interface:
+
     ```typescript
     interface FormatAdapter {
       name: string;
@@ -156,13 +157,15 @@ validation and execution.
       validate(content: string): ValidationResult;
     }
     ```
+
   - [ ] Implement adapter registry for format detection
   - [ ] Add adapter testing utilities
   - [ ] Create adapter documentation template
-  - **Acceptance**: Framework supports pluggable adapters
-  - **Dependencies**: APS core complete
-  - **Target**: Week 2
-  - **Sprint**: Current
+
+- **Acceptance**: Framework supports pluggable adapters
+- **Dependencies**: APS core complete
+- **Target**: Week 2
+- **Sprint**: Current
 
 #### SpecKit Adapter (Customer #1)
 
