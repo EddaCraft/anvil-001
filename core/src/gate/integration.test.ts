@@ -28,26 +28,35 @@ describe('Gate Integration Tests', () => {
     // Create a test plan
     const plan = {
       id: 'aps-test123',
+      schema_version: '0.1.0',
+      hash: 'test-hash',
       intent: 'Add TypeScript support',
       proposed_changes: [
         {
-          type: 'file',
-          target: 'src/index.ts',
-          action: 'create',
+          type: 'file_create',
+          path: 'src/index.ts',
+          description: 'Create index file',
           content: 'console.log("Hello, TypeScript!");',
         },
         {
-          type: 'file',
-          target: 'src/utils.ts',
-          action: 'create',
+          type: 'file_create',
+          path: 'src/utils.ts',
+          description: 'Create utils file',
           content: 'export function helper() { return "help"; }',
         },
       ],
       provenance: {
-        created_at: '2024-01-01T00:00:00Z',
-        created_by: 'test@example.com',
+        timestamp: '2024-01-01T00:00:00Z',
+        author: 'test@example.com',
+        source: 'cli',
         version: '1.0.0',
       },
+      validations: {
+        required_checks: [],
+        skip_checks: [],
+      },
+      evidence: [],
+      executions: [],
     };
 
     // Create the files referenced in the plan
@@ -86,20 +95,29 @@ describe('Gate Integration Tests', () => {
   it('should handle mixed check results', async () => {
     const plan = {
       id: 'aps-test123',
+      schema_version: '0.1.0',
+      hash: 'test-hash',
       intent: 'Test plan with secrets',
       proposed_changes: [
         {
-          type: 'file',
-          target: 'src/secret.js',
-          action: 'create',
+          type: 'file_create',
+          path: 'src/secret.js',
+          description: 'Create file with secret',
           content: 'const apiKey = "sk-1234567890abcdef";',
         },
       ],
       provenance: {
-        created_at: '2024-01-01T00:00:00Z',
-        created_by: 'test@example.com',
+        timestamp: '2024-01-01T00:00:00Z',
+        author: 'test@example.com',
+        source: 'cli',
         version: '1.0.0',
       },
+      validations: {
+        required_checks: [],
+        skip_checks: [],
+      },
+      evidence: [],
+      executions: [],
     };
 
     mkdirSync(join(tempDir, 'src'), { recursive: true });
@@ -130,13 +148,22 @@ describe('Gate Integration Tests', () => {
   it('should handle disabled checks', async () => {
     const plan = {
       id: 'aps-test123',
+      schema_version: '0.1.0',
+      hash: 'test-hash',
       intent: 'Test plan',
       proposed_changes: [],
       provenance: {
-        created_at: '2024-01-01T00:00:00Z',
-        created_by: 'test@example.com',
+        timestamp: '2024-01-01T00:00:00Z',
+        author: 'test@example.com',
+        source: 'cli',
         version: '1.0.0',
       },
+      validations: {
+        required_checks: [],
+        skip_checks: [],
+      },
+      evidence: [],
+      executions: [],
     };
 
     const config = {
@@ -163,20 +190,29 @@ describe('Gate Integration Tests', () => {
   it('should calculate scores correctly with multiple checks', async () => {
     const plan = {
       id: 'aps-test123',
+      schema_version: '0.1.0',
+      hash: 'test-hash',
       intent: 'Test plan',
       proposed_changes: [
         {
-          type: 'file',
-          target: 'src/clean.js',
-          action: 'create',
+          type: 'file_create',
+          path: 'src/clean.js',
+          description: 'Create clean file',
           content: 'console.log("clean code");',
         },
       ],
       provenance: {
-        created_at: '2024-01-01T00:00:00Z',
-        created_by: 'test@example.com',
+        timestamp: '2024-01-01T00:00:00Z',
+        author: 'test@example.com',
+        source: 'cli',
         version: '1.0.0',
       },
+      validations: {
+        required_checks: [],
+        skip_checks: [],
+      },
+      evidence: [],
+      executions: [],
     };
 
     mkdirSync(join(tempDir, 'src'), { recursive: true });

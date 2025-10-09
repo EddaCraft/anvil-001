@@ -65,8 +65,14 @@ export class ESLintCheck extends BaseCheck {
     const files: string[] = [];
 
     for (const change of context.plan.proposed_changes) {
-      if (change.type === 'file' && this.isLintableFile(change.target)) {
-        const fullPath = join(context.workspace_root, change.target);
+      // Check for file-related change types
+      const isFileChange =
+        change.type === 'file_create' ||
+        change.type === 'file_update' ||
+        change.type === 'file_delete';
+
+      if (isFileChange && this.isLintableFile(change.path)) {
+        const fullPath = join(context.workspace_root, change.path);
         if (existsSync(fullPath)) {
           files.push(fullPath);
         }

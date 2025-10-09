@@ -1,3 +1,6 @@
+// Import APSPlan type from schema
+import type { APSPlan } from '../schema/index.js';
+
 export interface GateCheck {
   name: string;
   description: string;
@@ -37,25 +40,8 @@ export interface GateConfig {
   global_config?: Record<string, unknown>;
 }
 
-export interface PlanData {
-  id: string;
-  intent: string;
-  proposed_changes: Array<{
-    type: string;
-    target: string;
-    action: string;
-    content: unknown;
-  }>;
-  provenance: {
-    created_at: string;
-    created_by: string;
-    version: string;
-  };
-  validations?: {
-    required_checks: string[];
-    thresholds: Record<string, number>;
-  };
-}
+// Use APSPlan directly instead of a separate interface
+export type PlanData = APSPlan;
 
 export interface CheckContext {
   plan: PlanData;

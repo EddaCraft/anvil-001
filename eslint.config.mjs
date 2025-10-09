@@ -65,13 +65,18 @@ export default typescriptEslint.config(
     },
   },
   {
-    files: ['**/*.test.ts', '**/*.spec.ts', '**/vitest.config.ts', '**/jest.config.ts'],
+    files: [
+      '**/*.test.ts',
+      '**/*.spec.ts',
+      '**/vitest.config.ts',
+      '**/jest.config.ts',
+      '**/scripts/**/*.ts',
+    ],
     languageOptions: {
       parserOptions: {
-        projectService: {
-          allowDefaultProject: ['*.test.ts', '*.spec.ts', 'vitest.config.ts', 'jest.config.ts'],
-        },
+        projectService: true,
         tsconfigRootDir: import.meta.dirname,
+        allowDefaultProject: true,
       },
     },
     rules: {

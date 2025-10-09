@@ -17,20 +17,29 @@ describe('SecretCheck', () => {
 
     const mockPlan: PlanData = {
       id: 'aps-test123',
+      schema_version: '0.1.0',
+      hash: 'test-hash',
       intent: 'Test plan',
       proposed_changes: [
         {
-          type: 'file',
-          target: 'test.js',
-          action: 'create',
+          type: 'file_create',
+          path: 'test.js',
+          description: 'Create test file',
           content: '',
         },
       ],
       provenance: {
-        created_at: '2024-01-01T00:00:00Z',
-        created_by: 'test@example.com',
+        timestamp: '2024-01-01T00:00:00Z',
+        author: 'test@example.com',
+        source: 'cli',
         version: '1.0.0',
       },
+      validations: {
+        required_checks: [],
+        skip_checks: [],
+      },
+      evidence: [],
+      executions: [],
     };
 
     context = {

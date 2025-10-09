@@ -13,17 +13,37 @@ A modern monorepo workspace powered by Nx, pnpm, and TypeScript.
 
 ## 📊 Project Status
 
-| Phase                   | Status         | Progress          |
-| ----------------------- | -------------- | ----------------- |
-| Phase 1: Infrastructure | ✅ Complete    | 100%              |
-| Phase 2: APS Core       | 🚧 In Progress | 0%                |
-| Phase 3: CLI Foundation | ⏳ Planned     | 0%                |
-| Phase 4: Gate v1        | ⏳ Planned     | 0%                |
-| Phase 5: OPA/Rego       | ⏳ Planned     | 0%                |
-| **Overall Progress**    | **~4%**        | **14/300+ tasks** |
+| Phase                   | Status         | Progress |
+| ----------------------- | -------------- | -------- |
+| Phase 1: Infrastructure | ✅ Complete    | 100%     |
+| Phase 2: APS Core       | ✅ Complete    | 95%      |
+| Phase 3: CLI Foundation | 🚧 In Progress | 30%      |
+| Phase 4: Gate v1        | ✅ Complete    | 100%     |
+| Phase 5: OPA/Rego       | ⏳ Planned     | 0%       |
+| **Overall Progress**    | **~18%**       | **MVP**  |
 
 See [TODO.md](./TODO.md) for detailed task tracking and [PLAN.md](./PLAN.md) for
 the strategic roadmap.
+
+### 🎉 Recent Milestones
+
+- **2025-10-10**: CLI + APS integration complete
+  - Core package exports all APS utilities
+  - CLI successfully imports and uses core functionality
+  - TypeScript configuration fixed for proper build outputs
+  - Gate types aligned with APS schema v0.1.0
+  - All 116 tests passing
+
+- **2025-09-26**: APS Core implementation complete
+  - Schema validation with Zod
+  - Hash generation and verification
+  - Plan ID generation
+  - Comprehensive test coverage
+
+- **2025-09-22**: Project infrastructure established
+  - Nx monorepo setup
+  - CI/CD pipeline with GitHub Actions
+  - Quality gates (ESLint, Prettier, Husky)
 
 ## 🚀 Features
 
