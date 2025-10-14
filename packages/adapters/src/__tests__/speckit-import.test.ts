@@ -69,6 +69,15 @@ describe('SpecKitImportAdapter', () => {
       expect(result.data).toBeDefined();
 
       if (result.success && result.data) {
+        console.log('Changes found:', result.data.proposed_changes.length);
+        console.log(
+          'Changes:',
+          result.data.proposed_changes.map((c) => ({
+            type: c.type,
+            path: c.path,
+            desc: c.description.substring(0, 50),
+          }))
+        );
         expect(result.data.intent).toContain('JWT tokens');
         expect(result.data.schema_version).toBe('0.1.0');
         expect(result.data.proposed_changes.length).toBeGreaterThan(0);

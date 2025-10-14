@@ -7,9 +7,9 @@ strategic context, see [PLAN.md](./PLAN.md).
 
 ## Executive Summary
 
-**Current Status**: Phase 2 (APS Core) 95% complete, Phase 4 (Gate) 100%
+**Current Status**: Phase 2 (APS Core) 100% complete, Phase 4 (Gate) 100%
 complete **Next Critical Path**: Adapters → CLI Integration → Dry-run →
-Apply/Rollback **Target MVP**: 14-16 weeks from current state
+Apply/Rollback **Target MVP**: 13-15 weeks from current state
 
 ### Strategic Priorities (in order)
 
@@ -20,19 +20,20 @@ Apply/Rollback **Target MVP**: 14-16 weeks from current state
 
 ## Progress Summary
 
-### ✅ Completed Phases (18% overall)
+### ✅ Completed Phases (22% overall)
 
 - **Phase 1: Foundations** - Repository structure, CI/CD, quality gates (100%)
 - **Phase 2: APS Spine** - Core schema, validation, hash generation, CLI
-  integration (95%)
+  integration, documentation (100%)
 - **Phase 4: Gate v1** - ESLint, coverage, secret scanning (100%)
 
-### 🚧 Current Sprint (Weeks 1-2)
+### 🚧 Current Sprint (Weeks 2-3)
 
-**Goal**: Complete APS core and begin adapter development
+**Goal**: Begin adapter framework and SpecKit implementation
 
-- [x] Finish APS core integration (remaining 20%) ✅
-- [ ] Add CLI + APS integration tests
+- [x] Finish APS core integration ✅
+- [x] Add CLI + APS integration tests (36 tests, 100% passing) ✅
+- [x] Complete APS core documentation (API, Examples, Migration) ✅
 - [ ] Begin SpecKit adapter implementation
 - [ ] Update CLI foundation for format detection
 
@@ -86,7 +87,7 @@ Apply/Rollback **Target MVP**: 14-16 weeks from current state
 
 ---
 
-## Phase 2: APS Spine (80% Complete)
+## Phase 2: APS Spine ✅ COMPLETE
 
 ### Epic: APS Core Implementation
 
@@ -126,17 +127,18 @@ Apply/Rollback **Target MVP**: 14-16 weeks from current state
   - [x] Align Gate types with APS schema (PlanData → APSPlan)
   - [x] Update gate checks to use new schema fields (path instead of target)
   - [x] Update all test fixtures to use APS schema v0.1.0
-  - [ ] Add integration tests for CLI + APS
+  - [x] Add integration tests for CLI + APS
   - **Acceptance**: CLI can import and use APS validation ✅
-  - **Status**: Core integration complete, integration tests pending
-  - **Date Completed**: 2025-10-10
+  - **Status**: Complete with comprehensive test coverage
+  - **Date Completed**: 2025-10-13
 
-- [ ] **Documentation for APS Core**
-  - [ ] API documentation for all exported functions
-  - [ ] Usage examples for developers
-  - [ ] Migration guide from manual JSON
-  - **Acceptance**: Developers can use APS without source code inspection
-  - **Target**: Week 2
+- [x] **Documentation for APS Core**
+  - [x] API documentation for all exported functions
+  - [x] Usage examples for developers
+  - [x] Migration guide from manual JSON
+  - **Acceptance**: Developers can use APS without source code inspection ✅
+  - **Status**: Complete - API.md, EXAMPLES.md, MIGRATION.md created
+  - **Date Completed**: 2025-10-13
 
 ---
 
@@ -148,30 +150,21 @@ Apply/Rollback **Target MVP**: 14-16 weeks from current state
 existing planning formats (SpecKit, BMAD) whilst using APS internally for
 validation and execution.
 
-#### Adapter Architecture
+#### Adapter Architecture ✅
 
-- [ ] **Create adapter framework** (`adapters/src/base/`)
-  - [ ] Define `FormatAdapter` interface:
+- [x] **Create adapter framework** (`adapters/src/base/`)
+  - [x] Define `FormatAdapter` interface with detection, parse, serialize,
+        validate
+  - [x] Implement adapter registry for format detection
+  - [x] Add adapter testing utilities
+  - [x] Create adapter documentation
+  - [x] Implement comprehensive framework tests (22 tests passing)
 
-    ```typescript
-    interface FormatAdapter {
-      name: string;
-      supportedExtensions: string[];
-      detect(content: string): boolean;
-      parse(content: string): APSPlan;
-      serialize(plan: APSPlan): string;
-      validate(content: string): ValidationResult;
-    }
-    ```
-
-  - [ ] Implement adapter registry for format detection
-  - [ ] Add adapter testing utilities
-  - [ ] Create adapter documentation template
-
-- **Acceptance**: Framework supports pluggable adapters
-- **Dependencies**: APS core complete
+- **Acceptance**: Framework supports pluggable adapters ✅
+- **Dependencies**: APS core complete ✅
 - **Target**: Week 2
 - **Sprint**: Current
+- **Date Completed**: 2025-10-13
 
 #### SpecKit Adapter (Customer #1)
 

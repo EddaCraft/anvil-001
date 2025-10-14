@@ -11,7 +11,8 @@
       "Bash(pnpm build:*)",
       "Bash(pnpm typecheck:*)",
       "Bash(pnpm test:*)",
-      "Bash(npx nx build:*)"
+      "Bash(npx nx build:*)",
+      "WebFetch(domain:medium.com)"
     ],
     "deny": [],
     "ask": []

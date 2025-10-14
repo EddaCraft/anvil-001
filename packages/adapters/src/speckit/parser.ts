@@ -91,9 +91,17 @@ export class SpecKitParser {
 
   private extractSectionData(section: MarkdownSection, result: ParsedSpecKit): void {
     const sectionTitleLower = section.title.toLowerCase();
+    let sectionWasProcessed = false;
 
     for (const [key, aliases] of Object.entries(SpecKitParser.SPEC_SECTIONS)) {
-      if (aliases.some((alias) => sectionTitleLower.includes(alias))) {
+      // Use word boundary matching to avoid partial matches (e.g., "objective" shouldn't match "objectives")
+      if (
+        aliases.some((alias) => {
+          const regex = new RegExp(`\\b${alias}\\b`, 'i');
+          return regex.test(sectionTitleLower);
+        })
+      ) {
+        sectionWasProcessed = true;
         switch (key) {
           case 'intent':
             // For intent, get only the paragraph text, not list items
@@ -110,14 +118,19 @@ export class SpecKitParser {
             result.requirements = this.parseListItems(section.content);
             break;
           case 'changes':
+            // parseChanges handles all nested subsections, so don't recurse into them
             result.changes = this.parseChanges(section);
-            break;
+            return; // Exit early - changes section is fully processed
         }
       }
     }
 
-    for (const subsection of section.subsections) {
-      this.extractSectionData(subsection, result);
+    // Only recurse into subsections if this section wasn't fully processed by a specialized method
+    // or if the section didn't match any known section types
+    if (!sectionWasProcessed) {
+      for (const subsection of section.subsections) {
+        this.extractSectionData(subsection, result);
+      }
     }
   }
 
