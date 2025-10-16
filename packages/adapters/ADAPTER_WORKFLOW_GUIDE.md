@@ -527,6 +527,10 @@ As a [user type], I want [action], so that [benefit]
 
 ## Developer Workflows
 
+This section demonstrates real-world workflows for both SpecKit and BMAD
+formats, showing how Anvil's adapter system enables seamless format detection,
+validation, and cross-format collaboration.
+
 ### Workflow 1: Plan Validation (SpecKit)
 
 ```bash
@@ -612,7 +616,7 @@ anvil gate specs/auth-feature/spec.md
 anvil convert specs/auth-feature/spec.md --to bmad
 # → Output: docs/prd.md
 
-# PM edits PRD, adds NFRs
+# PM edits PRD, adds NFRs and QA requirements
 vim docs/prd.md
 
 # Developer 2 needs latest from PM
@@ -623,7 +627,243 @@ anvil convert docs/prd.md --to speckit
 # APS ensures consistency across formats.
 ```
 
-### Workflow 4: CI/CD Integration
+### Format Decision Guide: SpecKit vs BMAD
+
+**Use SpecKit when:**
+
+- Working with GitHub's official spec-kit CLI
+- Need constitution checks for architectural decisions
+- Want explicit clarification markers for ambiguous requirements
+- Prefer phase-based task execution (Setup → Foundation → Stories → Polish)
+- Team is developer-focused with AI pair programming
+- Single-document simplicity is preferred
+- Project has <10 user scenarios
+
+**Use BMAD when:**
+
+- Need comprehensive QA integration with risk assessments
+- Want agent-driven workflow (PM, Architect, Dev, QA agents)
+- Require detailed requirement traceability (FR/NFR)
+- Need document sharding for large projects (Epic/Story files)
+- Want explicit quality gates and master checklists
+- Team includes dedicated QA and product roles
+- Multi-document structure fits your workflow
+- Project has >10 epics or complex requirements
+
+**Key Differences:**
+
+| Aspect               | SpecKit                             | BMAD                                    |
+| -------------------- | ----------------------------------- | --------------------------------------- |
+| **Philosophy**       | Spec-driven development             | Agent-driven agile                      |
+| **Documents**        | 3 files (spec, plan, tasks)         | Multi-document (PRD, arch, stories, QA) |
+| **Priority System**  | P1, P2, P3+ (scenarios)             | P0, P1, P2 (stories + tests)            |
+| **Requirements**     | FR-XXX only                         | FR-XXX + NFR-XXX                        |
+| **Validation**       | Constitution check + clarifications | Master checklist + QA gates             |
+| **QA Integration**   | Embedded in spec                    | Separate risk profiles & gates          |
+| **Task Granularity** | Implementation tasks                | User stories                            |
+| **Parallelization**  | Task-level with `[~]` markers       | Epic/story-level                        |
+| **Evidence Format**  | Markdown comments                   | YAML front matter                       |
+| **Best For**         | Developers, small teams             | Full product teams, complex projects    |
+
+### Workflow 4: Plan Validation (BMAD)
+
+```bash
+# PM creates BMAD PRD using agent framework
+cat > docs/prd.md <<EOF
+# Product Requirements Document
+**Version**: 2.0
+**Date**: 2025-10-16
+
+## Goals and Background Context
+### Goals
+- Enable secure user authentication
+- Support social login providers
+
+### Background Context
+Users need a secure way to access their accounts.
+
+## Requirements
+### Functional (FR)
+**FR-001**: System MUST support email/password authentication
+**FR-002**: System MUST support OAuth (Google, GitHub)
+
+### Non-Functional (NFR)
+**NFR-001**: Authentication MUST complete within 2 seconds
+**NFR-002**: System MUST comply with OWASP standards
+
+## Epic List
+1. **User Authentication**: Enable users to securely log in
+2. **Social Login**: Integrate OAuth providers
+
+## Epic Details
+### Epic 1: User Authentication
+**Expanded Goal**: Implement email/password authentication with secure password hashing
+
+**User Stories:**
+- **US-001**: As a user, I want to log in with email/password, so that I can access my account
+- **US-002**: As a user, I want to reset my password, so that I can regain access if I forget it
+
+**Acceptance Criteria (US-001):**
+1. Given valid credentials, When I submit login form, Then I am logged in
+2. Given invalid credentials, When I submit login form, Then I see error message
+EOF
+
+# Create architecture document
+cat > docs/architecture.md <<EOF
+# Architecture Document
+**Version**: 2.0
+**References**: docs/prd.md
+
+## Tech Stack (DEFINITIVE - Single Source of Truth)
+| Category  | Technology | Version | Purpose            | Rationale             |
+|-----------|------------|---------|--------------------|-----------------------|
+| Runtime   | Node.js    | 20.0.0  | Server runtime     | LTS, widely supported |
+| Framework | Express    | 4.18.2  | Web framework      | Mature, flexible      |
+| Database  | PostgreSQL | 15.3    | Primary data store | ACID, relational      |
+| ORM       | Prisma     | 5.0.0   | Database access    | Type-safe, modern     |
+
+## Data Models
+### Model 1: User
+**Attributes**:
+- \`id\`: UUID, Primary Key
+- \`email\`: string, unique, required
+- \`password_hash\`: string, required
+- \`created_at\`: timestamp
+EOF
+
+# Anvil detects BMAD format and validates
+anvil gate docs/prd.md
+
+# Behind the scenes:
+# 1. AdapterRegistry.detectAdapter(content)
+#    → Detects BMAD (confidence: 88%)
+#
+# 2. BMADImportAdapter.parse(content)
+#    → Parses PRD and Architecture
+#    → Converts to APS with full metadata
+#
+# 3. GateRunner.run(apsPlan)
+#    → Runs checks:
+#      - Lint: ✅ Passed
+#      - Tests: ✅ Passed
+#      - Coverage: ✅ 85%
+#      - Master Checklist: ✅ PASSED
+#      - Alignment Check: ✅ PRD/Architecture aligned
+#      - Quality Gates: ⚠️ Risk assessment pending
+#
+# 4. BMADExportAdapter.serialize(apsPlanWithEvidence)
+#    → Injects evidence as YAML front matter:
+#      ---
+#      anvil_evidence:
+#        gate_status: WARNING
+#        master_checklist: PASSED
+#        alignment_check: PASSED
+#        checks: All passed
+#        quality_gates: PENDING
+#      ---
+#
+# Output:
+# ⚠️  Gate Validation: WARNING
+# ✅ All checks passed
+# ⚠️ Quality gate: Risk assessment required for high-priority stories
+```
+
+### Workflow 5: BMAD Agent Workflow
+
+```bash
+# Step 1: PM Agent creates PRD
+anvil bmad init --agent pm
+# → Generates docs/prd.md from YAML template
+
+# Step 2: Architect Agent creates Architecture
+anvil bmad arch --from docs/prd.md
+# → Reads PRD, generates docs/architecture.md
+
+# Step 3: PO runs master checklist validation
+anvil bmad validate --checklist master
+# → Validates PRD/Architecture alignment
+# → Checks all FR/NFR have architectural coverage
+# → Output: ✅ Master checklist PASSED
+
+# Step 4: Dev Agent shards stories for implementation
+anvil bmad shard --epic 1
+# → Creates individual story files:
+#   docs/stories/epic-001.story-001.md
+#   docs/stories/epic-001.story-002.md
+
+# Step 5: QA Agent creates risk profiles
+anvil bmad qa-assess --story epic-001.story-001
+# → Generates risk profile:
+#   docs/qa/assessments/epic-001.story-001-risk-profile-20251016.md
+
+# Step 6: Gate validation before implementation
+anvil gate docs/stories/epic-001.story-001.md
+# → Validates story is ready for implementation
+# → Checks:
+#   - Risk profile exists ✅
+#   - Requirements traced ✅
+#   - Test strategy defined ✅
+#   - Quality gate status: PASS
+
+# Step 7: Dev implements story
+# ... implementation work ...
+
+# Step 8: QA gate after implementation
+anvil bmad qa-gate --story epic-001.story-001 --gate unit-tests
+# → Creates quality gate YAML:
+#   docs/qa/gates/epic-001.story-001-unit-tests.yml
+# → Status: PASS
+
+# All steps validated through APS core!
+```
+
+### Workflow 6: BMAD Multi-Document Workflow
+
+```bash
+# PM has complete BMAD project structure
+docs/
+├── prd.md
+├── architecture.md
+├── front-end-spec.md
+├── stories/
+│   ├── epic-001.story-001.md
+│   ├── epic-001.story-002.md
+│   └── epic-002.story-001.md
+└── qa/
+    ├── assessments/
+    │   └── epic-001.story-001-risk-profile-20251016.md
+    └── gates/
+        └── epic-001.story-001-unit-tests.yml
+
+# Validate entire project
+anvil gate docs/ --recursive
+# → Auto-detects BMAD format
+# → Parses all documents as a set
+# → Validates cross-document references
+# → Checks:
+#   - All epics in PRD have stories ✅
+#   - All stories reference valid FRs ✅
+#   - All high-risk stories have QA assessments ✅
+#   - Tech stack versions match across docs ✅
+
+# Convert entire BMAD project to SpecKit
+anvil convert docs/ --to speckit --output specs/
+# → Behind the scenes:
+#   1. BMADImportAdapter.parseMultiple(documentSet)
+#   2. Merges all documents into single APS
+#   3. SpecKitExportAdapter.serialize(apsPlan)
+# → Output:
+#   specs/auth-feature/
+#   ├── spec.md      (from PRD epics + stories)
+#   ├── plan.md      (from Architecture)
+#   └── tasks.md     (from Stories)
+
+# Developer can now work in SpecKit format
+# PM continues working in BMAD format
+# Both stay in sync through APS!
+```
+
+### Workflow 7: CI/CD Integration
 
 ```yaml
 # .github/workflows/anvil-gate.yml
@@ -633,7 +873,9 @@ on:
   pull_request:
     paths:
       - 'specs/**'
-      - 'docs/prds/**'
+      - 'docs/prd.md'
+      - 'docs/architecture.md'
+      - 'docs/stories/**'
 
 jobs:
   validate:
