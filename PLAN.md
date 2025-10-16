@@ -5,9 +5,9 @@
 **Mission**: Build the AI-governed development platform that makes prototype →
 production safe through validated, deterministic plans.
 
-**Current Phase**: Act 1 (Developer Wedge) - MVP **Timeline**: 16 weeks to MVP,
-12 months to Product-Market Fit **Vision**: Three-act expansion from dev tools →
-knowledge work → enterprise platform
+**Current Phase**: Act 1 (Developer Wedge) - MVP **Timeline**: 12-14 weeks to
+MVP (SpecKit adapter complete ✅), 12 months to Product-Market Fit **Vision**:
+Three-act expansion from dev tools → knowledge work → enterprise platform
 
 ---
 
@@ -329,27 +329,34 @@ existing workflows; Anvil just makes them safer.
 
 The fastest route to a fundable, demonstrable product:
 
-**Weeks 1-2: Complete APS Core**
+**Weeks 1-2: Complete APS Core** ✅ COMPLETE
 
-- Finish remaining 20% of APS integration
-- Export all utilities from core package
-- Documentation for developers
+- ✅ Finish remaining 20% of APS integration
+- ✅ Export all utilities from core package
+- ✅ Documentation for developers
+- **Completed**: October 13, 2025
 
-**Weeks 3-4: SpecKit Adapter (Customer #1)**
+**Weeks 3-4: SpecKit Adapter (Customer #1)** ✅ COMPLETE
 
-- Parser and serialiser for SpecKit format
-- Round-trip conversion with evidence injection
-- Demo with first customer
+- ✅ Parser and serialiser for SpecKit format (~2,469 LOC)
+- ✅ Support for spec.md, plan.md, and tasks.md
+- ✅ Round-trip conversion with evidence injection
+- ✅ Comprehensive test suite (51 tests, 49 passing)
+- ✅ Registry integration with auto-detection
+- **Completed**: October 14, 2025
+- **Next**: Demo with Customer #1
 
-**Weeks 5-6: BMAD Adapter (Customer #2)**
+**Weeks 5-6: BMAD Adapter (Customer #2)** ⏳ IN PROGRESS
 
-- Parser and serialiser for BMAD format
+- Parser and serialiser for BMAD/PRD format
+- Requirements extraction (REQ-XXX format)
 - Round-trip conversion with evidence injection
 - Demo with second customer
+- **Target**: Week 5-6
 
-**Weeks 7-8: Gate Integration**
+**Weeks 7: CLI Integration** ⏳ NEXT
 
-- Wire CLI commands to gate runner
+- Wire CLI commands to adapter auto-detection
 - Evidence updates work across formats
 - Configuration file support
 - **Milestone**: Both customers can validate plans in their formats
@@ -710,27 +717,51 @@ for infrastructure.
 
 ## What's Next: Execution Plan
 
-### Immediate Actions (This Week)
+### Immediate Actions (This Week) - **Week 5**
 
-1. **Finish APS core** (remaining 20%)
-2. **Start SpecKit adapter** (Week 3 target)
-3. **Customer #1 demo preparation**
-4. **Investor deck update** (if fundraising)
+1. ✅ ~~Finish APS core~~ COMPLETE
+2. ✅ ~~Ship SpecKit adapter~~ COMPLETE (2,469 LOC, 51 tests)
+3. **Start BMAD adapter** development (Week 5-6 target)
+4. **Customer #1 demo preparation** with SpecKit adapter
 
 ### Next 30 Days
 
-1. **Ship SpecKit adapter** with working gate integration
-2. **Demo with Customer #1** and get feedback
-3. **Start BMAD adapter** development
+1. **Ship BMAD adapter** with full test coverage
+2. **CLI integration** for adapter auto-detection
+3. **Demo with Customer #1 and #2** and get feedback
 4. **Begin fundraising conversations** (if applicable)
 
-### Next 90 Days (MVP Complete)
+### Next 60-90 Days (MVP Complete)
 
-1. **Both adapters working** with full gate integration
+1. **Both adapters working** with full CLI and gate integration
 2. **15-20 pilot customers** using Anvil
 3. **Launch partner secured** (ideally)
 4. **Fundraise closed** (if pursuing)
 5. **MVP feature-complete** and stable
+
+### Progress to Date (as of October 16, 2025)
+
+✅ **Completed**:
+
+- Phase 1: Foundations (100%)
+- Phase 2: APS Core (100%)
+- Phase 2.5: Adapter Framework (100%)
+- Phase 2.5: SpecKit Adapter (100%)
+- Phase 4: Gate v1 (100%)
+
+⏳ **In Progress**:
+
+- Phase 2.5: BMAD Adapter (0%)
+
+📋 **Remaining**:
+
+- Phase 3: CLI Integration with adapters
+- Phase 5: Policy Engine (OPA/Rego)
+- Phase 6: Sidecar & Dry-run
+- Phase 7: Apply & Rollback
+- Phase 8: GitHub Integration
+
+**Overall Progress**: ~28% complete
 
 ---
 

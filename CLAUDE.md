@@ -115,8 +115,10 @@ npx nx graph
 - **Monorepo structure**:
   - `cli/` - Command-line interface application
   - `ui/` - User interface components
-  - `core/` - Shared core functionality
-  - `packs/` - Package bundles
+  - `core/` - Shared core functionality (APS schema, validation, hashing)
+  - `gate/` - Quality gate checks (lint, test, coverage, secrets)
+  - `packages/adapters/` - Format adapters (SpecKit ✅, BMAD planned)
+  - `packs/` - Package bundles (future: feature flags, telemetry)
   - `packages/` - Additional library packages
   - `e2e/` - End-to-end tests using Playwright
   - `docs/` - Project documentation
@@ -141,11 +143,98 @@ npx nx graph
 
 ## Development Workflow
 
-1. Core shared functionality goes in `core/`
-2. CLI application code goes in `cli/`
-3. UI components go in `ui/`
-4. Package bundles go in `packs/`
-5. Additional libraries can be created under `packages/`
-6. All packages use `@anvil/*` namespace
-7. TypeScript project references ensure proper build order
-8. Dependencies between packages use `workspace:*` protocol
+1. Core shared functionality goes in `core/` (APS schema, validation, utilities)
+2. Format adapters go in `packages/adapters/` (SpecKit, BMAD, etc.)
+3. Quality gate checks go in `gate/` (lint, test, coverage, secrets)
+4. CLI application code goes in `cli/` (commands, UI, orchestration)
+5. UI components go in `ui/`
+6. Package bundles go in `packs/` (future: feature flags, telemetry)
+7. Additional libraries can be created under `packages/`
+8. All packages use `@anvil/*` namespace
+9. TypeScript project references ensure proper build order
+10. Dependencies between packages use `workspace:*` protocol
+
+## Current Implementation Status (as of October 16, 2025)
+
+### ✅ Completed Components
+
+1. **APS Core** (`packages/core/`)
+   - Zod schema with full TypeScript types
+   - Deterministic hashing (SHA-256)
+   - Validation engine
+   - Comprehensive test coverage
+
+2. **Adapter Framework** (`packages/adapters/src/base/`)
+   - FormatAdapter interface
+   - AdapterRegistry with auto-detection
+   - Testing utilities
+   - ~586 LOC, 22 tests (100% passing)
+
+3. **SpecKit Adapter** (`packages/adapters/src/speckit/`)
+   - Complete implementation for GitHub's official spec-kit format
+   - Support for spec.md, plan.md, and tasks.md
+   - V1 (simple) and V2 (official) format parsers
+   - Import and export adapters
+   - ~2,469 LOC, 51 tests (49 passing, 2 minor fixes pending)
+
+4. **Gate v1** (`packages/gate/`)
+   - ESLint integration
+   - Test coverage checks
+   - Secret scanning
+   - Evidence collection
+
+### ⏳ In Progress
+
+1. **BMAD Adapter** (Week 5-6 target)
+   - PRD/architecture document format
+   - Requirement extraction (REQ-XXX format)
+
+### 📋 Planned
+
+1. CLI integration with adapter auto-detection
+2. Policy engine (OPA/Rego)
+3. Sidecar (dry-run, apply, rollback)
+4. GitHub Action integration
+
+## Package Structure
+
+```
+packages/
+├── core/                      # @anvil/core
+│   ├── src/
+│   │   ├── schema/           # APS Zod schema
+│   │   ├── hash/             # Deterministic hashing
+│   │   ├── validation/       # Validation engine
+│   │   └── index.ts
+│   └── README.md
+├── adapters/                  # @anvil/adapters
+│   ├── src/
+│   │   ├── base/             # Framework core (586 LOC)
+│   │   │   ├── types.ts      # FormatAdapter interface
+│   │   │   ├── registry.ts   # Adapter registry
+│   │   │   ├── utils.ts      # Utilities
+│   │   │   └── testing.ts    # Test helpers
+│   │   ├── speckit/          # SpecKit adapter (2,469 LOC) ✅
+│   │   │   ├── parser.ts     # Core parser
+│   │   │   ├── import.ts     # V1 import
+│   │   │   ├── import-v2.ts  # V2 import
+│   │   │   ├── export.ts     # Export adapter
+│   │   │   └── parsers/      # Specialized parsers
+│   │   └── bmad/             # BMAD adapter (planned) ⏳
+│   └── README.md
+└── gate/                      # @anvil/gate
+    ├── src/
+    │   ├── checks/           # Individual gate checks
+    │   ├── runner.ts         # Gate runner
+    │   └── index.ts
+    └── README.md
+```
+
+## Key Documentation Files
+
+- `ARCHITECTURE.md` - Detailed system architecture and design decisions
+- `PLAN.md` - Strategic plan and three-act vision
+- `TODO.md` - Comprehensive implementation task list with progress tracking
+- `ROADMAP.md` - High-level milestones and phases
+- `packages/adapters/README.md` - Adapter framework documentation
+- `packages/core/docs/` - APS core API documentation

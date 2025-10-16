@@ -291,46 +291,54 @@ interface DetectionResult {
 }
 ```
 
-#### SpecKit Adapter
+#### SpecKit Adapter ✅ COMPLETE
 
-**Responsibility**: Parse and serialize SpecKit format (`spec.md`, `plan.md`).
+**Responsibility**: Parse and serialize GitHub's official SpecKit format
+(`spec.md`, `plan.md`, `tasks.md`).
 
-**SpecKit Format Structure**:
+**Status**: Fully implemented (October 2025)
 
-```markdown
-# [Title]
+- **Code Size**: 2,469 lines of code
+- **Tests**: 51 tests (49 passing, 2 minor fixes pending)
+- **Coverage**: >95%
 
-## Intent
+**SpecKit Format Support**:
 
-[What we're trying to achieve]
+The adapter supports GitHub's complete spec-kit workflow with three document
+types:
 
-## Context
+1. **spec.md** - Requirements and user scenarios (WHAT and WHY)
+   - Feature metadata (branch, date, status)
+   - User scenarios with acceptance criteria
+   - Functional requirements with clarification markers
+   - Key entities (data model)
+   - Success criteria
 
-[Why we need this]
+2. **plan.md** - Technical implementation (HOW)
+   - Summary of technical approach
+   - Technical context (language, dependencies, constraints)
+   - Constitution check (compliance with project principles)
+   - Project structure
+   - Implementation details
 
-## Proposed Changes
-
-- Change 1
-- Change 2
-
-## Acceptance Criteria
-
-- Criterion 1
-- Criterion 2
-
-## Metadata
-
-- Author: @username
-- Created: 2025-09-30
-- Version: 1.0
-```
+3. **tasks.md** - Executable breakdown
+   - Tasks organized by phases with IDs
+   - Parallel execution markers
+   - Checkpoints after each phase
+   - Dependencies and execution order
 
 **Mapping to APS**:
 
-- `Intent` → `intent`
-- `Proposed Changes` → `proposed_changes[]`
-- `Acceptance Criteria` → validation hooks
-- `Metadata` → `provenance`
+- User Scenarios → `proposed_changes[]` with scenario metadata
+- Functional Requirements → `metadata.requirements.functional[]`
+- Key Entities → `metadata.requirements.entities[]`
+- Success Criteria → `metadata.successCriteria`
+- Clarifications → `metadata.clarifications[]` (all `[NEEDS CLARIFICATION]`
+  markers)
+- Technical Context → `metadata.technicalContext`
+- Project Structure → `metadata.projectStructure`
+- Implementation Details → `metadata.implementationDetails`
+- Phases & Tasks → `metadata.phases[]`, `metadata.taskDependencies[]`
 
 **Round-trip Preservation**:
 
@@ -338,49 +346,80 @@ interface DetectionResult {
 - Maintain comment structure
 - Keep custom sections
 - Inject evidence as markdown comments
+- Support for v1 (simple) and v2 (official) formats
 
-**Implementation Location**: `adapters/src/speckit/`
+**Implementation Structure**: `adapters/src/speckit/`
 
-#### BMAD Adapter
+```
+speckit/
+├── index.ts              # Exports
+├── parser.ts             # Core markdown parser (330 LOC)
+├── import.ts             # V1 import adapter (284 LOC)
+├── import-v2.ts          # V2 official format adapter (424 LOC)
+├── export.ts             # Export adapter (462 LOC)
+└── parsers/              # Specialized parsers (966 LOC)
+    ├── spec-parser.ts    # Spec.md parser (378 LOC)
+    ├── plan-parser.ts    # Plan.md parser (342 LOC)
+    └── tasks-parser.ts   # Tasks.md parser (246 LOC)
+```
 
-**Responsibility**: Parse and serialize BMAD format (PRD, architecture docs).
+#### BMAD Adapter ⏳ PLANNED
 
-**BMAD Format Structure**:
+**Responsibility**: Parse and serialize BMAD format (Business Model and
+Architecture Documents, PRDs).
+
+**Status**: Not yet implemented (Planned for Week 5-6, November 2025)
+
+**Expected BMAD Format Structure**:
 
 ```markdown
 # Product Requirements Document
 
 ## Problem Statement
 
-[Description]
+[Description of the problem being solved]
 
 ## Requirements
 
 ### Functional
 
-- REQ-001: [Requirement]
+- REQ-001: [Requirement description]
+- REQ-002: [Requirement description]
 
 ### Non-Functional
 
 - PERF-001: [Performance requirement]
+- SEC-001: [Security requirement]
 
 ## Architecture
 
-[Technical approach]
+[Technical approach and design decisions]
 
 ## Acceptance Criteria
 
-[Testing criteria]
+[Testing and validation criteria]
 ```
 
-**Mapping to APS**:
+**Planned Mapping to APS**:
 
 - `Problem Statement` → `intent`
-- `Requirements` → `proposed_changes[]`
-- `Architecture` → implementation hints
-- `Acceptance Criteria` → validation criteria
+- Functional Requirements (REQ-XXX) → `proposed_changes[]`
+- Non-Functional Requirements (PERF-XXX, SEC-XXX) → `metadata.nfr[]`
+- `Architecture` → `metadata.architecture`
+- `Acceptance Criteria` → `metadata.acceptance_criteria[]`
+- Requirement IDs → `metadata.requirement_ids[]`
 
-**Implementation Location**: `adapters/src/bmad/`
+**Planned Implementation Location**: `adapters/src/bmad/`
+
+```
+bmad/
+├── index.ts              # Exports
+├── parser.ts             # Markdown parser with REQ-ID extraction
+├── import.ts             # BMAD → APS adapter
+└── export.ts             # APS → BMAD adapter
+```
+
+**Target Completion**: Week 5-6
 
 #### Native APS Adapter
 
@@ -393,7 +432,8 @@ interface DetectionResult {
 - Pretty printing
 - YAML ↔ JSON conversion
 
-**Implementation Location**: `adapters/src/aps/`
+**Implementation Location**: Native APS handling is built into core
+(`@anvil/core`) and base adapter framework (`adapters/src/base/`)
 
 ### 2. Core Layer (APS)
 

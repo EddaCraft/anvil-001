@@ -1,6 +1,16 @@
 packages:
-  - 'cli'
-  - 'ui'
-  - 'core'
-  - 'packs'
-  - 'packages/*'
+  - cli
+  - ui
+  - core
+  - packs
+  - packages/*
+
+ignoredBuiltDependencies:
+  - '@devm33/node-pty'
+  - '@swc/core'
+  - keytar-forked-forked
+  - unrs-resolver
+
+onlyBuiltDependencies:
+  - esbuild
+  - nx
