@@ -24,5 +24,34 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "git.autoRepositoryDetection": false,
+  "git.enabled": true,
+  "git.repositoryScanMaxDepth": 0,
+  "git.openRepositories": ["/home/aneki/anvil-001"],
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/.nx/**": true,
+    "**/tmp/**": true,
+    "**/out-tsc/**": true,
+    "**/coverage/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.nx": true,
+    "**/tmp": true,
+    "**/coverage": true
+  },
+  "git.ignoreLimitWarning": true,
+  "git.untrackedChanges": "hidden",
+  "githubPullRequests.fileListLayout": "flat",
+  "githubPullRequests.queries": [],
+  "githubRepositories.autoRefresh": false,
+  "files.exclude": {
+    "**/.git": false
   }
 }

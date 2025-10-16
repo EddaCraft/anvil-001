@@ -1,7 +1,6 @@
 # Anvil Architecture
 
-**Version**: 2.0  
-**Last Updated**: 30 September 2025  
+**Version**: 2.0.0 **Last Updated**: 30 September 2025  
 **Status**: Living Document
 
 ---
