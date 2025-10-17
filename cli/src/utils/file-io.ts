@@ -15,9 +15,9 @@ export async function loadPlan(path: string): Promise<APSPlan> {
     // Validate the plan
     const validationResult = await validateAPSPlan(data);
 
-    if (!validationResult.valid) {
+    if (!validationResult.success) {
       const errorMessages =
-        validationResult.issues?.map((e) => e.message).join(', ') || 'Unknown validation error';
+        validationResult.errors?.map((e) => e.message).join(', ') || 'Unknown validation error';
       throw new Error(`Invalid plan: ${errorMessages}`);
     }
 
