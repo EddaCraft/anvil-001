@@ -1,22 +1,60 @@
 # Anvil
 
-[![CI](https://github.com/[username]/anvil/actions/workflows/ci.yml/badge.svg)](https://github.com/[username]/anvil/actions/workflows/ci.yml)
-[![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/EddaCraft/anvil-001/actions/workflows/ci.yml/badge.svg)](https://github.com/EddaCraft/anvil-001/actions/workflows/ci.yml)
+[![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg?style=flat-square)](https://pnpm.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js->=18.0.0-339933.svg?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Nx](https://img.shields.io/badge/Nx-21.5.2-143055.svg?style=flat-square)](https://nx.dev)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+[![Nx](https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png)](https://nx.dev)
 
 A modern monorepo workspace powered by Nx, pnpm, and TypeScript.
 
+## 📊 Project Status
+
+| Phase                   | Status         | Progress |
+| ----------------------- | -------------- | -------- |
+| Phase 1: Infrastructure | ✅ Complete    | 100%     |
+| Phase 2: APS Core       | ✅ Complete    | 95%      |
+| Phase 3: CLI Foundation | 🚧 In Progress | 30%      |
+| Phase 4: Gate v1        | ✅ Complete    | 100%     |
+| Phase 5: OPA/Rego       | ⏳ Planned     | 0%       |
+| **Overall Progress**    | **~18%**       | **MVP**  |
+
+See [TODO.md](./TODO.md) for detailed task tracking and [PLAN.md](./PLAN.md) for
+the strategic roadmap.
+
+### 🎉 Recent Milestones
+
+- **2025-10-10**: CLI + APS integration complete
+  - Core package exports all APS utilities
+  - CLI successfully imports and uses core functionality
+  - TypeScript configuration fixed for proper build outputs
+  - Gate types aligned with APS schema v0.1.0
+  - All 116 tests passing
+
+- **2025-09-26**: APS Core implementation complete
+  - Schema validation with Zod
+  - Hash generation and verification
+  - Plan ID generation
+  - Comprehensive test coverage
+
+- **2025-09-22**: Project infrastructure established
+  - Nx monorepo setup
+  - CI/CD pipeline with GitHub Actions
+  - Quality gates (ESLint, Prettier, Husky)
+
 ## 🚀 Features
 
-- **Monorepo Structure**: Organized workspace with `cli/`, `ui/`, `core/`, and `packs/` packages
+- **Monorepo Structure**: Organized workspace with `cli/`, `ui/`, `core/`, and
+  `packs/` packages
 - **TypeScript**: Full TypeScript support with project references
 - **Testing**: Vitest for unit tests, Playwright for E2E tests
 - **Code Quality**: ESLint, Prettier, and Husky pre-commit hooks
 - **CI/CD**: GitHub Actions workflow with caching and matrix testing
-- **Developer Experience**: Fast builds with Nx, efficient package management with pnpm
+- **Developer Experience**: Fast builds with Nx, efficient package management
+  with pnpm
 
 ## 📦 Project Structure
 
@@ -149,10 +187,6 @@ GitHub Actions workflow includes:
 - [Vitest Documentation](https://vitest.dev)
 - [Playwright Documentation](https://playwright.dev)
 
-## 📄 License
-
-MIT
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please ensure:
@@ -164,7 +198,8 @@ Contributions are welcome! Please ensure:
 
 ## 💡 Nx Console
 
-For an enhanced development experience, install the Nx Console extension for your IDE:
+For an enhanced development experience, install the Nx Console extension for
+your IDE:
 
 - [VSCode Extension](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console)
 - [IntelliJ Plugin](https://plugins.jetbrains.com/plugin/15000-nx-console)

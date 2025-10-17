@@ -20,8 +20,13 @@ export default defineConfig({
         '**/index.ts',
       ],
     },
-    include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    exclude: ['node_modules', 'dist', '.nx', 'playwright-report', 'e2e'],
+    include: [
+      'core/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      'cli/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      'ui/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      'packs/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+    ],
+    exclude: ['**/node_modules/**', '**/dist/**', '**/.nx/**', '**/playwright-report/**'],
   },
   resolve: {
     alias: {

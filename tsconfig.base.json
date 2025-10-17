@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "composite": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
@@ -16,6 +17,9 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["@anvil/source"]
+    "customConditions": ["@anvil/source"],
+    "paths": {
+      "@anvil/adapters": ["packages/adapters/src/index.ts"]
+    }
   }
 }

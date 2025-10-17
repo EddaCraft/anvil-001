@@ -1,0 +1,74 @@
+{
+  "nxConsole.generateAiAgentRules": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "eslint.format.enable": true,
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "prettier.requireConfig": true,
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "git.autoRepositoryDetection": false,
+  "git.enabled": true,
+  "git.repositoryScanMaxDepth": 1,
+  "git.detectSubmodules": false,
+  "git.openRepositories": ["/home/aneki/anvil-001"],
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/.nx/**": true,
+    "**/tmp/**": true,
+    "**/out-tsc/**": true,
+    "**/coverage/**": true,
+    "**/playwright-report/**": true,
+    "**/test-results/**": true,
+    "**/.git/**": true,
+    "**/*.log": true,
+    "**/.pnpm-store/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.nx": true,
+    "**/tmp": true,
+    "**/coverage": true,
+    "**/playwright-report": true,
+    "**/test-results": true,
+    "**/*.log": true,
+    "pnpm-lock.yaml": true,
+    "**/.pnpm-store": true
+  },
+  "files.exclude": {
+    "**/.git": false,
+    "**/.nx/cache": true,
+    "**/dist": false,
+    "**/coverage": false
+  },
+  "typescript.tsserver.maxTsServerMemory": 4096,
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": false,
+  "typescript.surveys.enabled": false,
+  "typescript.preferences.autoImportFileExcludePatterns": ["**/node_modules/**", "**/.nx/**"],
+  "git.ignoreLimitWarning": true,
+  "git.untrackedChanges": "hidden",
+  "githubPullRequests.fileListLayout": "flat",
+  "githubPullRequests.queries": [],
+  "githubRepositories.autoRefresh": false
+}
