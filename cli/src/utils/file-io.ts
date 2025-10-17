@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { join, resolve } from 'path';
-import { APSPlan, validateAPSPlan } from '@anvil/core';
+import { join, resolve, dirname } from 'path';
+import { APSPlan, validatePlan } from '@anvil/core';
 import { ensureDirSync } from 'fs-extra';
 
 export async function loadPlan(path: string): Promise<APSPlan> {
@@ -13,7 +13,7 @@ export async function loadPlan(path: string): Promise<APSPlan> {
     const data = JSON.parse(content);
 
     // Validate the plan
-    const validationResult = await validateAPSPlan(data);
+    const validationResult = validatePlan(data);
 
     if (!validationResult.success) {
       const errorMessages =
@@ -30,7 +30,7 @@ export async function loadPlan(path: string): Promise<APSPlan> {
 }
 
 export function savePlan(plan: APSPlan, path: string): void {
-  ensureDirSync(resolve(path, '..'));
+  ensureDirSync(dirname(path));
   writeFileSync(path, JSON.stringify(plan, null, 2), 'utf-8');
 }
 

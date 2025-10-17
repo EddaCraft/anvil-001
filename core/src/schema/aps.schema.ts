@@ -175,6 +175,11 @@ export interface SchemaValidationResult {
 }
 
 /**
+ * @deprecated Use SchemaValidationResult instead. Will be removed in next major version.
+ */
+export interface ValidationResult extends SchemaValidationResult {}
+
+/**
  * Parse and validate a plan with user-friendly error formatting
  */
 export function validatePlan(data: unknown): SchemaValidationResult {
