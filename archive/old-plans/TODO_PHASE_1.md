@@ -2,9 +2,8 @@
 
 ## Overview
 
-**Timeline**: Weeks 2-3
-**Goal**: Build APS (Anvil Plan Spec) schema, validation, and CLI commands for deterministic plans
-**Status**: 🚧 In Progress
+**Timeline**: Weeks 2-3 **Goal**: Build APS (Anvil Plan Spec) schema,
+validation, and CLI commands for deterministic plans **Status**: 🚧 In Progress
 
 ---
 
