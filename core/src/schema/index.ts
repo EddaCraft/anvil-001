@@ -32,6 +32,8 @@ export type {
   SchemaValidationResult,
 } from './aps.schema.js';
 
+// Deprecated: Re-export old ValidationResult name for compatibility. Remove in next major version.
+export type ValidationResult = SchemaValidationResult;
 // Re-export utility functions
 export { validatePlan, createPlan, APS_SCHEMA_VERSION } from './aps.schema.js';
 
