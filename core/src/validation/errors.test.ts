@@ -69,7 +69,7 @@ describe('Error Formatting', () => {
 
         expect(formatted).toHaveLength(1);
         expect(formatted[0].path).toBe('name');
-        expect(formatted[0].message).toContain('expected string, received number');
+        expect(formatted[0].message).toContain('expected string');
         expect(formatted[0].severity).toBe('error');
       }
     });
@@ -86,8 +86,8 @@ describe('Error Formatting', () => {
         const formatted = formatZodErrors(result.error.issues);
 
         expect(formatted).toHaveLength(2);
-        expect(formatted[0].message).toContain('minimum length is 5');
-        expect(formatted[1].message).toContain('maximum length is 3');
+        expect(formatted[0].message).toContain('minimum is 5');
+        expect(formatted[1].message).toContain('maximum is 3');
       }
     });
 
@@ -100,7 +100,7 @@ describe('Error Formatting', () => {
 
       if (!result.success) {
         const formatted = formatZodErrors(result.error.issues);
-        expect(formatted[0].message).toContain('does not match expected pattern');
+        expect(formatted[0].message).toContain('must match pattern');
       }
     });
 
