@@ -8,16 +8,20 @@ strategic context, see [PLAN.md](./PLAN.md).
 ## Executive Summary
 
 **Current Status**: Phase 2 (APS Core) 100% complete, Phase 2.5 (Adapters) 50%
-complete (SpecKit done), Phase 4 (Gate) 100% complete **Next Critical Path**:
-BMAD Adapter → CLI Integration → Dry-run → Apply/Rollback **Target MVP**: 12-14
-weeks from current state
+complete (SpecKit ✅ done), Phase 4 (Gate) 100% complete
+
+**Next Critical Path**: CLI Integration → BMAD Adapter → Dry-run →
+Apply/Rollback
+
+**Target MVP**: 10-12 weeks from current state
 
 ### Strategic Priorities (in order)
 
-1. **Interoperability First** - SpecKit ✅ & BMAD adapters (Act 1 wedge)
-2. **Developer Experience** - CLI commands that work with existing formats
-3. **Validation & Safety** - Gate integration with formats
-4. **Production Readiness** - Apply/rollback with audit trail
+1. **CLI Integration** - Complete SpecKit adapter integration with CLI commands
+2. **Interoperability First** - BMAD adapter (Act 1 wedge)
+3. **Developer Experience** - CLI commands that work with existing formats
+4. **Validation & Safety** - Gate integration with formats
+5. **Production Readiness** - Apply/rollback with audit trail
 
 ## Progress Summary
 
@@ -29,25 +33,28 @@ weeks from current state
 - **Phase 2.5: Adapters** - Framework complete, SpecKit adapter complete (50%)
 - **Phase 4: Gate v1** - ESLint, coverage, secret scanning (100%)
 
-### 🚧 Current Sprint (Week 5)
+### 🚧 Current Sprint (Week 5-6)
 
-**Goal**: Complete BMAD adapter implementation
+**Goal**: Complete CLI integration with SpecKit adapter
 
 - [x] Adapter framework (types, registry, testing utilities) ✅
 - [x] SpecKit parser (spec.md, plan.md, tasks.md parsers) ✅
 - [x] SpecKit import adapter (v1 and v2) ✅
 - [x] SpecKit export adapter ✅
 - [x] SpecKit tests (51 tests, 49 passing, 2 minor fixes needed) ✅
-- [ ] Begin BMAD adapter implementation
-- [ ] Update CLI foundation for format detection
+- [ ] CLI format auto-detection
+- [ ] CLI `gate` command with adapter support
+- [ ] CLI `validate` command with adapter support
+- [ ] CLI `export` command for format conversion
+- [ ] Evidence bundle integration with SpecKit format
 
-### 🎯 Next 3 Sprints (Weeks 5-7)
+### 🎯 Next 3 Sprints (Weeks 7-9)
 
-**Goal**: Complete BMAD interoperability and CLI integration
+**Goal**: Complete BMAD interoperability and full CLI functionality
 
-- Weeks 5-6: BMAD adapter + tests
-- Week 7: CLI integration with both formats
-- Week 8: Gate integration with both formats
+- Weeks 7-8: BMAD adapter + tests
+- Week 9: Enhanced CLI commands (`plan`, `apply` dry-run preview)
+- Week 10: Evidence bundle integration with both formats
 
 ### 📋 Remaining Work (Phases 5-12)
 
@@ -199,14 +206,16 @@ validation and execution.
   - **Acceptance**: >95% test coverage achieved ✅
   - **Date Completed**: 2025-10-14
 
-- [ ] **CLI integration for SpecKit**
+- [ ] **CLI integration for SpecKit** (IN PROGRESS)
   - [ ] Auto-detect SpecKit format in CLI
   - [ ] `anvil gate spec.md` works end-to-end
   - [ ] `anvil validate plan.md` provides feedback
+  - [ ] `anvil export spec.md --to=aps` format conversion
   - [ ] Evidence updates append to SpecKit files
   - **Acceptance**: SpecKit users can validate plans
   - **Demo**: Show Customer #1
-  - **Target**: Week 4
+  - **Target**: Week 6 (current sprint)
+  - **Status**: SpecKit adapter complete, CLI integration in progress
 
 #### BMAD Adapter (Customer #2)
 
@@ -217,7 +226,8 @@ validation and execution.
   - [ ] Handle BMAD metadata and versioning
   - [ ] Support multiple BMAD document types
   - **Acceptance**: Valid BMAD documents convert to valid APS
-  - **Target**: Week 5
+  - **Target**: Weeks 7-8
+  - **Status**: Deferred until after CLI integration complete
 
 - [ ] **Implement BMAD serialiser**
   - [ ] Convert APS back to BMAD format
@@ -225,7 +235,7 @@ validation and execution.
   - [ ] Update BMAD with validation results
   - [ ] Inject evidence as BMAD annotations
   - **Acceptance**: Round-trip conversion works correctly
-  - **Target**: Week 5
+  - **Target**: Week 8
 
 - [ ] **BMAD adapter tests**
   - [ ] Fixture: Valid BMAD documents (5+ examples)
@@ -233,7 +243,7 @@ validation and execution.
   - [ ] Round-trip tests
   - [ ] Integration with gate validation
   - **Acceptance**: >95% test coverage, all fixtures pass
-  - **Target**: Week 6
+  - **Target**: Week 8
 
 - [ ] **CLI integration for BMAD**
   - [ ] Auto-detect BMAD format in CLI
@@ -241,26 +251,27 @@ validation and execution.
   - [ ] Evidence updates work correctly
   - **Acceptance**: BMAD users can validate plans
   - **Demo**: Show Customer #2
-  - **Target**: Week 6
+  - **Target**: Week 9
 
 #### Format Detection
 
-- [ ] **Implement format auto-detection**
+- [ ] **Implement format auto-detection** (IN PROGRESS)
   - [ ] Content-based detection (not just file extension)
   - [ ] Confidence scoring for format detection
   - [ ] Fallback to APS native format
   - [ ] Clear error messages for unknown formats
   - **Acceptance**: `anvil gate <any-format>` just works
-  - **Target**: Week 6
+  - **Target**: Week 6 (current sprint)
+  - **Status**: Framework supports detection, CLI integration in progress
 
 ---
 
-## Phase 3: CLI Foundation (30% Complete)
+## Phase 3: CLI Foundation (30% Complete, IN PROGRESS)
 
 ### Epic: CLI Interface
 
-**Status**: Commander.js setup complete, commands need implementation with
-adapter support
+**Status**: Commander.js setup complete, currently implementing commands with
+adapter support (Week 5-6 sprint)
 
 #### Core Commands
 
@@ -274,17 +285,18 @@ adapter support
   - **Dependencies**: Adapter framework
   - **Target**: Week 7
 
-- [ ] **Implement `anvil validate <plan>`**
+- [ ] **Implement `anvil validate <plan>`** (IN PROGRESS)
   - [ ] Auto-detect plan format
   - [ ] Convert to APS for validation
   - [ ] Run schema + hash validation
   - [ ] Display validation results
   - [ ] Support `--format` for output
   - **Acceptance**: Validates any supported format
-  - **Dependencies**: Adapter framework, APS validator
-  - **Target**: Week 7
+  - **Dependencies**: Adapter framework ✅, APS validator ✅
+  - **Target**: Week 6 (current sprint)
+  - **Status**: Dependencies complete, command implementation in progress
 
-- [ ] **Implement `anvil gate <plan>`**
+- [ ] **Implement `anvil gate <plan>`** (IN PROGRESS)
   - [ ] Auto-detect plan format
   - [ ] Convert to APS if needed
   - [ ] Run all configured checks (lint, test, coverage, secrets)
@@ -293,15 +305,18 @@ adapter support
   - [ ] Display summary table
   - [ ] Exit with appropriate code
   - **Acceptance**: Gate works with all supported formats
-  - **Dependencies**: Gate v1, Adapter framework
-  - **Target**: Week 8
+  - **Dependencies**: Gate v1 ✅, Adapter framework ✅
+  - **Target**: Week 6 (current sprint)
+  - **Status**: Dependencies complete, command implementation in progress
 
-- [ ] **Implement `anvil export <plan>`**
+- [ ] **Implement `anvil export <plan>`** (IN PROGRESS)
   - [ ] Export to different formats: `--to=speckit|bmad|aps|json|yaml`
   - [ ] Preserve all data during conversion
   - [ ] Validate exported format
   - **Acceptance**: Plans can be converted between formats
-  - **Target**: Week 8
+  - **Dependencies**: Adapter framework ✅
+  - **Target**: Week 6 (current sprint)
+  - **Status**: SpecKit export adapter complete, CLI integration in progress
 
 #### CLI User Experience
 
@@ -341,13 +356,14 @@ adapter support
   - **Status**: Core integration complete
   - **Date Completed**: 2025-10-10
 
-- [ ] **Evidence bundle integration**
+- [ ] **Evidence bundle integration** (IN PROGRESS)
   - [ ] Append evidence to APS plans
   - [ ] Update SpecKit/BMAD with evidence annotations
   - [ ] Store evidence separately for audit
   - [ ] Format evidence for different outputs
   - **Acceptance**: Evidence properly attached to plans
-  - **Target**: Week 8
+  - **Target**: (current sprint)
+  - **Status**: Part of gate command implementation
 
 - [ ] **Gate configuration**
   - [ ] Support `.anvilrc` configuration file
@@ -355,7 +371,7 @@ adapter support
   - [ ] Per-project policy overrides
   - [ ] Configuration validation
   - **Acceptance**: Users can configure gate behaviour
-  - **Target**: Week 9
+  - **Target**:
 
 ---
 
@@ -371,7 +387,7 @@ adapter support
   - [ ] Checksum verification
   - [ ] Binary execution wrapper
   - **Acceptance**: OPA available on all platforms
-  - **Target**: Week 10
+  - **Target**:
 
 - [ ] **Policy bundle structure**
   - [ ] Define policy directory structure: `.anvil/policies/`
@@ -382,7 +398,7 @@ adapter support
   - [ ] Policy versioning strategy
   - [ ] Policy testing framework
   - **Acceptance**: Policies can be defined and versioned
-  - **Target**: Week 10
+  - **Target**:
 
 #### Policy Integration
 
@@ -393,14 +409,14 @@ adapter support
   - [ ] Support policy warnings vs. failures
   - **Acceptance**: Policies enforced during gate execution
   - **Dependencies**: OPA binary, Gate v1
-  - **Target**: Week 11
+  - **Target**:
 
 - [ ] **Policy CLI commands**
   - [ ] `anvil policy validate` - Check policy syntax
   - [ ] `anvil policy test` - Run policy tests
   - [ ] `anvil policy list` - Show active policies
   - **Acceptance**: Users can manage policies via CLI
-  - **Target**: Week 11
+  - **Target**:
 
 ---
 
@@ -420,7 +436,7 @@ boundary.
   - [ ] Create preview bundle
   - [ ] Support rollback preview
   - **Acceptance**: `anvil dry-run plan.json` shows what would happen
-  - **Target**: Week 12
+  - **Target**:
   - **Demo**: This is the "wow moment"
 
 - [ ] **Dry-run CLI command**
@@ -430,7 +446,7 @@ boundary.
   - [ ] Support `--output` for saving preview
   - **Acceptance**: Users can preview changes safely
   - **Dependencies**: Dry-run system
-  - **Target**: Week 12
+  - **Target**:
 
 #### Sidecar Daemon
 
@@ -440,7 +456,7 @@ boundary.
   - [ ] Status monitoring
   - [ ] Graceful shutdown
   - **Acceptance**: Sidecar runs as background service
-  - **Target**: Week 13
+  - **Target**
 
 - [ ] **Evidence collection**
   - [ ] Immutable evidence appending
@@ -448,7 +464,7 @@ boundary.
   - [ ] Evidence verification
   - [ ] Audit trail generation
   - **Acceptance**: All operations produce evidence
-  - **Target**: Week 13
+  - **Target**:
 
 ---
 
@@ -459,7 +475,7 @@ boundary.
 **Critical**: This is where Anvil's core value proposition is delivered - safe,
 auditable, reversible changes.
 
-#### Apply System
+#### Apply Systm
 
 - [ ] **Implement idempotent apply** (`sidecar/src/apply/`)
   - [ ] Parse proposed_changes from APS
@@ -469,7 +485,7 @@ auditable, reversible changes.
   - [ ] Generate apply evidence
   - [ ] Support partial application with clear errors
   - **Acceptance**: Changes apply successfully with audit trail
-  - **Target**: Week 14
+  - **Target**:
 
 - [ ] **Apply CLI command**
   - [ ] `anvil apply <plan>` command
@@ -479,7 +495,7 @@ auditable, reversible changes.
   - [ ] Show summary of applied changes
   - **Acceptance**: Users can apply validated plans safely
   - **Dependencies**: Apply system, Gate integration
-  - **Target**: Week 14
+  - **Target**:
 
 #### Rollback System
 
@@ -490,7 +506,7 @@ auditable, reversible changes.
   - [ ] Generate rollback evidence
   - [ ] Support partial rollback
   - **Acceptance**: Changes can be rolled back to previous state
-  - **Target**: Week 15
+  - **Target**:
 
 - [ ] **Rollback CLI command**
   - [ ] `anvil rollback <plan-id>` command
@@ -500,7 +516,7 @@ auditable, reversible changes.
   - [ ] Verify system state after rollback
   - **Acceptance**: Users can safely undo applied changes
   - **Dependencies**: Rollback system
-  - **Target**: Week 15
+  - **Target**:
 
 #### Safety Guards
 
@@ -511,7 +527,7 @@ auditable, reversible changes.
   - [ ] Prevent concurrent applies
   - [ ] Timeout protection
   - **Acceptance**: Apply operations are safe by default
-  - **Target**: Week 15
+  - **Target**:
 
 ---
 
@@ -531,7 +547,7 @@ auditable, reversible changes.
   - [ ] Set status check (pass/fail)
   - [ ] Support configuration via workflow inputs
   - **Acceptance**: Action can be used in any repository
-  - **Target**: Week 16
+  - **Target**:
 
 - [ ] **PR Integration**
   - [ ] Detect SpecKit/BMAD files in PR
@@ -540,7 +556,7 @@ auditable, reversible changes.
   - [ ] Clear merge on gate pass
   - [ ] Support override via comment: `/anvil override`
   - **Acceptance**: PRs are automatically validated
-  - **Target**: Week 16
+  - **Target**:
 
 - [ ] **Status checks**
   - [ ] Report individual check results
@@ -548,7 +564,7 @@ auditable, reversible changes.
   - [ ] Show validation summary
   - [ ] Support required vs. optional checks
   - **Acceptance**: PR status clearly shows validation state
-  - **Target**: Week 17
+  - **Target**:
 
 #### Documentation & Examples
 
@@ -558,7 +574,7 @@ auditable, reversible changes.
   - [ ] Troubleshooting guide
   - [ ] Best practices
   - **Acceptance**: Teams can integrate Anvil easily
-  - **Target**: Week 17
+  - **Target**:
 
 ---
 
@@ -575,7 +591,7 @@ auditable, reversible changes.
 - [ ] Test generation
 - [ ] Documentation
 
-**Target**: Post-MVP (Weeks 20+)
+**Target**: Post-MVP ()
 
 ---
 
@@ -595,7 +611,7 @@ engine deferred.
   - [ ] Basic security scan (secrets, known vulns)
   - [ ] Simple scoring system
   - **Acceptance**: Scanner identifies obvious gaps
-  - **Target**: Week 18
+  - **Target**:
 
 - [ ] **Safe recommendations**
   - [ ] Suggest adding tests where missing
@@ -604,7 +620,7 @@ engine deferred.
   - [ ] Flag potential security issues
   - [ ] No automatic fixes, only suggestions
   - **Acceptance**: Recommendations are safe and valuable
-  - **Target**: Week 18
+  - **Target**:
 
 #### Productioniser Command
 
@@ -614,7 +630,7 @@ engine deferred.
   - [ ] Optionally create remediation plan
   - [ ] Support `--fix` flag for safe auto-fixes only
   - **Acceptance**: Command outputs useful assessment
-  - **Target**: Week 19
+  - **Target**:
 
 ---
 
@@ -630,14 +646,14 @@ engine deferred.
   - [ ] Incremental validation
   - [ ] Memory optimisation
   - **Acceptance**: Gate runs efficiently on large repositories
-  - **Target**: Week 20
+  - **Target**:
 
 - [ ] **CLI responsiveness**
   - [ ] Fast startup time
   - [ ] Streaming output for long operations
   - [ ] Interrupt handling
   - **Acceptance**: CLI feels fast and responsive
-  - **Target**: Week 20
+  - **Target**:
 
 #### Security Hardening
 
@@ -647,14 +663,14 @@ engine deferred.
   - [ ] Prevent path traversal
   - [ ] Rate limiting for operations
   - **Acceptance**: CLI is secure against common attacks
-  - **Target**: Week 21
+  - **Target**:
 
 - [ ] **Secrets handling**
   - [ ] Never log sensitive data
   - [ ] Secure evidence storage
   - [ ] Audit trail encryption (optional)
   - **Acceptance**: No secrets leaked in logs or evidence
-  - **Target**: Week 21
+  - **Target**:
 
 #### Documentation
 
@@ -665,7 +681,7 @@ engine deferred.
   - [ ] API reference
   - [ ] Troubleshooting guide
   - **Acceptance**: Developers can contribute effectively
-  - **Target**: Week 22
+  - **Target**:
 
 - [ ] **User documentation**
   - [ ] Installation guide
@@ -674,14 +690,14 @@ engine deferred.
   - [ ] Best practices
   - [ ] Examples and tutorials
   - **Acceptance**: Users can use Anvil without support
-  - **Target**: Week 22
+  - **Target**:
 
 - [ ] **Policy cookbook**
   - [ ] Common policy examples
   - [ ] Policy writing guide
   - [ ] Policy testing guide
   - **Acceptance**: Users can write effective policies
-  - **Target**: Week 22
+  - **Target**:
 
 ---
 
@@ -697,7 +713,7 @@ engine deferred.
   - [ ] Version bumping automation
   - [ ] Git tagging strategy
   - **Acceptance**: Versions managed consistently
-  - **Target**: Week 23
+  - **Target**:
 
 - [ ] **Artifact signing**
   - [ ] Package signing setup
@@ -705,7 +721,7 @@ engine deferred.
   - [ ] Provenance documentation
   - [ ] SBOM generation
   - **Acceptance**: Artifacts are signed and verifiable
-  - **Target**: Week 23
+  - **Target**:
 
 #### Release Testing
 
@@ -715,14 +731,14 @@ engine deferred.
   - [ ] Security validation
   - [ ] Cross-platform testing (Linux, macOS, Windows)
   - **Acceptance**: Release candidate is production-ready
-  - **Target**: Week 24
+  - **Target**:
 
 - [ ] **Sample walkthrough**
   - [ ] Video demonstration
   - [ ] Written tutorial
   - [ ] Example repository
   - **Acceptance**: New users have clear onboarding
-  - **Target**: Week 24
+  - **Target**:
 
 #### Release Documentation
 
@@ -731,7 +747,7 @@ engine deferred.
   - [ ] Configuration recommendations
   - [ ] Common issues and solutions
   - **Acceptance**: Teams can deploy Anvil quickly
-  - **Target**: Week 24
+  - **Target**:
 
 - [ ] **Release notes**
   - [ ] Feature summary
@@ -739,7 +755,7 @@ engine deferred.
   - [ ] Migration guide
   - [ ] Known issues
   - **Acceptance**: Release notes are clear and complete
-  - **Target**: Week 24
+  - **Target**:
 
 ---
 
@@ -782,13 +798,13 @@ planning:**
 
 We've achieved MVP when:
 
-1. ✅ **Interoperability**: SpecKit and BMAD users can validate plans without
-   changing formats
-2. ✅ **Validation**: Gate enforces quality standards (lint, test, coverage,
-   secrets, policies)
-3. ✅ **Safety**: Apply and rollback work reliably with full audit trails
-4. ✅ **Integration**: GitHub Action blocks PRs that fail validation
-5. ✅ **Adoption**: 15-20 teams using Anvil in production
+1. 🚧 **Interoperability**: SpecKit and BMAD users can validate plans without
+   changing formats (SpecKit ✅, BMAD in progress)
+2. 🚧 **Validation**: Gate enforces quality standards (lint, test, coverage,
+   secrets, policies) (Gate v1 ✅, CLI integration in progress)
+3. ⏳ **Safety**: Apply and rollback work reliably with full audit trails
+4. ⏳ **Integration**: GitHub Action blocks PRs that fail validation
+5. ⏳ **Adoption**: 15-20 teams using Anvil in production
 
 ### Quality Gates for Each Phase
 
@@ -804,28 +820,44 @@ Each phase must meet:
 
 ## Sprint Planning Template
 
-### Current Sprint: [Week Number]
+### Current Sprint: (October 2025)
 
-**Goal**: [Primary objective]
+**Goal**: Complete CLI integration with SpecKit adapter
 
 **Tasks**:
 
-- [ ] Task 1
-- [ ] Task 2
-- [ ] Task 3
+- [x] Complete SpecKit adapter (parser, import, export) ✅
+- [ ] Implement format auto-detection in CLI
+- [ ] Implement `anvil validate` with adapter support
+- [ ] Implement `anvil gate` with adapter support
+- [ ] Implement `anvil export` with format conversion
+- [ ] Evidence bundle integration with SpecKit
 
 **Blockers**:
 
-- None / [Description]
+- None
 
 **Demo**:
 
-- [What to demonstrate]
+- Show `anvil validate spec.md` working end-to-end
+- Show `anvil gate plan.md` with SpecKit format
+- Show `anvil export spec.md --to=aps` format conversion
 
-### Daily Standup
+### Recent Progress (October 14-18, 2025)
 
-**Yesterday**: [Completed tasks] **Today**: [Planned tasks] **Blockers**:
-[Issues preventing progress]
+**Completed**:
+
+- SpecKit adapter framework (586 LOC, 22 tests passing)
+- SpecKit parser (2,469 LOC, 51 tests, 49 passing)
+- V1 and V2 format support
+- Import and export adapters
+- Comprehensive test coverage
+
+**In Progress**:
+
+- CLI integration with adapter framework
+- Format auto-detection
+- Command implementation (validate, gate, export)
 
 ---
 
@@ -857,6 +889,9 @@ Each phase must meet:
 
 ## Version History
 
+- **2025-10-18**: Updated current state - SpecKit adapter complete (51 tests, 49
+  passing), CLI integration in progress (Week 5-6 sprint), BMAD deferred to
+  weeks 7-8
 - **2025-09-30**: Major revision for interoperability strategy, updated
   progress, aligned with three-act vision
 - **2025-09-26**: Initial comprehensive TODO with phase breakdown
