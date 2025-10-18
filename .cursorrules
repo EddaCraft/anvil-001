@@ -1,0 +1,42 @@
+# Cursor AI Rules for Anvil Project
+
+## Project Context
+This is an Nx monorepo for Anvil - a validation and execution system for AI-generated plans using the APS (Anvil Plan Schema) format.
+
+## Focus Areas
+1. **Source Code Priority**: Focus on TypeScript source files in:
+   - `packages/*/src/` - Core packages (adapters, core, gate)
+   - `cli/src/` - CLI application
+   - `ui/src/` - UI components
+   - `packs/*/src/` - Feature packs
+
+2. **Exclude from Context**:
+   - Test files (*.test.ts, *.spec.ts) unless specifically debugging tests
+   - Generated files (*.d.ts, *.map, dist/)
+   - Node modules and dependencies
+   - Build artifacts and cache (.nx/, tmp/, coverage/)
+   - Large fixture files in __tests__ directories
+
+3. **Key Files for Reference**:
+   - `CLAUDE.md` - Project structure and commands
+   - `ARCHITECTURE.md` - System design
+   - `TODO.md` - Current implementation status
+   - `packages/*/README.md` - Package-specific documentation
+
+## Code Style
+- TypeScript strict mode enabled
+- Follow existing ESLint and Prettier configurations
+- Use Zod for schema validation
+- Prefer functional programming patterns
+- Write concise, well-typed code
+
+## Performance Optimization
+- Skip indexing large test fixtures
+- Focus on recently modified files
+- Use TypeScript project references for faster builds
+- Leverage Nx caching where applicable
+
+## Current Sprint Focus (Week 5-6)
+- CLI integration with adapter framework
+- SpecKit adapter testing and refinement
+- Format auto-detection implementation

@@ -41,7 +41,9 @@
     "**/test-results/**": true,
     "**/.git/**": true,
     "**/*.log": true,
-    "**/.pnpm-store/**": true
+    "**/.pnpm-store/**": true,
+    "**/*.map": true,
+    "**/*.d.ts.map": true
   },
   "search.exclude": {
     "**/node_modules": true,
@@ -53,7 +55,9 @@
     "**/test-results": true,
     "**/*.log": true,
     "pnpm-lock.yaml": true,
-    "**/.pnpm-store": true
+    "**/.pnpm-store": true,
+    "**/*.map": true,
+    "**/*.d.ts.map": true
   },
   "files.exclude": {
     "**/.git": false,
@@ -65,7 +69,16 @@
   "typescript.disableAutomaticTypeAcquisition": true,
   "typescript.tsserver.experimental.enableProjectDiagnostics": false,
   "typescript.surveys.enabled": false,
-  "typescript.preferences.autoImportFileExcludePatterns": ["**/node_modules/**", "**/.nx/**"],
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "**/node_modules/**",
+    "**/.nx/**",
+    "**/dist/**",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ],
+  "typescript.tsserver.watchOptions": {
+    "excludeDirectories": ["**/node_modules", "**/.nx", "**/dist", "**/tmp"]
+  },
   "git.ignoreLimitWarning": true,
   "git.untrackedChanges": "hidden",
   "githubPullRequests.fileListLayout": "flat",

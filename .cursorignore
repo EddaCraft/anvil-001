@@ -22,3 +22,21 @@ test-results/
 
 # Lock files
 pnpm-lock.yaml
+
+# Generated files (reduces ~14K files from indexing)
+**/*.map
+**/*.d.ts.map
+**/node_modules/**/*.d.ts
+
+# Git internals
+.git/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
